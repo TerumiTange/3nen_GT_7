@@ -1,0 +1,17 @@
+#pragma once
+#include "../Device/Dx.h"
+#include "../Device/CSVReader.h"
+
+enum Type
+{
+	BLANK,//ãÛîí
+	FLOOR,//è∞
+
+};
+class Map
+{
+public:
+	Map();
+private:
+	CSVReader* mCSVReader;
+};
