@@ -3,11 +3,18 @@
 #include "../Device/Renderer.h"
 #include "Collider.h"
 
+enum Type
+{
+	Top,    //è„
+	Under,	//â∫
+	Right,	//âE
+	Left	//ç∂
+};
 
 class Player
 {
 public :
-	Player(const char* tag = "Player");
+	Player(const char* tag = "a");
 	Player(const Vector2& position, const char* tag = "Player");
 	~Player();
 	void Init();
@@ -16,10 +23,12 @@ public :
 	void SetPosition(const Vector2& position);
 	Vector2& GetPosition();
 
+
 private:
 	Vector2* pos;
 	const char* filename;
+	//Renderer renderer;
 
 private:
-	Collider* mCollider;
+	//Collider* mCollider;
 };

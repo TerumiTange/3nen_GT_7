@@ -3,7 +3,6 @@
 #include <cassert>
 #include <fstream>
 #include <sstream>
-#include <string>
 
 CSVReader::CSVReader():
 	mCSV(0),
@@ -13,30 +12,33 @@ CSVReader::CSVReader():
 {
 }
 
-CSVReader::CSVReader(const char * filename):
+CSVReader::CSVReader(const char* filename):
 	mCSV(0),
 	mCSVString(0),
 	mWidthCount(0),
 	mHeightCount(0)
 {
-	parse(filename);
+	//parse(filename);
+	DxParse(filename);
 }
 
 CSVReader::~CSVReader() = default;
 
-std::vector<int> CSVReader::load(const char * filename)
+std::vector<int> CSVReader::load(const char* filename)
 {
-	parse(filename);
+	//parse(filename);
+	DxParse(filename);
 
 	return mCSV;
 }
 
-std::vector<std::string> CSVReader::loadString(const char * filename)
+std::vector<std::string> CSVReader::loadString(const char* filename)
 {
 	parseString(filename);
 
 	return mCSVString;
 }
+
 
 std::vector<int> CSVReader::getParseData() const
 {
@@ -48,6 +50,7 @@ std::vector<std::string> CSVReader::getParseStringData() const
 	return mCSVString;
 }
 
+
 int CSVReader::getWidth()
 {
 	return mWidthCount;
@@ -58,14 +61,17 @@ int CSVReader::getHeight()
 	return mHeightCount;
 }
 
-void CSVReader::parse(const char * filename)
+
+
+void CSVReader::parse(const char* filename)
 {
 	//中身をリセット
 	mCSV.clear();
 
 	//読み込み開始
 	std::ifstream ifs(filename, std::ios::in);
-	assert(ifs);
+	
+	//assert(ifs);
 
 	std::string line;
 	bool first = true;
@@ -87,7 +93,41 @@ void CSVReader::parse(const char * filename)
 	mHeightCount = mCSV.size() / mWidthCount;
 }
 
-void CSVReader::parseString(const char * filename)
+void CSVReader::DxParse(const char* filename)
+{
+	//中身をリセット
+	mCSV.clear();
+	int file;
+	
+	file = FileRead_open(filename);
+	//assert(file);
+
+	char line[256];
+	bool first = true;
+	//全て読み込むまで続ける
+	while(FileRead_eof(file) == 0)
+	{
+		//1行読み込む
+		FileRead_gets(line, 256, file);
+
+		const char delimiter = ',';
+		for (const auto& s : line) {
+			if (s != delimiter) {
+				mCSV.emplace_back(s - 48);
+			}
+		}
+		if (first) {
+			first = false;
+			mWidthCount = mCSV.size();
+		}
+		break;
+	}
+	mHeightCount = 0;// mCSV.size() / mWidthCount;
+	//ファイルを閉じる
+	FileRead_close(file);
+}
+
+void CSVReader::parseString(const char* filename)
 {
 	//中身リセット
 	mCSVString.clear();
