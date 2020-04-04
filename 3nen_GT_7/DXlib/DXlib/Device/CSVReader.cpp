@@ -19,16 +19,16 @@ CSVReader::CSVReader(const char* filename):
 	mWidthCount(0),
 	mHeightCount(0)
 {
-	//parse(filename);
-	DxParse(filename);
+	parse(filename);
+	//DxParse(filename);
 }
 
 CSVReader::~CSVReader() = default;
 
 std::vector<int> CSVReader::load(const char* filename)
 {
-	//parse(filename);
-	DxParse(filename);
+	parse(filename);
+	//DxParse(filename);
 
 	return mCSV;
 }

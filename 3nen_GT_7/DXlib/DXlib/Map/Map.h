@@ -2,6 +2,7 @@
 #include "../Device/Dx.h"
 #include "../Device/CSVReader.h"
 #include "../Utility/Vector2.h"
+#include "../Actor/Wall.h"
 #include <list>
 
 enum class Category
@@ -37,4 +38,5 @@ private:
 	CSVReader* mCSVReader;
 	std::vector<int> mCSV;
 	std::list<GimmickData> mGimmickData;
+	std::vector<Wall>mWall;
 };

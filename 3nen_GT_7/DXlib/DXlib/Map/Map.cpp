@@ -1,10 +1,10 @@
 #include "Map.h"
-#include "../Actor/Wall.h"
 
 Map::Map():
 	mCSVReader(nullptr),
 	mCSV(0),
-	mGimmickData(0)
+	mGimmickData(0),
+	mWall(0)
 {
 
 }
@@ -17,7 +17,7 @@ void Map::Init(const char* filename)
 {
 	mCSV.clear();
 	mGimmickData.clear();
-	//mWall.clear();
+	mWall.clear();
 	mCSVReader = new CSVReader(filename);
 	mCSV = mCSVReader->load(filename);
 
@@ -68,18 +68,19 @@ void Map::Update()
 
 void Map::Draw()
 {
-	//for (int i = 0; i < mWall.size(); ++i)
-	//{
-	//	mWall[i]->Draw();
-	//}
+	for (int i = 0; i < mWall.size(); ++i)
+	{
+		mWall[i].Draw();
+	}
 }
 
 void Map::Create(const GimmickData & data)
 {
 	if (data.type == Category::WALL)
 	{
-		auto w = new Wall(data.position);
+		//auto w = new Wall(data.position);
 		//mWall.emplace_back(new Wall(data.position));
+		mWall.emplace_back(new Wall(new Vector2(data.position.x, data.position.y)));
 	}
 	else if(data.type == Category::FLOOR)
 	{

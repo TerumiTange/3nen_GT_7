@@ -1,8 +1,8 @@
 #include "Wall.h"
 
 
-Wall::Wall(Vector2 pos, const char* tag):
-	position(&pos),
+Wall::Wall(Vector2* pos, const char* tag):
+	position(pos),
 	filename(tag),
 	renderer()
 {
@@ -18,5 +18,9 @@ void Wall::Update()
 
 void Wall::Draw()
 {
-	renderer.Draw(filename, *position);
+	//renderer.Draw(filename, *position);
+	int a;
+	a = LoadGraph("./Assets/Texture/Wall.png");
+	DrawGraph(position->x, position->y, a, TRUE);
+	DeleteGraph(a);
 }
