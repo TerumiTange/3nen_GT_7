@@ -18,4 +18,6 @@ private:
 
 
 	std::string name;
+	std::string tag;
+
 };

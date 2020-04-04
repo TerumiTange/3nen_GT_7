@@ -130,20 +130,24 @@
   <ItemGroup>
     <ClCompile Include="Actor\Collider.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
+    <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Scene\GamePlay.cpp" />
     <ClCompile Include="System\Input.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Collider.h" />
     <ClInclude Include="Actor\Player.h" />
+    <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />
     <ClInclude Include="Device\Renderer.h" />
     <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Scene\GamePlay.h" />
     <ClInclude Include="System\Input.h" />
     <ClInclude Include="Utility\Vector2.h" />
   </ItemGroup>

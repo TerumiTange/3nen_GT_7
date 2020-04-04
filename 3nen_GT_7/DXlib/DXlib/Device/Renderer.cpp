@@ -17,8 +17,8 @@ Renderer::~Renderer()
 
 void Renderer::Init()
 {
-	name = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
-	//name = "../Assets/Texture/";
+	//name = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
+	name = "../Assets/Texture/";
 }
 
 void Renderer::LoadTexture(const char * filename)

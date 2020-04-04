@@ -1,34 +1,35 @@
 #include "Device/Dx.h"
 #include "Device/Renderer.h"
+#include "Scene/GamePlay.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Renderer renderer;
-	
+	//GamePlay mGame;
+	Player player;
 	// ウインドウモードで起動
 	ChangeWindowMode(TRUE);
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
 	//SetWindowSizeChangeEnableFlag(TRUE, TRUE);
 	// 画面サイズは最大の 1920x1080 にしておく
-	SetGraphMode(1920, 1080, 32);
+	SetGraphMode(500, 500, 32);
 	// 最初は 640x480 にしておく
-	SetWindowSize(1024,576);//16:9
-
+	SetWindowSize(500,500);//16:9//1024:576
+	
 	if (DxLib_Init() == -1)    // ＤＸライブラリ初期化処理
 	{
 		return -1;    // エラーが起きたら直ちに終了
 	}
 
-	//renderer.LoadTexture("../Assets/Texture/a.png");
-	renderer.LoadTexture("a.png");
-	//renderer.LoadTex("../Assets/Texture/a.png");
+	//mGame.Init();
+
 	// メインループ(何かキーが押されたらループを抜ける)
 	while (ProcessMessage() == 0)
 	{
 		// 画面のクリア
 		ClearDrawScreen();
-		//renderer.Draw("../Assets/Texture/a.png", 0, 0);
-		renderer.Draw("a.png", 0, 1000);//したが+
+		//mGame.Update();
+		//mGame.Draw();
+		player.Draw();
 		//
 		if (WaitKey())
 		{

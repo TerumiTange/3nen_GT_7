@@ -5,7 +5,8 @@ Collider::Collider(const char* tag):
 	y(0),
 	width(0),
 	height(0),
-	name("")
+	name(""),
+	tag(tag)
 {
 	name = "../Assets/Texture/";
 	name = name + tag + ".png";

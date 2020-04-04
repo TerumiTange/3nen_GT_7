@@ -1,11 +1,9 @@
 #include "Player.h"
-
 Renderer renderer;
 
 Player::Player(const char* tag):
 	pos(&Vector2(0,0)),
-	filename(tag),
-	mCollider(new Collider(tag))
+	filename("Player")
 {
 
 }
@@ -13,6 +11,7 @@ Player::Player(const char* tag):
 Player::Player(const Vector2 & position, const char* tag):
 	pos(&Vector2(0,0)),
     filename(tag)
+	//renderer(*new Renderer())
 {
 	*pos = position;
 }
@@ -27,7 +26,7 @@ void Player::Init()
 
 void Player::Update()
 {
-	mCollider->Update();
+
 }
 
 void Player::Draw()
