@@ -4,7 +4,7 @@
 Map map;
 
 GamePlay::GamePlay():
-	player()
+	player(*new Vector2(0,0))
 {
 }
 
@@ -14,7 +14,7 @@ GamePlay::~GamePlay()
 
 void GamePlay::Init()
 {
-	//player.SetPosition(*new Vector2(0,0));
+	//player.SetPosition(*new Vector2(30,30));
 	//map.Init("../Assets/Data/map.csv");
 }
 

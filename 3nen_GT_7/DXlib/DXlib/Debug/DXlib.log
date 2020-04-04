@@ -1,5 +1,3 @@
 ﻿  Player.cpp
-  Main.cpp
-  GamePlay.cpp
-  コードを生成中...
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(57): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   DXlib.vcxproj -> C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe

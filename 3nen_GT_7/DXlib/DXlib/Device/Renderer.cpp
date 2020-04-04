@@ -21,29 +21,29 @@ void Renderer::Init()
 	name = "../Assets/Texture/";
 }
 
-void Renderer::LoadTexture(const char * filename)
+void Renderer::LoadTexture(const char* filename)
 {
 	//assets = name + *filename;
 	//assets = strcat(name, filename);
 	Init();
-	name = name + filename + ".png";
+	name += filename;
 	texture[name.c_str()] = LoadGraph(name.c_str());
 	Init();
 }
 
 
-void Renderer::Draw(const char * filename, Vector2& position)
+void Renderer::Draw(const char* filename, Vector2& position)
 {
 	Init();
-	name = name + filename + ".png";
+	name += filename;
 	DrawGraph(position.x, position.y, texture[name.c_str()], TRUE);
 	Init();
 }
 
-void Renderer::Draw(const char * filename, int x, int y)
+void Renderer::Draw(const char* filename, int x, int y)
 {
 	Init();
-	name = name + filename + ".png";
+	name += filename;
 	DrawGraph(x, y, texture[name.c_str()], TRUE);
 	Init();
 }
