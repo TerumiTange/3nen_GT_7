@@ -1,7 +1,6 @@
 #include "GamePlay.h"
 #include "../Map/Map.h"
 
-Map map;
 
 GamePlay::GamePlay():
 	player(*new Vector2(0,0))
