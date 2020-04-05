@@ -4,6 +4,7 @@
 #include "../Utility/Vector2.h"
 #include "../Actor/Wall.h"
 #include <list>
+#include <vector>
 
 enum class Category
 {
@@ -38,5 +39,6 @@ private:
 	CSVReader* mCSVReader;
 	std::vector<int> mCSV;
 	std::list<GimmickData> mGimmickData;
-	std::vector<Wall>mWall;
+	//std::list<Wall> mWall;
+	std::list<std::shared_ptr<Wall>> mWall;
 };

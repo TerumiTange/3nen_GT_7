@@ -5,7 +5,7 @@
 class Wall
 {
 public:
-	Wall(Vector2* pos, const char* tag = "Wall");
+	Wall(const Vector2& pos, const char* tag = "Wall");
 	~Wall();
 	void Update();
 	void Draw();

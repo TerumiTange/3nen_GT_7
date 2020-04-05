@@ -68,10 +68,22 @@ void Map::Update()
 
 void Map::Draw()
 {
-	for (int i = 0; i < mWall.size(); ++i)
+	for (auto&& itr : mWall)
 	{
-		mWall[i].Draw();
+		itr->Draw();
 	}
+	//for (int i = 0; i < mWall.size(); ++i)
+	//{
+	//	mWall[i].Draw();
+	//	
+	//}
+
+	//std::list<std::shared_ptr<Wall>>::iterator itr;
+	//for (itr = mWall.begin(); itr != mWall.end(); ++itr)
+	//{
+	//	itr->Draw();
+	//}
+
 }
 
 void Map::Create(const GimmickData & data)
@@ -80,7 +92,7 @@ void Map::Create(const GimmickData & data)
 	{
 		//auto w = new Wall(data.position);
 		//mWall.emplace_back(new Wall(data.position));
-		mWall.emplace_back(new Wall(new Vector2(data.position.x, data.position.y)));
+		mWall.emplace_back(new Wall(data.position));
 	}
 	else if(data.type == Category::FLOOR)
 	{

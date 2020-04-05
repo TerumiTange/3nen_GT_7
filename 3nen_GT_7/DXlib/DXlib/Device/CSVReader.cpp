@@ -72,7 +72,7 @@ void CSVReader::parse(const char* filename)
 	//“Ç‚İ‚İŠJn
 	std::ifstream ifs(filename, std::ios::in);
 	
-	//assert(ifs);
+	assert(ifs);
 
 	std::string line;
 	bool first = true;

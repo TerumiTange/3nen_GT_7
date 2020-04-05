@@ -16,7 +16,8 @@ Player::Player(const Vector2& position, const char* tag):
 	renderer(*new Renderer()),
 	input(new Input())
 {
-	*pos = position;
+	pos->x = position.x;
+	pos->y = position.y;
 }
 
 Player::~Player()

@@ -1,11 +1,13 @@
 #include "Wall.h"
 
 
-Wall::Wall(Vector2* pos, const char* tag):
-	position(pos),
+Wall::Wall(const Vector2& pos, const char* tag):
+	position(new Vector2(0,0)),
 	filename(tag),
 	renderer()
 {
+	position->x = pos.x;
+	position->y = pos.y;
 }
 
 Wall::~Wall()

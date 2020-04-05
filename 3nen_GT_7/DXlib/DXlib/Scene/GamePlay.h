@@ -2,6 +2,7 @@
 #include "../Device/Dx.h"
 
 #include "../Actor/Player.h"
+#include "../Map/Map.h"
 
 class GamePlay
 {
@@ -14,4 +15,5 @@ public:
 
 private:
 	Player player;
+	Map map;
 };
