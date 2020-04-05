@@ -1,3 +1,9 @@
-﻿  Wall.cpp
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\wall.cpp(26): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+﻿  CSVReader.cpp
+  Main.cpp
+  Map.cpp
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\map\map.cpp(31): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\map\map.cpp(43): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  GamePlay.cpp
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   DXlib.vcxproj -> C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe
