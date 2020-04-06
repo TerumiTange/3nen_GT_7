@@ -1,7 +1,8 @@
 #include "GamePlay.h"
 
 
-GamePlay::GamePlay():
+GamePlay::GamePlay(ISceneChanger* changer):
+	BaseScene(changer),
 	player(*new Vector2(0,0)),
 	map(),
 	sound()
@@ -32,4 +33,9 @@ void GamePlay::Draw()
 {
 	player.Draw();
 	map.Draw();
+}
+
+void GamePlay::NextScene()
+{
+	mSceneChanger->ChangeScene(SceneEnding);
 }

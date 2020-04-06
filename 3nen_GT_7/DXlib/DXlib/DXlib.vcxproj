@@ -132,11 +132,17 @@
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
+    <ClCompile Include="Device\GameDevice.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
     <ClCompile Include="Device\Sound.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="Scene\BaseScene.cpp" />
+    <ClCompile Include="Scene\Ending.cpp" />
     <ClCompile Include="Scene\GamePlay.cpp" />
+    <ClCompile Include="Scene\ISceneChanger.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\Title.cpp" />
     <ClCompile Include="System\Input.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
   </ItemGroup>
@@ -146,10 +152,16 @@
     <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />
+    <ClInclude Include="Device\GameDevice.h" />
     <ClInclude Include="Device\Renderer.h" />
     <ClInclude Include="Device\Sound.h" />
     <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="Scene\BaseScene.h" />
+    <ClInclude Include="Scene\Ending.h" />
     <ClInclude Include="Scene\GamePlay.h" />
+    <ClInclude Include="Scene\ISceneChanger.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\Title.h" />
     <ClInclude Include="System\Input.h" />
     <ClInclude Include="Utility\Vector2.h" />
   </ItemGroup>

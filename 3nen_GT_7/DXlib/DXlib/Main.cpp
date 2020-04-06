@@ -1,11 +1,9 @@
 
 #include "Device/Dx.h"
-#include "Device/Renderer.h"
-#include "Scene/GamePlay.h"
+#include "Scene/SceneManager.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	GamePlay mGame;
 	// ウインドウモードで起動
 	ChangeWindowMode(TRUE);
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
@@ -30,7 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;    // エラーが起きたら直ちに終了
 	}
 
-	mGame.Init();
+	SceneManager manager;
+	manager.Init();
 
 
 	// メインループ(何かキーが押されたらループを抜ける)
@@ -44,8 +43,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 現在のカウント値を保存
 		FrameStartTime = GetNowCount();
 
-		mGame.Update();
-		mGame.Draw();
+		manager.Update();
+		manager.Draw();
 		
 		if (WaitKey())
 		{

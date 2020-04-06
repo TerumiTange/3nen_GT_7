@@ -1,18 +1,20 @@
 #pragma once
 #include "../Device/Dx.h"
+#include"BaseScene.h"
 
 #include "../Actor/Player.h"
 #include "../Map/Map.h"
 #include "../Device/Sound.h"
 
-class GamePlay
+class GamePlay : public BaseScene
 {
 public:
-	GamePlay();
+	GamePlay(ISceneChanger* changer);
 	~GamePlay();
-	void Init();
-	void Update();
-	void Draw();
+	void Init() override;
+	void Update() override;
+	void Draw() override;
+	void NextScene();
 
 private:
 	Player player;
