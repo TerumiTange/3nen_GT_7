@@ -5,12 +5,15 @@ GamePlay::GamePlay(ISceneChanger* changer):
 	BaseScene(changer),
 	player(*new Vector2(0,0)),
 	map(),
-	sound()
+	sound(),
+	input(new Input())
 {
 }
 
 GamePlay::~GamePlay()
 {
+	sound.StopBGM("./Assets/Sound/a.mp3");
+	sound.Init();
 }
 
 void GamePlay::Init()
@@ -19,7 +22,7 @@ void GamePlay::Init()
 	map.Init("./Assets/Data/map.csv");
 	sound.Init();
 	sound.Load("./Assets/Sound/a.mp3");
-	
+	input->Init();
 }
 
 void GamePlay::Update()
@@ -27,6 +30,10 @@ void GamePlay::Update()
 	player.Update();
 	//map.Update();
 	sound.PlayBGM("./Assets/Sound/a.mp3");
+	if (input->GetKeyDown(B))
+	{
+		NextScene();
+	}
 }
 
 void GamePlay::Draw()

@@ -5,6 +5,7 @@
 #include "../Actor/Player.h"
 #include "../Map/Map.h"
 #include "../Device/Sound.h"
+#include "../System/Input.h"
 
 class GamePlay : public BaseScene
 {
@@ -20,4 +21,5 @@ private:
 	Player player;
 	Map map;
 	Sound sound;
+	Input* input;
 };
