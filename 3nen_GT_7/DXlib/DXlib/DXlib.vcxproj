@@ -142,7 +142,10 @@
     <ClCompile Include="Scene\ISceneChanger.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\Title.cpp" />
+    <ClCompile Include="System\CountDownTimer.cpp" />
+    <ClCompile Include="System\CountUpTimer.cpp" />
     <ClCompile Include="System\Input.cpp" />
+    <ClCompile Include="System\Timer.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +163,10 @@
     <ClInclude Include="Scene\ISceneChanger.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\Title.h" />
+    <ClInclude Include="System\CountDownTimer.h" />
+    <ClInclude Include="System\CountUpTimer.h" />
     <ClInclude Include="System\Input.h" />
+    <ClInclude Include="System\Timer.h" />
     <ClInclude Include="Utility\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
