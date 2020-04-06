@@ -29,8 +29,17 @@ bool CountUpTimer::IsTime()
 	return currentTime >= limitTime;
 }
 
+void CountUpTimer::SetTime(const float second)
+{
+}
+
 float CountUpTimer::Rate()
 {
 	return currentTime / limitTime;
+}
+
+float CountUpTimer::Now()
+{
+	return 0.0f;
 }
 
