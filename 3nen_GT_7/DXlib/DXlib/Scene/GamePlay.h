@@ -3,6 +3,7 @@
 
 #include "../Actor/Player.h"
 #include "../Map/Map.h"
+#include "../Device/Sound.h"
 
 class GamePlay
 {
@@ -16,4 +17,5 @@ public:
 private:
 	Player player;
 	Map map;
+	Sound sound;
 };

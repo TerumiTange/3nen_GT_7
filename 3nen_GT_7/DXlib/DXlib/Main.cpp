@@ -14,6 +14,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(1920, 1080, 32);
 	// 最初は 640x480 にしておく
 	SetWindowSize(1024,576);//16:9//1024:576
+
+	SetMainWindowText("ばっきゃろ～");
+
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	// 垂直同期信号を待たない
+	SetWaitVSyncFlag(FALSE);
+
+	// ６０ＦＰＳ固定用、時間保存用変数を現在のカウント値にセット
+	int FrameStartTime = GetNowCount();
 	
 	if (DxLib_Init() == -1)    // ＤＸライブラリ初期化処理
 	{
@@ -28,9 +38,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		// 画面のクリア
 		ClearDrawScreen();
+
+		// １/６０秒立つまで待つ
+		while (GetNowCount() - FrameStartTime < 1000 / 60) {}
+		// 現在のカウント値を保存
+		FrameStartTime = GetNowCount();
+
 		mGame.Update();
 		mGame.Draw();
-		//player.Draw();
+		
 		if (WaitKey())
 		{
 			//break;

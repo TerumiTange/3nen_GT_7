@@ -133,6 +133,7 @@
     <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
+    <ClCompile Include="Device\Sound.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Scene\GamePlay.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />
     <ClInclude Include="Device\Renderer.h" />
+    <ClInclude Include="Device\Sound.h" />
     <ClInclude Include="Map\Map.h" />
     <ClInclude Include="Scene\GamePlay.h" />
     <ClInclude Include="System\Input.h" />
