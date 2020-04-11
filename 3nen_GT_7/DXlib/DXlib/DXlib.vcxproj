@@ -147,6 +147,7 @@
     <ClCompile Include="System\CountUpTimer.cpp" />
     <ClCompile Include="System\Input.cpp" />
     <ClCompile Include="System\Timer.cpp" />
+    <ClCompile Include="Utility\Rect.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="System\CountUpTimer.h" />
     <ClInclude Include="System\Input.h" />
     <ClInclude Include="System\Timer.h" />
+    <ClInclude Include="Utility\Rect.h" />
     <ClInclude Include="Utility\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
