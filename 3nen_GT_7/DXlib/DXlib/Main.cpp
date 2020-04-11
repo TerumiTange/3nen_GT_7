@@ -16,6 +16,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetMainWindowText("‚Î‚Á‚«‚á‚ë`");
 
 	SetDrawScreen(DX_SCREEN_BACK);
+	//”wŒiF‚ğ•ÏX
+	SetBackgroundColor(255, 255, 255);
 
 	// ‚’¼“¯ŠúM†‚ğ‘Ò‚½‚È‚¢
 	SetWaitVSyncFlag(FALSE);

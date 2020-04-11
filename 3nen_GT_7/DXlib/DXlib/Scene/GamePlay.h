@@ -6,6 +6,7 @@
 #include "../Map/Map.h"
 #include "../Device/Sound.h"
 #include "../System/Input.h"
+#include "Load.h"
 
 class GamePlay : public BaseScene
 {
@@ -22,4 +23,5 @@ private:
 	Map map;
 	Sound sound;
 	Input* input;
+	Load* load;
 };
