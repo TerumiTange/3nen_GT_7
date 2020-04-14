@@ -1,4 +1,3 @@
-
 #include "Player.h"
 
 Player::Player(const char* tag):
@@ -7,9 +6,12 @@ Player::Player(const char* tag):
 	filename("Player.png"),
 	renderer(*new Renderer()),
 	input(new Input()),
-	mCollider(new Collider(this))
+	//mCollider(new Collider(this)),
+	//mRect(new Rect(*pos, Vector2(64, 64))),
+	fall(true)
 {
 	Actor::SetPos(*pos);
+	Actor::SetSize(*new Vector2(64, 64));
 }
 
 Player::Player(const Vector2& position, const char* tag):
@@ -18,11 +20,14 @@ Player::Player(const Vector2& position, const char* tag):
     filename(tag),
 	renderer(*new Renderer()),
 	input(new Input()),
-	mCollider(new Collider(this))
+	//mCollider(new Collider(this)),
+	fall(true)
 {
 	pos->x = position.x;
 	pos->y = position.y;
 	Actor::SetPos(*pos);
+	Actor::SetSize(*new Vector2(64, 64));
+	//mRect = new Rect(*pos, Vector2(64, 64));
 }
 
 Player::~Player() = default;
@@ -34,6 +39,10 @@ void Player::Init()
 
 void Player::Update()
 {
+	if (fall)//èdóÕ
+	{
+		pos->y += 1;
+	}
 	if (input->GetKey(A))
 	{
 		pos->x -= 10;
@@ -51,6 +60,8 @@ void Player::Update()
 	{
 		pos->y += 10;
 	}
+	//mRect->SetPos(*pos);
+	Hit();
 }
 
 void Player::Draw()
@@ -75,12 +86,15 @@ Vector2 & Player::GetPosition()
 
 void Player::Hit()
 {
-	for (auto&& c : mCollider->onCollisionEnter())
+	/*for (auto&& c : mCollider->onCollisionEnter())
 	{
-		if (c->GetOwner()->Tag() == "")
+		if (c->GetOwner()->Tag() == "Wall")
 		{
 			//èàóù
+			int Cr = GetColor(0, 255, 0);
+			DrawString(100, 100, "Ç†ÇΩÇ¡ÇΩÇÊ", Cr);
+			fall = false;
 		}
-	}
+	}*/
 }
 

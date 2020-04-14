@@ -31,7 +31,9 @@ public:
 
 	//ゲッターセッター
 	void SetPos(Vector2& position);
+	void SetSize(Vector2& size);
 	std::shared_ptr<Vector2> Position()const;
+	std::shared_ptr<Vector2>Size()const;
 	ActorState GetState() const;
 	const char* Tag() const;
 
@@ -41,6 +43,7 @@ public:
 
 private:
 	std::shared_ptr<Vector2> mPos;
+	std::shared_ptr<Vector2> mSize;
 	ActorState mState;
 	const char* mTag;
 

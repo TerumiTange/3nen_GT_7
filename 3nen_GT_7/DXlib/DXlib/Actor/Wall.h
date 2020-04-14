@@ -19,5 +19,5 @@ public:
 	Renderer renderer;
 
 private:
-	Collider* mCollider;
+	//Collider* mCollider;
 };

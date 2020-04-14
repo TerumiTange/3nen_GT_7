@@ -48,10 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		manager.Update();
 		manager.Draw();
 		
-		if (WaitKey())
-		{
-			//break;
-		}
+		
 		// — ‰æ–Ê‚Ì“à—e‚ð•\‰æ–Ê‚É”½‰f
 		ScreenFlip();
 	}

@@ -8,7 +8,7 @@ enum Range
 	Buttom, //â∫
 	Right,	//âE
 	Left,	//ç∂
-	None	//
+	Non	//
 };
 
 struct Rect
@@ -20,7 +20,7 @@ public:
 	bool Intersect(const Vector2& position);
 	bool Intersect(const Rect& rect);
 	Range& Point();
-
+	void SetPos(Vector2& pos);
 public:
 	Vector2* mPos;
 	Vector2* mSize;

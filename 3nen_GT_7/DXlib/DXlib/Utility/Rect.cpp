@@ -17,7 +17,7 @@ Rect::~Rect()
 
 void Rect::Init()
 {
-	*mRange = Range::None;
+	*mRange = Range::Non;
 }
 
 bool Rect::Intersect(const Vector2 & position)
@@ -70,4 +70,9 @@ bool Rect::Intersect(const Rect & rect)
 Range & Rect::Point()
 {
 	return *mRange;
+}
+
+void Rect::SetPos(Vector2 & pos)
+{
+	mPos = &pos;
 }

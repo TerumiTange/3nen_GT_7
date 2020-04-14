@@ -4,6 +4,7 @@
 
 Actor::Actor(const char * tag):
 	mPos(std::make_shared<Vector2>()),
+	mSize(std::make_shared<Vector2>()),
 	mState(ActorState::ACTIVE),
 	mTag(tag)
 {
@@ -38,9 +39,19 @@ void Actor::SetPos(Vector2& position)
 	*mPos = position;
 }
 
+void Actor::SetSize(Vector2 & size)
+{
+	*mSize = size;
+}
+
 std::shared_ptr<Vector2> Actor::Position() const
 {
 	return mPos;
+}
+
+std::shared_ptr<Vector2> Actor::Size() const
+{
+	return mSize;
 }
 
 

@@ -4,6 +4,7 @@
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
 #include "Collider.h"
+#include "../Utility/Rect.h"
 
 class Player:
 	public Actor
@@ -24,7 +25,7 @@ private:
 	const char* filename;
 	Renderer renderer;
 	Input* input;
-
+	bool fall;
 private:
-	Collider* mCollider;
+	//Collider* mCollider;
 };

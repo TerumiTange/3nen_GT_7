@@ -5,12 +5,13 @@ Wall::Wall(const Vector2& position, const char* tag):
 	Actor(tag),
 	pos(new Vector2(0,0)),
 	filename(tag),
-	renderer(*new Renderer()),
-	mCollider(new Collider(this))
+	renderer(*new Renderer())//,
+	//mCollider(new Collider(this))
 {
 	pos->x = position.x;
 	pos->y = position.y;
 	Actor::SetPos(*pos);
+	Actor::SetSize(*new Vector2(32, 32));
 }
 
 Wall::~Wall() = default;
