@@ -1,4 +1,3 @@
-
 #include "Device/Dx.h"
 #include "Scene/SceneManager.h"
 
