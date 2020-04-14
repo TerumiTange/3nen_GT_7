@@ -1,6 +1,56 @@
-﻿  GamePlay.cpp
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
-  c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\collider.h(5): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
-  c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-  DXlib.vcxproj -> C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe
+﻿  Actor.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+  ActorManager.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\collider.h(5): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+  Collider.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+  Player.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\collider.h(5): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(73): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Wall.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\collider.h(5): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\wall.cpp(28): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  CSVReader.cpp
+  Renderer.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\device\renderer.cpp(40): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Sound.cpp
+  Main.cpp
+  Map.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\actor.h(12): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\collider.h(5): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\actor.h(12): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\map\map.cpp(31): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\map\map.cpp(43): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  BaseScene.cpp
+  Ending.cpp
+  GamePlay.cpp
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\actor\collider.h(5): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\k018a1498\desktop\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+  ISceneChanger.cpp
+  Load.cpp
+  SceneManager.cpp
+  Title.cpp
+  CountDownTimer.cpp
+  CountUpTimer.cpp
+  Input.cpp
+  コードを生成中...
+  コンパイル中...
+  Timer.cpp
+  Rect.cpp
+  Vector2.cpp
+  コードを生成中...
+  DXlib.vcxproj -> C:\Users\K018A1498\Desktop\gtsample\3nen_GT_7\DXlib\Debug\DXlib.exe
