@@ -1,4 +1,5 @@
 #include "Title.h"
+#include "DxLib.h"
 
 Title::Title(ISceneChanger* changer)
 	:BaseScene(changer),
@@ -25,6 +26,8 @@ void Title::Update()
 
 void Title::Draw()
 {
+	int Cr = GetColor(255, 0, 0);
+	DrawString(50, 50, "Title", Cr);
 }
 
 void Title::NextScene()

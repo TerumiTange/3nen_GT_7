@@ -1,17 +1,23 @@
 #pragma once
+#include "Actor.h"
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
+#include "Collider.h"
 
-class Wall
+class Wall:
+	public Actor
 {
 public:
-	Wall(const Vector2& pos, const char* tag = "Wall");
+	Wall(const Vector2& position, const char* tag = "Wall");
 	~Wall();
-	void Update();
-	void Draw();
+	virtual void Update()override;
+	virtual void Draw()override;
 
 public:
-	Vector2* position;
+	Vector2* pos;
 	const char* filename;
 	Renderer renderer;
+
+private:
+	Collider* mCollider;
 };

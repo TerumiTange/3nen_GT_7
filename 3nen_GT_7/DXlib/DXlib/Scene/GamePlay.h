@@ -2,11 +2,12 @@
 #include "../Device/Dx.h"
 #include"BaseScene.h"
 
-#include "../Actor/Player.h"
-#include "../Map/Map.h"
 #include "../Device/Sound.h"
 #include "../System/Input.h"
 #include "Load.h"
+
+class ActorManager;
+
 
 class GamePlay : public BaseScene
 {
@@ -19,8 +20,7 @@ public:
 	void NextScene();
 
 private:
-	Player player;
-	Map map;
+	ActorManager* mActorManager;
 	Sound sound;
 	Input* input;
 	Load* load;

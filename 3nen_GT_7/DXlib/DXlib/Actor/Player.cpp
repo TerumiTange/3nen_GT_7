@@ -2,27 +2,30 @@
 #include "Player.h"
 
 Player::Player(const char* tag):
+	Actor(tag),
 	pos(&Vector2(0,0)),
 	filename("Player.png"),
 	renderer(*new Renderer()),
-	input(new Input())
+	input(new Input()),
+	mCollider(new Collider(this))
 {
-
+	Actor::SetPos(*pos);
 }
 
 Player::Player(const Vector2& position, const char* tag):
+	Actor(tag),
 	pos(new Vector2(0,0)),
     filename(tag),
 	renderer(*new Renderer()),
-	input(new Input())
+	input(new Input()),
+	mCollider(new Collider(this))
 {
 	pos->x = position.x;
 	pos->y = position.y;
+	Actor::SetPos(*pos);
 }
 
-Player::~Player()
-{
-}
+Player::~Player() = default;
 
 void Player::Init()
 {
@@ -68,5 +71,16 @@ void Player::SetPosition(const Vector2& position)
 Vector2 & Player::GetPosition()
 {
 	return *pos;
+}
+
+void Player::Hit()
+{
+	for (auto&& c : mCollider->onCollisionEnter())
+	{
+		if (c->GetOwner()->Tag() == "")
+		{
+			//ˆ—
+		}
+	}
 }
 

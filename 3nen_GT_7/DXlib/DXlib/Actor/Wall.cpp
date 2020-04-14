@@ -1,18 +1,19 @@
 #include "Wall.h"
 
 
-Wall::Wall(const Vector2& pos, const char* tag):
-	position(new Vector2(0,0)),
+Wall::Wall(const Vector2& position, const char* tag):
+	Actor(tag),
+	pos(new Vector2(0,0)),
 	filename(tag),
-	renderer()
+	renderer(*new Renderer()),
+	mCollider(new Collider(this))
 {
-	position->x = pos.x;
-	position->y = pos.y;
+	pos->x = position.x;
+	pos->y = position.y;
+	Actor::SetPos(*pos);
 }
 
-Wall::~Wall()
-{
-}
+Wall::~Wall() = default;
 
 void Wall::Update()
 {
@@ -23,6 +24,6 @@ void Wall::Draw()
 	//renderer.Draw(filename, *position);
 	int a;
 	a = LoadGraph("./Assets/Texture/Wall.png");
-	DrawGraph(position->x, position->y, a, TRUE);
+	DrawGraph(pos->x, pos->y, a, TRUE);
 	DeleteGraph(a);
 }

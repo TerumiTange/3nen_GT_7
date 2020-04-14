@@ -2,7 +2,6 @@
 #include "../Device/Dx.h"
 #include "../Device/CSVReader.h"
 #include "../Utility/Vector2.h"
-#include "../Actor/Wall.h"
 #include <list>
 #include <vector>
 
@@ -27,8 +26,6 @@ public:
 	void Init(const char* filename);
 	int ReturnWidth();//マップ全体の横大きさ
 	int ReturnHeight();//マップ全体の縦大きさ
-	void Update();
-	void Draw();
 	void Create(const GimmickData& data);
 
 	static int width;
@@ -40,5 +37,5 @@ private:
 	std::vector<int> mCSV;
 	std::list<GimmickData> mGimmickData;
 	//std::list<Wall> mWall;
-	std::list<std::shared_ptr<Wall>> mWall;
+	//std::list<std::shared_ptr<Wall>> mWall;
 };

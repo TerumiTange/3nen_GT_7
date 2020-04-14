@@ -1,52 +1,59 @@
 #include "GamePlay.h"
-
+#include "../Actor/Actor.h"
+#include "../Actor/Player.h"
+#include "../Actor/ActorManager.h"
+#include "../Map/Map.h"
 
 GamePlay::GamePlay(ISceneChanger* changer):
 	BaseScene(changer),
-	player(*new Vector2(0,0)),
-	map(),
+	mActorManager(new ActorManager()),
 	sound(),
 	input(new Input()),
 	load(new Load())
 {
+	Actor::SetActorManager(mActorManager);
 }
 
 GamePlay::~GamePlay()
 {
+	delete(mActorManager);
 	sound.StopBGM("./Assets/Sound/a.mp3");
 	sound.Init();
 }
 
 void GamePlay::Init()
 {
-	load->Start();
-	player.SetPosition(*new Vector2(30,30));
-	load->Loading();
-	map.Init("./Assets/Data/map.csv");
-	load->Loading();
+	new Player(Vector2(50, 50));
+	//load->Start();
+	//load->Loading();
+	//load->End();
+	Map* map = new Map();
+	map->Init("./Assets/Data/map.csv");
+	delete(map);
 	sound.Init();
-	load->Loading();
 	sound.Load("./Assets/Sound/a.mp3");
-	load->Loading();
 	input->Init();
-	load->End();
 }
 
 void GamePlay::Update()
 {
-	player.Update();
-	//map.Update();
+	mActorManager->Update();
 	sound.PlayBGM("./Assets/Sound/a.mp3");
 	if (input->GetKeyDown(B))
 	{
 		NextScene();
 	}
+
+	if (!mActorManager->GetPlayer())
+	{
+		//ƒvƒŒƒCƒ„[‚ªŽ€‚ñ‚Å‚¢‚½‚ç
+	}
+
 }
 
 void GamePlay::Draw()
 {
-	player.Draw();
-	map.Draw();
+	mActorManager->Draw();
 }
 
 void GamePlay::NextScene()
