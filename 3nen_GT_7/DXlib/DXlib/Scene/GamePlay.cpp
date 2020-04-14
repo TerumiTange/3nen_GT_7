@@ -48,7 +48,12 @@ void GamePlay::Update()
 	{
 		//ƒvƒŒƒCƒ„[‚ªŽ€‚ñ‚Å‚¢‚½‚ç
 	}
-
+	if (input->GetKeyDown(R))
+	{
+		mActorManager->Clear();
+		sound.StopBGM("./Assets/Sound/a.mp3");
+		Init();
+	}
 }
 
 void GamePlay::Draw()
