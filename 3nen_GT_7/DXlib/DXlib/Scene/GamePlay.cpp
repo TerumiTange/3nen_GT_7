@@ -22,7 +22,9 @@ GamePlay::~GamePlay()
 
 void GamePlay::Init()
 {
-	new Player(Vector2(50, 50));
+	//new Player(Vector2(50, 50));
+	Player* player = new Player(Vector2(50, 50));
+	player->Init("./Assets/Data/map.csv");
 	Map* map = new Map();
 	map->Init("./Assets/Data/map.csv");
 	delete(map);
