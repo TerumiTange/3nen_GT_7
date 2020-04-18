@@ -8,8 +8,7 @@ GamePlay::GamePlay(ISceneChanger* changer):
 	BaseScene(changer),
 	mActorManager(new ActorManager()),
 	sound(),
-	input(new Input()),
-	load(new Load())
+	input(new Input())
 {
 	Actor::SetActorManager(mActorManager);
 }
@@ -23,10 +22,9 @@ GamePlay::~GamePlay()
 
 void GamePlay::Init()
 {
-	new Player(Vector2(50, 50));
-	//load->Start();
-	//load->Loading();
-	//load->End();
+	//new Player(Vector2(50, 50));
+	Player* player = new Player(Vector2(50, 50));
+	player->Init("./Assets/Data/map.csv");
 	Map* map = new Map();
 	map->Init("./Assets/Data/map.csv");
 	delete(map);

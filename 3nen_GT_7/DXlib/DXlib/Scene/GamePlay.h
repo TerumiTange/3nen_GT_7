@@ -4,7 +4,6 @@
 
 #include "../Device/Sound.h"
 #include "../System/Input.h"
-#include "Load.h"
 
 class ActorManager;
 
@@ -23,5 +22,4 @@ private:
 	ActorManager* mActorManager;
 	Sound sound;
 	Input* input;
-	Load* load;
 };
