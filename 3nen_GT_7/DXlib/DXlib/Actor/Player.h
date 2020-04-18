@@ -2,9 +2,8 @@
 #include "Actor.h"
 #include "../System/Input.h"
 #include "../Utility/Vector2.h"
+#include "../Device/CSVReader.h"
 #include "../Device/Renderer.h"
-#include "Collider.h"
-#include "../Utility/Rect.h"
 
 class Player:
 	public Actor
@@ -22,10 +21,11 @@ public :
 
 private:
 	Vector2* pos;
+	int Width;
+	int Height;
 	const char* filename;
 	Renderer renderer;
 	Input* input;
 	bool fall;
 private:
-	//Collider* mCollider;
 };

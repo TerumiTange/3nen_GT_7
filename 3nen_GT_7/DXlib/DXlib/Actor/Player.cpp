@@ -6,8 +6,6 @@ Player::Player(const char* tag):
 	filename("Player.png"),
 	renderer(*new Renderer()),
 	input(new Input()),
-	//mCollider(new Collider(this)),
-	//mRect(new Rect(*pos, Vector2(64, 64))),
 	fall(true)
 {
 	Actor::SetPos(*pos);
@@ -20,21 +18,22 @@ Player::Player(const Vector2& position, const char* tag):
     filename(tag),
 	renderer(*new Renderer()),
 	input(new Input()),
-	//mCollider(new Collider(this)),
 	fall(true)
 {
 	pos->x = position.x;
 	pos->y = position.y;
 	Actor::SetPos(*pos);
 	Actor::SetSize(*new Vector2(64, 64));
-	//mRect = new Rect(*pos, Vector2(64, 64));
 }
 
 Player::~Player() = default;
 
 void Player::Init()
 {
+	Width = 64;
+	Height = 64;
 	input->Init();
+
 }
 
 void Player::Update()
@@ -60,7 +59,6 @@ void Player::Update()
 	{
 		pos->y += 10;
 	}
-	//mRect->SetPos(*pos);
 	Hit();
 }
 
@@ -86,15 +84,5 @@ Vector2 & Player::GetPosition()
 
 void Player::Hit()
 {
-	/*for (auto&& c : mCollider->onCollisionEnter())
-	{
-		if (c->GetOwner()->Tag() == "Wall")
-		{
-			//èàóù
-			int Cr = GetColor(0, 255, 0);
-			DrawString(100, 100, "Ç†ÇΩÇ¡ÇΩÇÊ", Cr);
-			fall = false;
-		}
-	}*/
 }
 
