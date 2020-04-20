@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "../Actor/Wall.h"
+#include "../Actor/Floor.h"
 
 Map::Map():
 	mCSVReader(nullptr),
@@ -69,7 +70,7 @@ void Map::Create(const GimmickData & data)
 	}
 	else if(data.type == Category::FLOOR)
 	{
-
+		auto f = new Floor(data.position);
 	}
 }
 

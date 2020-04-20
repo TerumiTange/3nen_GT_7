@@ -25,6 +25,14 @@ void ActorManager::Update()
 	Remove();
 }
 
+void ActorManager::Hit()
+{
+	for (auto&& actor : mActors)
+	{
+		actor->Hit();
+	}
+}
+
 void ActorManager::Draw()
 {
 	for (auto&& actor : mActors)

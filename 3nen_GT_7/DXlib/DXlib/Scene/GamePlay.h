@@ -6,7 +6,7 @@
 #include "../System/Input.h"
 
 class ActorManager;
-
+class Camera;
 
 class GamePlay : public BaseScene
 {

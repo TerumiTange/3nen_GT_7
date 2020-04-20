@@ -12,6 +12,7 @@ public:
 	ActorManager();
 	~ActorManager();
 	void Update();
+	void Hit();
 	void Draw();
 	void Add(Actor* add);
 	void Clear();
