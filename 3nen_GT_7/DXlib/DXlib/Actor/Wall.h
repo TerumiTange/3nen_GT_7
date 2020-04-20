@@ -12,11 +12,11 @@ public:
 	~Wall();
 	virtual void Update()override;
 	virtual void Draw()override;
-
+	virtual void Hit()override;
 public:
-	Vector2* pos;
-	const char* filename;
-	Renderer renderer;
+	Vector2* mPos;
+	const char* mFilename;
+	Renderer* mRenderer;
 
 private:
 	//Collider* mCollider;

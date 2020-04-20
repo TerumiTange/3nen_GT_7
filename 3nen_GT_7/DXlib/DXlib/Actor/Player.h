@@ -17,19 +17,21 @@ public :
 	virtual void Draw() override;
 	void SetPosition(const Vector2& position);
 	Vector2& GetPosition();
-	void Hit();
+	virtual void Hit()override;
 	bool CheckHit(int x, int y, int width, int height);
 	void HitMap();
 	//void HitEnemy();
 
 private:
-	Vector2* pos;
-	int Width;
-	int Height;
-	const char* filename;
-	Renderer renderer;
-	Input* input;
-	bool fall;
+	Vector2* mPos;
+	int mWidth;
+	int mHeight;
+	const char* mFilename;
+	Renderer* mRenderer;
+	Input* mInput;
+	bool mFall;
+	int old_x;
+	int old_y;
 private:
 	CSVReader* mCSVReader;
 	std::vector<int> mCSV;

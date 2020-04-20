@@ -2,31 +2,31 @@
 
 Player::Player(const char* tag):
 	Actor(tag),
-	pos(&Vector2(0,0)),
-	filename("Player.png"),
-	renderer(*new Renderer()),
-	input(new Input()),
+	mPos(&Vector2(0,0)),
+	mFilename("Player.png"),
+	mRenderer(new Renderer()),
+	mInput(new Input()),
 	mCSVReader(nullptr),
 	mCSV(0),
-	fall(true)
+	mFall(true)
 {
-	Actor::SetPos(*pos);
+	Actor::SetPos(*mPos);
 	Actor::SetSize(*new Vector2(64, 64));
 }
 
 Player::Player(const Vector2& position, const char* tag):
 	Actor(tag),
-	pos(new Vector2(0,0)),
-    filename(tag),
-	renderer(*new Renderer()),
-	input(new Input()),
+	mPos(new Vector2(0,0)),
+    mFilename(tag),
+	mRenderer(new Renderer()),
+	mInput(new Input()),
 	mCSVReader(nullptr),
 	mCSV(0),
-	fall(true)
+	mFall(true)
 {
-	pos->x = position.x;
-	pos->y = position.y;
-	Actor::SetPos(*pos);
+	mPos->x = position.x;
+	mPos->y = position.y;
+	Actor::SetPos(*mPos);
 	Actor::SetSize(*new Vector2(64, 64));
 }
 
@@ -34,9 +34,9 @@ Player::~Player() = default;
 
 void Player::Init(const char* name)
 {
-	Width = 64;
-	Height = 64;
-	input->Init();
+	mWidth = 64;
+	mHeight = 64;
+	mInput->Init();
 	mCSV.clear();
 	mCSVReader = new CSVReader(name);
 	mCSV = mCSVReader->load(name);
@@ -46,28 +46,22 @@ void Player::Init(const char* name)
 
 void Player::Update()
 {
-	if (fall)//d—Í
+	if (mFall)//d—Í
 	{
-		pos->y += 1;
+		mPos->y += 20;
 	}
-	fall = true;
-	if (input->GetKey(A))
+	mFall = true;
+	old_x = mPos->x;
+	old_y = mPos->y;
+	if (mInput->GetKey(A)||mInput->GetKey(LEFTARROW))
 	{
-		pos->x -= 10;
+		mPos->x -= 10;
 	}
-	else if(input->GetKey(D))
+	else if(mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))
 	{
-		pos->x += 10;
+		mPos->x += 10;
 	}
 
-	if (input->GetKey(W))
-	{
-		pos->y -= 10;
-	}
-	else if(input->GetKey(S))
-	{
-		pos->y += 10;
-	}
 	Hit();
 }
 
@@ -77,18 +71,18 @@ void Player::Draw()
 	//test—p
 	int a;
 	a = LoadGraph("./Assets/Texture/Player.png");
-	DrawGraph(pos->x, pos->y, a, TRUE);
+	DrawGraph(mPos->x, mPos->y, a, TRUE);
 	DeleteGraph(a);
 }
 
 void Player::SetPosition(const Vector2& position)
 {
-	*pos = position;
+	*mPos = position;
 }
 
 Vector2 & Player::GetPosition()
 {
-	return *pos;
+	return *mPos;
 }
 
 void Player::Hit()
@@ -98,12 +92,12 @@ void Player::Hit()
 
 bool Player::CheckHit(int x, int y, int width, int height)
 {
-	int L1 = pos->x;
-	int R1 = pos->x + Width;
+	int L1 = mPos->x;
+	int R1 = mPos->x + mWidth;
 	int L2 = x;
 	int R2 = x + width;
-	int U1 = pos->y;
-	int D1 = pos->y + Height;
+	int U1 = mPos->y;
+	int D1 = mPos->y + mHeight;
 	int U2 = y;
 	int D2 = y + height;
 	if (R1 < L2)return false;
@@ -124,7 +118,15 @@ void Player::HitMap()
 			{
 				if (CheckHit(i * 32, j * 32, 32, 32))//‚ ‚½‚Á‚Ä‚¢‚½‚È‚ç
 				{
-					fall = false;
+					mPos->x = old_x;
+					//mPos->y = old_y;
+				}
+			}
+			if (no == 2)//Floor‚Æ‚Ì“–‚½‚è”»’è
+			{
+				if (CheckHit(i * 32, j * 32, 32, 32))
+				{
+					mFall = false;
 				}
 			}
 		}

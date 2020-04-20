@@ -1,5 +1,8 @@
 #include "Device/Dx.h"
 #include "Scene/SceneManager.h"
+#include "Device/WindowSize.h"
+//static int ScreenWidth = 1024;
+//static int ScreenHeight = 576;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -10,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// âÊñ ÉTÉCÉYÇÕç≈ëÂÇÃ 1920x1080 Ç…ÇµÇƒÇ®Ç≠
 	SetGraphMode(1920, 1080, 32);
 	// ç≈èâÇÕ 640x480 Ç…ÇµÇƒÇ®Ç≠
-	SetWindowSize(1024,576);//16:9//1024:576
+	SetWindowSize(ScreenWidth,ScreenHeight);//16:9//1024:576
 
 	SetMainWindowText("ÇŒÇ¡Ç´Ç·ÇÎÅ`");
 

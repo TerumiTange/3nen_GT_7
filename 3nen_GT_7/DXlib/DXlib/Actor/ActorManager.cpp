@@ -11,6 +11,14 @@ ActorManager::ActorManager():
 
 ActorManager::~ActorManager() = default;
 
+void ActorManager::Init()
+{
+	for (auto&& actor : mActors)
+	{
+		//actor->Init();
+	}
+}
+
 void ActorManager::Update()
 {
 	mUpdatingActors = true;
@@ -23,6 +31,14 @@ void ActorManager::Update()
 	MovePendingToMain();
 
 	Remove();
+}
+
+void ActorManager::Hit()
+{
+	for (auto&& actor : mActors)
+	{
+		actor->Hit();
+	}
 }
 
 void ActorManager::Draw()

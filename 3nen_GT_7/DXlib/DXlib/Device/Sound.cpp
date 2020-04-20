@@ -26,6 +26,7 @@ void Sound::PlayBGM(const char * filename)
 {
 	if (!CheckSoundMem(mSound[filename]))
 	{
+		ChangeVolumeSoundMem(255 * 30 / 100, mSound[filename]);
 		PlaySoundMem(mSound[filename], DX_PLAYTYPE_BACK, FALSE);
 	}
 }

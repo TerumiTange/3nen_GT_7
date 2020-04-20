@@ -23,6 +23,8 @@ public:
 
 	virtual void Draw() = 0;
 
+	virtual void Hit() = 0;
+
 	void update();//全て更新用
 
 	//アクター削除

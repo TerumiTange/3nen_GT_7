@@ -4,7 +4,7 @@
 #include "../Actor/ActorManager.h"
 #include "../Map/Map.h"
 
-GamePlay::GamePlay(ISceneChanger* changer):
+GamePlay::GamePlay(ISceneChanger* changer) :
 	BaseScene(changer),
 	mActorManager(new ActorManager()),
 	sound(),
