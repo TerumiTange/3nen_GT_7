@@ -1,25 +1,15 @@
 ﻿  Player.cpp
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
   c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(51): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(52): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(70): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(90): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(92): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(98): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(105): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(115): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(53): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(71): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(91): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(93): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(99): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(106): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(116): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(119): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(117): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(120): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
-  TestEnemy.cpp
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
-  c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\testenemy.cpp(35): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  GamePlay.cpp
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
-  c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\scene\gameplay.cpp(28): error C2664: 'TestEnemy::TestEnemy(const TestEnemy &)': 引数 1 を 'Vector2' から 'const TestEnemy &' へ変換できません。
-  c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\scene\gameplay.cpp(28): note: 理由: 'Vector2' から 'const TestEnemy' へは変換できません。
-  c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\scene\gameplay.cpp(28): note: この変換を実行可能なユーザー定義変換演算子がないか、または演算子を呼び出せません。
-  コードを生成中...
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\player.cpp(121): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+  DXlib.vcxproj -> C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe

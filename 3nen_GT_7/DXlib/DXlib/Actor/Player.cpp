@@ -43,6 +43,7 @@ void Player::Init()
 
 void Player::Update()
 {
+	Actor::SetPos(*mPos);
 	if (mFall)//d—Í
 	{
 		mPos->y += 20;

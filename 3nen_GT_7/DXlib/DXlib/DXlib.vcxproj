@@ -140,7 +140,7 @@
     <ClCompile Include="Actor\Collider.cpp" />
     <ClCompile Include="Actor\Floor.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
-    <ClCompile Include="Actor\TestEnemy.cpp" />
+    <ClCompile Include="Actor\SmallEnemy.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
@@ -167,7 +167,7 @@
     <ClInclude Include="Actor\Collider.h" />
     <ClInclude Include="Actor\Floor.h" />
     <ClInclude Include="Actor\Player.h" />
-    <ClInclude Include="Actor\TestEnemy.h" />
+    <ClInclude Include="Actor\SmallEnemy.h" />
     <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />

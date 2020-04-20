@@ -3,7 +3,8 @@
 #include "../Actor/Player.h"
 #include "../Actor/ActorManager.h"
 #include "../Map/Map.h"
-#include "../Actor/TestEnemy.h"
+#include "../Actor/SmallEnemy.h"
+#include "../Utility/Vector2.h"
 
 GamePlay::GamePlay(ISceneChanger* changer) :
 	BaseScene(changer),
@@ -25,6 +26,7 @@ void GamePlay::Init()
 {
 	new Player(Vector2(50, 50));
 	//Player* player = new Player(Vector2(50, 50));
+	new SmallEnemy(*new Vector2(500,50));
 	Map* map = new Map();
 	map->Init("./Assets/Data/map.csv");
 	delete(map);
@@ -43,9 +45,12 @@ void GamePlay::Update()
 		NextScene();
 	}
 
-	if (!mActorManager->GetPlayer())
+	if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
 	{
-		//プレイヤーが死んでいたら
+		//リセット
+		mActorManager->Clear();
+		sound.StopBGM("./Assets/Sound/a.mp3");
+		Init();
 	}
 	if (input->GetKeyDown(R))
 	{
