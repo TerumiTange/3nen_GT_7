@@ -37,7 +37,7 @@ void ActorManager::Hit()
 {
 	for (auto&& actor : mActors)
 	{
-		actor->Hit();
+		actor->Hit(mActors);
 	}
 }
 

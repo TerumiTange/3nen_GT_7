@@ -26,6 +26,6 @@ void Floor::Draw()
 	DeleteGraph(a);
 }
 
-void Floor::Hit()
+void Floor::Hit(std::list<std::shared_ptr<Actor>>)
 {
 }

@@ -2,46 +2,43 @@
 
 Player::Player(const char* tag):
 	Actor(tag),
-	mPos(&Vector2(0,0)),
+	mPos(new Vector2(0,0)),
+	mSize(new Vector2(64,64)),
 	mFilename("Player.png"),
 	mRenderer(new Renderer()),
 	mInput(new Input()),
-	mCSVReader(nullptr),
-	mCSV(0),
-	mFall(true)
+	mFall(true),
+	mElectricity(0),
+	mChargedState(false),
+	mPoppedState(false)
 {
 	Actor::SetPos(*mPos);
-	Actor::SetSize(*new Vector2(64, 64));
+	Actor::SetSize(*mSize);
 }
 
 Player::Player(const Vector2& position, const char* tag):
 	Actor(tag),
 	mPos(new Vector2(0,0)),
+	mSize(new Vector2(64, 64)),
     mFilename(tag),
 	mRenderer(new Renderer()),
 	mInput(new Input()),
-	mCSVReader(nullptr),
-	mCSV(0),
-	mFall(true)
+	mFall(true),
+	mElectricity(0),
+	mChargedState(false),
+	mPoppedState(false)
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
 	Actor::SetPos(*mPos);
-	Actor::SetSize(*new Vector2(64, 64));
+	Actor::SetSize(*mSize);
 }
 
 Player::~Player() = default;
 
-void Player::Init(const char* name)
+void Player::Init()
 {
-	mWidth = 64;
-	mHeight = 64;
 	mInput->Init();
-	mCSV.clear();
-	mCSVReader = new CSVReader(name);
-	mCSV = mCSVReader->load(name);
-	mapWidth = mCSVReader->getWidth();
-	mapHeight = mCSVReader->getHeight();
 }
 
 void Player::Update()
@@ -62,7 +59,6 @@ void Player::Update()
 		mPos->x += 10;
 	}
 
-	Hit();
 }
 
 void Player::Draw()
@@ -85,19 +81,43 @@ Vector2 & Player::GetPosition()
 	return *mPos;
 }
 
-void Player::Hit()
+void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
-	HitMap();
+	for (auto& a : actors)
+	{
+		if (a->Tag() == "Wall")
+		{
+			if (CheckHit( a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				mPos->x = old_x;
+			}
+		}
+
+		if (a->Tag() == "Floor")
+		{
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				mFall = false;
+			}
+		}
+		if (a->Tag() == "Enemy")
+		{
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				
+			}
+		}
+	}
 }
 
 bool Player::CheckHit(int x, int y, int width, int height)
 {
 	int L1 = mPos->x;
-	int R1 = mPos->x + mWidth;
+	int R1 = mPos->x + mSize->x;
 	int L2 = x;
 	int R2 = x + width;
 	int U1 = mPos->y;
-	int D1 = mPos->y + mHeight;
+	int D1 = mPos->y + mSize->y;
 	int U2 = y;
 	int D2 = y + height;
 	if (R1 < L2)return false;
@@ -107,29 +127,5 @@ bool Player::CheckHit(int x, int y, int width, int height)
 	return true;
 }
 
-void Player::HitMap()
-{
-	for (int j = 0; j < mapHeight; ++j)
-	{
-		for (int i = 0; i < mapWidth; ++i)
-		{
-			int no = mCSV[i + j * mapWidth];
-			if (no == 1)//wall‚Æ‚Ì“–‚½‚è”»’è
-			{
-				if (CheckHit(i * 32, j * 32, 32, 32))//‚ ‚½‚Á‚Ä‚¢‚½‚È‚ç
-				{
-					mPos->x = old_x;
-					//mPos->y = old_y;
-				}
-			}
-			if (no == 2)//Floor‚Æ‚Ì“–‚½‚è”»’è
-			{
-				if (CheckHit(i * 32, j * 32, 32, 32))
-				{
-					mFall = false;
-				}
-			}
-		}
-	}
-}
+
 

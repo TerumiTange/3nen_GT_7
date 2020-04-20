@@ -29,6 +29,6 @@ void Wall::Draw()
 	DeleteGraph(a);
 }
 
-void Wall::Hit()
+void Wall::Hit(std::list<std::shared_ptr<Actor>>)
 {
 }

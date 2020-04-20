@@ -3,6 +3,7 @@
 #include "../Actor/Player.h"
 #include "../Actor/ActorManager.h"
 #include "../Map/Map.h"
+#include "../Actor/TestEnemy.h"
 
 GamePlay::GamePlay(ISceneChanger* changer) :
 	BaseScene(changer),
@@ -22,9 +23,8 @@ GamePlay::~GamePlay()
 
 void GamePlay::Init()
 {
-	//new Player(Vector2(50, 50));
-	Player* player = new Player(Vector2(50, 50));
-	player->Init("./Assets/Data/map.csv");
+	new Player(Vector2(50, 50));
+	//Player* player = new Player(Vector2(50, 50));
 	Map* map = new Map();
 	map->Init("./Assets/Data/map.csv");
 	delete(map);
@@ -36,6 +36,7 @@ void GamePlay::Init()
 void GamePlay::Update()
 {
 	mActorManager->Update();
+	mActorManager->Hit();
 	sound.PlayBGM("./Assets/Sound/a.mp3");
 	if (input->GetKeyDown(B))
 	{

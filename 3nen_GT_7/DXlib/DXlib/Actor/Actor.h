@@ -1,5 +1,5 @@
 #pragma once
-
+#include <list>
 #include <memory>
 
 enum class ActorState
@@ -23,7 +23,7 @@ public:
 
 	virtual void Draw() = 0;
 
-	virtual void Hit() = 0;
+	virtual void Hit(std::list<std::shared_ptr<Actor>>) = 0;
 
 	void update();//全て更新用
 

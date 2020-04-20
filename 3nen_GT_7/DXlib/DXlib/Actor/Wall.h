@@ -12,7 +12,7 @@ public:
 	~Wall();
 	virtual void Update()override;
 	virtual void Draw()override;
-	virtual void Hit()override;
+	virtual void Hit(std::list<std::shared_ptr<Actor>>)override;
 public:
 	Vector2* mPos;
 	const char* mFilename;

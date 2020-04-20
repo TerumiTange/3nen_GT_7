@@ -1,8 +1,9 @@
 #include "TestEnemy.h"
-#include "../Utility/Vector2.h"
+
 #include "DxLib.h"
 
-TestEnemy::TestEnemy(const Vector2& position, const char* tag) :
+
+TestEnemy::TestEnemy(const Vector2 & position, const char * tag):
 	Actor(tag),
 	mPos(new Vector2()),
 	mFilename(tag),
@@ -22,7 +23,7 @@ void TestEnemy::Init()
 
 void TestEnemy::Update()
 {
-
+	
 }
 
 void TestEnemy::Draw()
@@ -35,7 +36,15 @@ void TestEnemy::Draw()
 	DeleteGraph(a);
 }
 
-void TestEnemy::Hit()
+void TestEnemy::Hit(std::list<std::shared_ptr<Actor>> actor)
 {
+	for (auto& a : actor)
+	{
+		
+	}
+}
 
+void TestEnemy::setPos(const Vector2 & pos)
+{
+	*mPos = pos;
 }
