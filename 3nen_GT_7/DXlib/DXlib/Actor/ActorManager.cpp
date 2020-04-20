@@ -11,6 +11,14 @@ ActorManager::ActorManager():
 
 ActorManager::~ActorManager() = default;
 
+void ActorManager::Init()
+{
+	for (auto&& actor : mActors)
+	{
+		//actor->Init();
+	}
+}
+
 void ActorManager::Update()
 {
 	mUpdatingActors = true;

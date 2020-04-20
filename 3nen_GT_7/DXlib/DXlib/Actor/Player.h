@@ -30,6 +30,8 @@ private:
 	Renderer* mRenderer;
 	Input* mInput;
 	bool mFall;
+	int old_x;
+	int old_y;
 private:
 	CSVReader* mCSVReader;
 	std::vector<int> mCSV;

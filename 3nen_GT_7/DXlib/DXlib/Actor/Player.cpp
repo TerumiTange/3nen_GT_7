@@ -48,26 +48,20 @@ void Player::Update()
 {
 	if (mFall)//d—Í
 	{
-		mPos->y += 10;
+		mPos->y += 20;
 	}
 	mFall = true;
-	if (mInput->GetKey(A))
+	old_x = mPos->x;
+	old_y = mPos->y;
+	if (mInput->GetKey(A)||mInput->GetKey(LEFTARROW))
 	{
 		mPos->x -= 10;
 	}
-	else if(mInput->GetKey(D))
+	else if(mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))
 	{
 		mPos->x += 10;
 	}
 
-	if (mInput->GetKey(W))
-	{
-		mPos->y -= 10;
-	}
-	else if(mInput->GetKey(S))
-	{
-		mPos->y += 10;
-	}
 	Hit();
 }
 
@@ -123,6 +117,14 @@ void Player::HitMap()
 			if (no == 1)//wall‚Æ‚Ì“–‚½‚è”»’è
 			{
 				if (CheckHit(i * 32, j * 32, 32, 32))//‚ ‚½‚Á‚Ä‚¢‚½‚È‚ç
+				{
+					mPos->x = old_x;
+					//mPos->y = old_y;
+				}
+			}
+			if (no == 2)//Floor‚Æ‚Ì“–‚½‚è”»’è
+			{
+				if (CheckHit(i * 32, j * 32, 32, 32))
 				{
 					mFall = false;
 				}

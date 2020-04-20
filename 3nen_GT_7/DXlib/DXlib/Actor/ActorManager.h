@@ -11,6 +11,7 @@ class ActorManager
 public:
 	ActorManager();
 	~ActorManager();
+	void Init();
 	void Update();
 	void Hit();
 	void Draw();
