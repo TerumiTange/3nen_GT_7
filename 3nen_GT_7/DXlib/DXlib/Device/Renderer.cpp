@@ -39,7 +39,9 @@ void Renderer::Draw(const char* filename, Vector2& position)
 	name = name + filename + ".png";
 	//printfDx("‰æ‘œ–¼%s",name.c_str());
 	//DrawGraph(position.x, position.y, texture[name.c_str()], TRUE);
-	DrawGraph(position.x, position.y, LoadGraph(name.c_str()), TRUE);
+	int mGra = LoadGraph(name.c_str());
+	DrawGraph(position.x, position.y, mGra, TRUE);
+	DeleteGraph(mGra);
 	Init();
 }
 
@@ -48,6 +50,8 @@ void Renderer::Draw(const char* filename, int x, int y)
 	Init();
 	name = name + filename + ".png";
 	//DrawGraph(x, y, texture[name.c_str()], TRUE);
-	DrawGraph(x, y, LoadGraph(name.c_str()), TRUE);
+	int mGra = LoadGraph(name.c_str());
+	DrawGraph(x, y, mGra, TRUE);
+	DeleteGraph(mGra);
 	Init();
 }

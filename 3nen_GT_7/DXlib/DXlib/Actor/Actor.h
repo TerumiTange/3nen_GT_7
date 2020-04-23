@@ -19,6 +19,8 @@ protected:
 public:
 	virtual ~Actor();
 
+	virtual void End() = 0;
+
 	virtual void Update() = 0;
 
 	virtual void Draw() = 0;

@@ -9,6 +9,7 @@ Title::Title(ISceneChanger* changer)
 
 Title::~Title()
 {
+	delete(input);
 }
 
 void Title::Init()

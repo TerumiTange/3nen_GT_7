@@ -11,6 +11,7 @@ public :
 	Player(const char* tag = "Player");
 	Player(const Vector2& position, const char* tag = "Player");
 	~Player();
+	virtual void End()override;
 	void Init();
 	virtual void Update()override;
 	virtual void Draw() override;

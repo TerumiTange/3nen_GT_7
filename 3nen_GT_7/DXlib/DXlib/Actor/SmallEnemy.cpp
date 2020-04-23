@@ -17,6 +17,13 @@ SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag) :
 
 SmallEnemy::~SmallEnemy() = default;
 
+void SmallEnemy::End()
+{
+	delete(mPos);
+	delete(mSize);
+	delete(mRenderer);
+}
+
 void SmallEnemy::Update()
 {
 	Actor::SetPos(*mPos);

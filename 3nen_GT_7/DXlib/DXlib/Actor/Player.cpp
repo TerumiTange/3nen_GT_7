@@ -45,6 +45,14 @@ Player::Player(const Vector2& position, const char* tag):
 
 Player::~Player() = default;
 
+void Player::End()
+{
+	delete(mPos);
+	delete(mSize);
+	delete(mRenderer);
+	delete(mInput);
+}
+
 void Player::Init()
 {
 	mInput->Init();

@@ -8,6 +8,7 @@ Ending::Ending(ISceneChanger * changer) :
 
 Ending::~Ending()
 {
+	delete(input);
 }
 
 void Ending::Init()

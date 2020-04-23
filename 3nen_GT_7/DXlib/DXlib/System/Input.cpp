@@ -22,6 +22,7 @@ void Input::Update()
 
 bool Input::GetKey(KeyCode key)
 {
+	mCurrentKey = CheckHitKey(key);
 	return CheckHitKey(key);
 }
 

@@ -2,16 +2,24 @@
 
 Floor::Floor(const Vector2& position, const char* tag) :
 	Actor(tag),
-	mPos(new Vector2()),
+	mPos(new Vector2(0,0)),
+	mSize(new Vector2(32,32)),
 	mFilename(tag),
 	mRenderer(new Renderer())
 {
 	*mPos = position;
 	Actor::SetPos(*mPos);
-	Actor::SetSize(*new Vector2(32, 32));
+	Actor::SetSize(*mSize);
 }
 
 Floor::~Floor() = default;
+
+void Floor::End()
+{
+	delete(mPos);
+	delete(mSize);
+	delete(mRenderer);
+}
 
 void Floor::Update()
 {

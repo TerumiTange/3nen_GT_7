@@ -9,6 +9,7 @@ class SmallEnemy :
 public:
 	SmallEnemy(const Vector2& pos, const char* tag = "Enemy");//SmallEnemy
 	~SmallEnemy();
+	virtual void End()override;
 	virtual void Update()override;
 	virtual void Draw()override;
 	virtual void Hit(std::list<std::shared_ptr<Actor>>actors)override;
