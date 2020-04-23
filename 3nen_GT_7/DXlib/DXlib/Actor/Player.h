@@ -23,6 +23,8 @@ public :
 
 private:
 	Vector2* mPos;
+	Vector2* old_mPos;//移動前の位置
+	Vector2* mVelocity;//ベクトル
 	Vector2* mSize;
 	const char* mFilename;
 	Renderer* mRenderer;
