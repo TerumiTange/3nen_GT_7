@@ -32,7 +32,8 @@ c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\collider.h(5): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
   c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\wall.cpp(28): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  Sound.cpp
+  Renderer.cpp
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\device\renderer.cpp(40): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   Main.cpp
   Map.cpp
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\actor.h(12): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
@@ -41,9 +42,13 @@ c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\collider.h
   c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\actor.h(12): note: 'Vector2' の宣言を確認してください
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\map\map.cpp(32): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\map\map.cpp(44): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  Ending.cpp
   GamePlay.cpp
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
   c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+  ISceneChanger.cpp
   SceneManager.cpp
+  Title.cpp
+  Input.cpp
   コードを生成中...
   DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
