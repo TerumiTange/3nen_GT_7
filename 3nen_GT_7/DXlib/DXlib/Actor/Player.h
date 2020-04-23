@@ -23,12 +23,14 @@ public :
 
 private:
 	Vector2* mPos;
-	Vector2* old_mPos;//移動前の位置
+	//Vector2* old_mPos;//移動前の位置
 	Vector2* mVelocity;//ベクトル
-	Vector2* mSize;
-	const char* mFilename;
-	Renderer* mRenderer;
-	Input* mInput;
+	float maxSpeed;//最大速度
+	float mAcceleration;//加速度
+	Vector2* mSize;//大きさ
+	const char* mFilename;//画像名
+	Renderer* mRenderer;//描画関数
+	Input* mInput;//キー入力
 	bool mFall;//落ちているかどうか
 	bool mJump;//ジャンプしているかどうか
 	bool mFloating;//浮遊しているかどうか

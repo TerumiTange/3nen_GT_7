@@ -6,6 +6,9 @@
 Player::Player(const char* tag):
 	Actor(tag),
 	mPos(new Vector2(0,0)),
+	mVelocity(new Vector2(0,0)),
+	maxSpeed(10),
+	mAcceleration(0.5),
 	mSize(new Vector2(64,64)),
 	mFilename(tag),
 	mRenderer(new Renderer()),
@@ -20,11 +23,15 @@ Player::Player(const char* tag):
 	Actor::SetPos(*mPos);
 	Actor::SetSize(*mSize);
 	mRenderer->LoadTexture(mFilename);
+	mInput->Init();
 }
 
 Player::Player(const Vector2& position, const char* tag):
 	Actor(tag),
 	mPos(new Vector2(0,0)),
+	mVelocity(new Vector2(0, 0)),
+	maxSpeed(10),
+	mAcceleration(0.5),
 	mSize(new Vector2(64, 64)),
     mFilename(tag),
 	mRenderer(new Renderer()),
@@ -41,6 +48,7 @@ Player::Player(const Vector2& position, const char* tag):
 	Actor::SetPos(*mPos);
 	Actor::SetSize(*mSize);
 	mRenderer->LoadTexture(mFilename);
+	mInput->Init();
 }
 
 Player::~Player() = default;
@@ -48,6 +56,7 @@ Player::~Player() = default;
 void Player::End()
 {
 	delete(mPos);
+	delete(mVelocity);
 	delete(mSize);
 	delete(mRenderer);
 	delete(mInput);
@@ -55,7 +64,7 @@ void Player::End()
 
 void Player::Init()
 {
-	mInput->Init();
+	
 }
 
 void Player::Update()
@@ -77,17 +86,20 @@ void Player::Update()
 	old_x = mPos->x;
 	old_y = mPos->y;
 
-	if (mInput->GetKey(A)||mInput->GetKey(LEFTARROW))
+	if (mInput->GetKey(A)||mInput->GetKey(LEFTARROW))//左
 	{
-		mPos->x -= 10;
+		//mPos->x -= 10;
+		mVelocity->x = min(mVelocity->x - mAcceleration, -maxSpeed);
 	}
-	else if(mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))
+	else if(mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))//右
 	{
-		mPos->x += 10;
+		//mPos->x += 10;
+		mVelocity->x = max(mVelocity->x + mAcceleration, maxSpeed);
 	}
 
-	if (!mJump && mInput->GetKeyDown(SPACE))//ジャンプ
+	if (!mJump && mInput->GetKeyDown(SPACE) && mElectricity >= 10)//ジャンプ
 	{
+		mElectricity -= 10;
 		mPos->y -= 64;
 		mJump = true;
 	}
@@ -117,7 +129,8 @@ void Player::Update()
 	printfDx("現在のゲージ_%d", mElectricity);
 	printfDx("ジャンプしているかどうか_%d", mJump);
 	printfDx("浮遊しているかどうか_%d", mFloating);
-	
+	mPos->x += mVelocity->x;//移動処理
+	mVelocity->x *= 0.8;//ここで慣性性が出る
 }
 
 void Player::Draw()
