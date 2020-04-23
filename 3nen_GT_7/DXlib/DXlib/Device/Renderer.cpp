@@ -19,7 +19,7 @@ Renderer::~Renderer()
 void Renderer::Init()
 {
 	//name = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
-	name = "../Assets/Texture/";
+	name = "./Assets/Texture/";
 }
 
 void Renderer::LoadTexture(const char* filename)
@@ -27,7 +27,7 @@ void Renderer::LoadTexture(const char* filename)
 	//assets = name + *filename;
 	//assets = strcat(name, filename);
 	Init();
-	name += filename;
+	name = name + filename + ".png";
 	texture[name.c_str()] = LoadGraph(name.c_str());
 	Init();
 }
@@ -36,15 +36,18 @@ void Renderer::LoadTexture(const char* filename)
 void Renderer::Draw(const char* filename, Vector2& position)
 {
 	Init();
-	name += filename;
-	DrawGraph(position.x, position.y, texture[name.c_str()], TRUE);
+	name = name + filename + ".png";
+	//printfDx("‰æ‘œ–¼%s",name.c_str());
+	//DrawGraph(position.x, position.y, texture[name.c_str()], TRUE);
+	DrawGraph(position.x, position.y, LoadGraph(name.c_str()), TRUE);
 	Init();
 }
 
 void Renderer::Draw(const char* filename, int x, int y)
 {
 	Init();
-	name += filename;
-	DrawGraph(x, y, texture[name.c_str()], TRUE);
+	name = name + filename + ".png";
+	//DrawGraph(x, y, texture[name.c_str()], TRUE);
+	DrawGraph(x, y, LoadGraph(name.c_str()), TRUE);
 	Init();
 }

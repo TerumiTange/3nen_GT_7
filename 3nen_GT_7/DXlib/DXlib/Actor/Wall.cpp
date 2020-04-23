@@ -22,11 +22,11 @@ void Wall::Update()
 
 void Wall::Draw()
 {
-	//renderer.Draw(filename, *position);
-	int a;
-	a = LoadGraph("./Assets/Texture/Wall.png");
-	DrawGraph(mPos->x, mPos->y, a, TRUE);
-	DeleteGraph(a);
+	mRenderer->Draw(mFilename, *mPos);
+	//int a;
+	//a = LoadGraph("./Assets/Texture/Wall.png");
+	//DrawGraph(mPos->x, mPos->y, a, TRUE);
+	//DeleteGraph(a);
 }
 
 void Wall::Hit(std::list<std::shared_ptr<Actor>>)

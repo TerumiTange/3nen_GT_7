@@ -6,7 +6,7 @@ SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag) :
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
-	renderer(new Renderer()),
+	mRenderer(new Renderer()),
 	mFall(true),
 	mRight(true)
 {
@@ -39,12 +39,12 @@ void SmallEnemy::Update()
 
 void SmallEnemy::Draw()
 {
-	//renderer.Draw(filename, *pos);
+	mRenderer->Draw(mFilename, *mPos);
 	//test—p
-	int a;
-	a = LoadGraph("./Assets/Texture/Enemy.png");
-	DrawGraph(mPos->x, mPos->y, a, TRUE);
-	DeleteGraph(a);
+	//int a;
+	//a = LoadGraph("./Assets/Texture/Enemy.png");
+	//DrawGraph(mPos->x, mPos->y, a, TRUE);
+	//DeleteGraph(a);
 }
 
 void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
@@ -72,7 +72,8 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
 				mFall = false;
-				mPos->y = old_y;
+				//mPos->y = old_y;
+				mPos->y = a->Position()->y - mSize->y;
 			}
 		}
 	}

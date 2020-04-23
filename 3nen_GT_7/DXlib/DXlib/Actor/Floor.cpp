@@ -20,10 +20,11 @@ void Floor::Update()
 
 void Floor::Draw()
 {
-	int a;
-	a = LoadGraph("./Assets/Texture/Floor.png");
-	DrawGraph(mPos->x, mPos->y, a, TRUE);
-	DeleteGraph(a);
+	mRenderer->Draw(mFilename, *mPos);
+	//int a;
+	//a = LoadGraph("./Assets/Texture/Floor.png");
+	//DrawGraph(mPos->x, mPos->y, a, TRUE);
+	//DeleteGraph(a);
 }
 
 void Floor::Hit(std::list<std::shared_ptr<Actor>>)

@@ -7,7 +7,7 @@ Player::Player(const char* tag):
 	Actor(tag),
 	mPos(new Vector2(0,0)),
 	mSize(new Vector2(64,64)),
-	mFilename("Player.png"),
+	mFilename(tag),
 	mRenderer(new Renderer()),
 	mInput(new Input()),
 	mFall(true),
@@ -19,6 +19,7 @@ Player::Player(const char* tag):
 {
 	Actor::SetPos(*mPos);
 	Actor::SetSize(*mSize);
+	mRenderer->LoadTexture(mFilename);
 }
 
 Player::Player(const Vector2& position, const char* tag):
@@ -39,6 +40,7 @@ Player::Player(const Vector2& position, const char* tag):
 	mPos->y = position.y;
 	Actor::SetPos(*mPos);
 	Actor::SetSize(*mSize);
+	mRenderer->LoadTexture(mFilename);
 }
 
 Player::~Player() = default;
@@ -97,7 +99,6 @@ void Player::Update()
 	if (mInput->GetKeyUp(SPACE))
 	{
 		mFloating = false;
-		mJump = false;
 	}
 	if (mElectricity < 0)//もし0よりも小さくなったら
 	{
@@ -113,12 +114,12 @@ void Player::Update()
 
 void Player::Draw()
 {
-	//renderer.Draw(filename, *pos);
+	mRenderer->Draw(mFilename, *mPos);
 	//test用
-	int a;
-	a = LoadGraph("./Assets/Texture/Player.png");
-	DrawGraph(mPos->x, mPos->y, a, TRUE);
-	DeleteGraph(a);
+	//int a;
+	//a = LoadGraph("./Assets/Texture/Player.png");
+	//DrawGraph(mPos->x, mPos->y, a, TRUE);
+	//DeleteGraph(a);
 }
 
 void Player::SetPosition(const Vector2& position)
@@ -167,6 +168,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				mFall = false;//重力が発生していない
 				mJump = false;//ジャンプしていない
 				mFloating = false;//浮遊していない
+				mPos->y = a->Position()->y - mSize->y;
 			}
 		}
 		if (a->Tag() == "Enemy")

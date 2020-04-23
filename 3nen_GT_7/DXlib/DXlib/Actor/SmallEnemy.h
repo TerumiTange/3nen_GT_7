@@ -7,7 +7,7 @@ class SmallEnemy :
 	public Actor
 {
 public:
-	SmallEnemy(const Vector2& pos, const char* tag = "SmallEnemy");
+	SmallEnemy(const Vector2& pos, const char* tag = "Enemy");//SmallEnemy
 	~SmallEnemy();
 	virtual void Update()override;
 	virtual void Draw()override;
@@ -18,7 +18,7 @@ private:
 	Vector2* mPos;
 	Vector2* mSize;
 	const char* mFilename;
-	Renderer* renderer;
+	Renderer* mRenderer;
 	bool mFall;
 	bool mRight;//âEÇ…êiÇÒÇ≈Ç¢ÇÈÇ©Ç«Ç§Ç©
 	//âºÇÃêîíl
