@@ -11,7 +11,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
 	//SetWindowSizeChangeEnableFlag(TRUE, TRUE);
 	// 画面サイズは最大の 1920x1080 にしておく
-	SetGraphMode(1920, 1080, 32);
+	SetGraphMode(1024, 576, 32);
 	// 最初は 640x480 にしておく
 	SetWindowSize(ScreenWidth,ScreenHeight);//16:9//1024:576
 

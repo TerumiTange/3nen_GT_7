@@ -1,4 +1,7 @@
 #include "Player.h"
+#include <algorithm>
+#define NOMINMAX
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
 
 Player::Player(const char* tag):
 	Actor(tag),
@@ -8,6 +11,8 @@ Player::Player(const char* tag):
 	mRenderer(new Renderer()),
 	mInput(new Input()),
 	mFall(true),
+	mJump(false),
+	mFloating(false),
 	mElectricity(0),
 	mChargedState(false),
 	mPoppedState(false)
@@ -24,6 +29,8 @@ Player::Player(const Vector2& position, const char* tag):
 	mRenderer(new Renderer()),
 	mInput(new Input()),
 	mFall(true),
+	mJump(false),
+	mFloating(false),
 	mElectricity(0),
 	mChargedState(false),
 	mPoppedState(false)
@@ -44,13 +51,22 @@ void Player::Init()
 void Player::Update()
 {
 	Actor::SetPos(*mPos);
-	if (mFall)//重力
+
+	if (!mFloating)//浮遊状態でなければ
+	{
+		mElectricity++;
+		if (mElectricity > 100)mElectricity = 100;
+	}
+
+	if (mFall&&(!mFloating))//重力
 	{
 		mPos->y += 20;
 	}
+
 	mFall = true;
 	old_x = mPos->x;
 	old_y = mPos->y;
+
 	if (mInput->GetKey(A)||mInput->GetKey(LEFTARROW))
 	{
 		mPos->x -= 10;
@@ -60,6 +76,39 @@ void Player::Update()
 		mPos->x += 10;
 	}
 
+	if (!mJump && mInput->GetKeyDown(SPACE))//ジャンプ
+	{
+		mPos->y -= 64;
+		mJump = true;
+	}
+	else if (mJump && mInput->GetKeyDown(SPACE))//浮遊
+	{
+		if (mElectricity > 0)
+		{
+			mFloating = true;
+			mElectricity--;
+		}
+		else
+		{
+			mFloating = false;
+			mFall = true;
+		}
+	}
+	if (mInput->GetKeyUp(SPACE))
+	{
+		mFloating = false;
+		mJump = false;
+	}
+	if (mElectricity < 0)//もし0よりも小さくなったら
+	{
+		mElectricity = 0;
+	}
+	clsDx();
+	printfDx("落ちているかどうか_%d", mFall);
+	printfDx("現在のゲージ_%d", mElectricity);
+	printfDx("ジャンプしているかどうか_%d", mJump);
+	printfDx("浮遊しているかどうか_%d", mFloating);
+	
 }
 
 void Player::Draw()
@@ -91,6 +140,23 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 			if (CheckHit( a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
 				mPos->x = old_x;
+				
+				//if (mPos->x <= a->Position()->x + a->Size()->x)
+				//{
+				//	mPos->x = a->Position()->x + a->Size()->x;
+				//}
+				//else if (mPos->x < a->Position()->x + a->Size()->x)
+				//{
+				//	mPos->x = a->Position()->x - mSize->x;
+				//}
+				//else if (mPos->x + mSize->x < a->Position()->x)
+				//{
+				//	mPos->x = a->Position()->x - mSize->x;
+				//}
+				//else
+				//{
+				//	mPos->x = old_x;
+				//}
 			}
 		}
 
@@ -98,7 +164,9 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				mFall = false;
+				mFall = false;//重力が発生していない
+				mJump = false;//ジャンプしていない
+				mFloating = false;//浮遊していない
 			}
 		}
 		if (a->Tag() == "Enemy")

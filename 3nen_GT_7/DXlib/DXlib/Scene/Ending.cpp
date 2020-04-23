@@ -26,7 +26,7 @@ void Ending::Update()
 void Ending::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
-	DrawString(50, 50, "Ending", Cr);
+	DrawString(50, 50, "Ending  A PUSH", Cr);
 }
 
 void Ending::NextScene()

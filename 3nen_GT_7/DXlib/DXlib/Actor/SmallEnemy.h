@@ -20,6 +20,7 @@ private:
 	const char* mFilename;
 	Renderer* renderer;
 	bool mFall;
+	bool mRight;//右に進んでいるかどうか
 	//仮の数値
 	int old_x;//1フレーム前の位置
 	int old_y;//1フレーム前の位置

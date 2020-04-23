@@ -1,13 +1,14 @@
 #include "SmallEnemy.h"
 #include "../Device/Renderer.h"
 
-SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag):
+SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
-	mPos(new Vector2(0,0)),
-	mSize(new Vector2(32,32)),
+	mPos(new Vector2(0, 0)),
+	mSize(new Vector2(32, 32)),
 	mFilename(tag),
 	renderer(new Renderer()),
-	mFall(true)
+	mFall(true),
+	mRight(true)
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -21,12 +22,19 @@ void SmallEnemy::Update()
 	Actor::SetPos(*mPos);
 	if (mFall)
 	{
-		mPos->y += 10;
+		mPos->y += 20;
 	}
 	mFall = true;
 	old_x = mPos->x;
 	old_y = mPos->y;
-
+	if (mRight)
+	{
+		mPos->x += 10;
+	}
+	else
+	{
+		mPos->x -= 10;
+	}
 }
 
 void SmallEnemy::Draw()
@@ -55,6 +63,8 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
 				mPos->x = old_x;
+				if (mRight)mRight = false;
+				else mRight = true;
 			}
 		}
 		if (a->Tag() == "Floor")
@@ -62,6 +72,7 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
 				mFall = false;
+				mPos->y = old_y;
 			}
 		}
 	}

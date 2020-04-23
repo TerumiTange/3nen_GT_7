@@ -27,6 +27,8 @@ private:
 	Renderer* mRenderer;
 	Input* mInput;
 	bool mFall;//落ちているかどうか
+	bool mJump;//ジャンプしているかどうか
+	bool mFloating;//浮遊しているかどうか
 	int mElectricity;//自身の電気ゲージの量
 	bool mChargedState;//帯電状態かどうか
 	bool mPoppedState;//はじけ状態かどうか
