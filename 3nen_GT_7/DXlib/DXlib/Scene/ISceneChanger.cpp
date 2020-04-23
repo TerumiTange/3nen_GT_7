@@ -2,5 +2,4 @@
 
 ISceneChanger::~ISceneChanger()
 {
-
 }

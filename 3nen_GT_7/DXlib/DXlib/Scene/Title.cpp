@@ -9,6 +9,7 @@ Title::Title(ISceneChanger* changer)
 
 Title::~Title()
 {
+	delete(input);
 }
 
 void Title::Init()
@@ -27,7 +28,7 @@ void Title::Update()
 void Title::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
-	DrawString(50, 50, "Title", Cr);
+	DrawString(50, 50, "Title A PUSH", Cr);
 }
 
 void Title::NextScene()

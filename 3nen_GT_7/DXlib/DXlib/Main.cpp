@@ -3,15 +3,18 @@
 #include "Device/WindowSize.h"
 //static int ScreenWidth = 1024;
 //static int ScreenHeight = 576;
+#include <crtdbg.h>
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//メモリーリーク検出
+	//_CrtSetBreakAlloc(552);//メモリーリークが出たら()に数字を入れる
 	// ウインドウモードで起動
 	ChangeWindowMode(TRUE);
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
 	//SetWindowSizeChangeEnableFlag(TRUE, TRUE);
 	// 画面サイズは最大の 1920x1080 にしておく
-	SetGraphMode(1920, 1080, 32);
+	SetGraphMode(1024, 576, 32);
 	// 最初は 640x480 にしておく
 	SetWindowSize(ScreenWidth,ScreenHeight);//16:9//1024:576
 
@@ -31,7 +34,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		return -1;    // エラーが起きたら直ちに終了
 	}
-
 	SceneManager manager;
 	manager.Init();
 
@@ -64,7 +66,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;        // エラーが起きたらループを抜ける
 		}
 	}*/
-	
 	DxLib_End();        // ＤＸライブラリ使用の終了処理
 
 	return 0;        // ソフトの終了
