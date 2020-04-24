@@ -89,6 +89,10 @@ void GamePlay::Update()
 		sound.StopBGM("./Assets/Sound/a.mp3");
 		Init();
 	}
+	if (mActorManager->GetPlayer()->RGoal())
+	{
+		NextScene();
+	}
 }
 
 void GamePlay::Draw()

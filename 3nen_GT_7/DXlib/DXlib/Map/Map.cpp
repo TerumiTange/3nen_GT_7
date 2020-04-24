@@ -1,6 +1,8 @@
 #include "Map.h"
 #include "../Actor/Wall.h"
 #include "../Actor/Floor.h"
+#include "../Actor/Metal.h"
+#include "../Actor/Goal.h"
 
 Map::Map():
 	mCSVReader(nullptr),
@@ -35,6 +37,8 @@ void Map::Init(const char* filename)
 		case 0:data.type = Category::EMPTY; break;
 		case 1:data.type = Category::WALL; break;
 		case 2:data.type = Category::FLOOR; break;
+		case 3:data.type = Category::METAL; break;
+		case 4:data.type = Category::GOAL; break;
 		default:
 			break;
 		}
@@ -71,6 +75,14 @@ void Map::Create(const GimmickData & data)
 	else if(data.type == Category::FLOOR)
 	{
 		auto f = new Floor(data.position);
+	}
+	else if (data.type == Category::METAL)
+	{
+		auto m = new Metal(data.position);
+	}
+	else if (data.type == Category::GOAL)
+	{
+		auto g = new Goal(data.position);
 	}
 }
 
