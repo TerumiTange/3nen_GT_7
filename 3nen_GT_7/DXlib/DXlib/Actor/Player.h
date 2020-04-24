@@ -19,9 +19,11 @@ public :
 	Vector2& GetPosition();
 	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;
 	bool CheckHit(int x, int y, int width, int height);
+	bool RGoal();//ゴールしたかどうか
 	//void HitEnemy();
 
 private:
+	bool mGoal;//ゴールしたかどうか
 	Vector2* mPos;
 	//Vector2* old_mPos;//移動前の位置
 	Vector2* mVelocity;//ベクトル

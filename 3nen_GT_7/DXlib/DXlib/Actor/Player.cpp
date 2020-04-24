@@ -5,6 +5,7 @@
 
 Player::Player(const char* tag):
 	Actor(tag),
+	mGoal(false),
 	mPos(new Vector2(0,0)),
 	mVelocity(new Vector2(0,0)),
 	maxSpeed(10),
@@ -28,6 +29,7 @@ Player::Player(const char* tag):
 
 Player::Player(const Vector2& position, const char* tag):
 	Actor(tag),
+	mGoal(false),
 	mPos(new Vector2(0,0)),
 	mVelocity(new Vector2(0, 0)),
 	maxSpeed(10),
@@ -163,22 +165,6 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 			{
 				mPos->x = old_x;
 				
-				//if (mPos->x <= a->Position()->x + a->Size()->x)
-				//{
-				//	mPos->x = a->Position()->x + a->Size()->x;
-				//}
-				//else if (mPos->x < a->Position()->x + a->Size()->x)
-				//{
-				//	mPos->x = a->Position()->x - mSize->x;
-				//}
-				//else if (mPos->x + mSize->x < a->Position()->x)
-				//{
-				//	mPos->x = a->Position()->x - mSize->x;
-				//}
-				//else
-				//{
-				//	mPos->x = old_x;
-				//}
 			}
 		}
 
@@ -190,6 +176,25 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				mJump = false;//ジャンプしていない
 				mFloating = false;//浮遊していない
 				mPos->y = a->Position()->y - mSize->y;
+			}
+		}
+		if (a->Tag() == "Metal")
+		{
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				mRenderer->Draw("ThunderEffect", *mPos);
+				mElectricity = 0;
+				mFall = false;//重力が発生していない
+				mJump = false;//ジャンプしていない
+				mFloating = false;//浮遊していない
+				mPos->y = a->Position()->y - mSize->y;
+			}
+		}
+		if (a->Tag() == "Goal")
+		{
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				mGoal = true;
 			}
 		}
 		if (a->Tag() == "Enemy")
@@ -217,6 +222,11 @@ bool Player::CheckHit(int x, int y, int width, int height)
 	if (D1 < U2)return false;
 	if (D2 < U1)return false;
 	return true;
+}
+
+bool Player::RGoal()
+{
+	return mGoal;
 }
 
 
