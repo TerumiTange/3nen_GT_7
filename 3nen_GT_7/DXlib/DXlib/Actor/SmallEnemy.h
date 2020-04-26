@@ -1,13 +1,13 @@
 #pragma once
 #include "Actor.h"
 #include "../Utility/Vector2.h"
-class Renderer;
+#include "../Device/Renderer.h"
 
 class SmallEnemy :
 	public Actor
 {
 public:
-	SmallEnemy(const Vector2& pos, const char* tag = "Enemy");//SmallEnemy
+	SmallEnemy(const Vector2& pos, const char* tag = "SmallEnemy");//SmallEnemy
 	~SmallEnemy();
 	virtual void End()override;
 	virtual void Update()override;

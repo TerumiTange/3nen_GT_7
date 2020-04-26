@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include <string>
 #include <vector>
+#include <string>
 
 class CSVReader
 {
@@ -19,7 +20,6 @@ public:
 
 private:
 	void parse(const char* filename);
-	void DxParse(const char* filename);
 	void parseString(const char* filename);
 
 private:

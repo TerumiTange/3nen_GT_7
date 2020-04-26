@@ -3,11 +3,13 @@
 #include "../Actor/Player.h"
 #include "../Actor/ActorManager.h"
 #include "../Map/Map.h"
-#include "../Actor/SmallEnemy.h"
+#include "../Actor/Enemy.h"
 #include "../Utility/Vector2.h"
 #include "Load.h"
 
 #include <thread>
+
+#define SAFE_DELETE(x) if(x){delete x; x=0;}
 
 GamePlay::GamePlay(ISceneChanger* changer) :
 	BaseScene(changer),
@@ -31,8 +33,9 @@ GamePlay::~GamePlay()
 
 void do_wark1()
 {
-	new Player(Vector2(50, 50));
-	
+	Enemy* enemy = new Enemy();
+	enemy->Init("./Assets/Data/EnemyList.csv");
+	delete(enemy);
 }
 void do_wark2()
 {
@@ -54,12 +57,16 @@ void GamePlay::Init()
 	{
 		std::cerr << ex.what() << std::endl;
 	}
-	//new Player(Vector2(50, 50));
-	//Player* player = new Player(Vector2(50, 50));
-	//new SmallEnemy(*new Vector2(500,50));
-	//Map* map = new Map();
-	//map->Init("./Assets/Data/map.csv");
-	//delete(map);
+	new Player(Vector2(50, 50));
+
+	/*Map* map = new Map();
+	map->Init("./Assets/Data/map.csv");
+	delete(map);
+
+	Enemy* enemy = new Enemy();
+	enemy->Init("./Assets/Data/EnemyList.csv");
+	delete(enemy);*/
+
 	sound.Init();
 	sound.Load("./Assets/Sound/a.mp3");
 	input->Init();
@@ -79,12 +86,14 @@ void GamePlay::Update()
 	if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
 	{
 		//リセット
+		mActorManager->End();
 		mActorManager->Clear();
 		sound.StopBGM("./Assets/Sound/a.mp3");
 		Init();
 	}
 	if (input->GetKeyDown(R))
 	{
+		mActorManager->End();
 		mActorManager->Clear();
 		sound.StopBGM("./Assets/Sound/a.mp3");
 		Init();

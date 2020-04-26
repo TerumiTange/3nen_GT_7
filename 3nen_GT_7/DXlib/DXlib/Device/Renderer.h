@@ -13,12 +13,9 @@ public:
 	~Renderer();
 	//‰Šú‰»
 	void Init();
-	//‰æ‘œ“Ç‚İ‚İ
-	void LoadTexture(const char* filename);
 	//‰æ‘œ‚ğ•`‰æ
 	void Draw(const char* filename, Vector2& position);
 	void Draw(const char* filename, int x, int y);
 private:
-	std::map<const char*, int>texture;
 	std::string name;
 };

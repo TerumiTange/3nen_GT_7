@@ -96,6 +96,7 @@ void ActorManager::Remove()
 	while (itr != mActors.end()) 
 	{
 		if ((*itr)->GetState() == ActorState::DEAD) {
+			(*itr)->End();//€‚ñ‚¾‚çƒƒ‚ƒŠŠJ•ú
 			itr = mActors.erase(itr);
 		}
 		else 
