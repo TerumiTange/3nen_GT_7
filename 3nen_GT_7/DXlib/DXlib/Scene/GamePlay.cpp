@@ -56,7 +56,7 @@ void GamePlay::Init()
 	}
 	//new Player(Vector2(50, 50));
 	//Player* player = new Player(Vector2(50, 50));
-	//new SmallEnemy(*new Vector2(500,50));
+	new SmallEnemy(*new Vector2(500,50));
 	//Map* map = new Map();
 	//map->Init("./Assets/Data/map.csv");
 	//delete(map);
