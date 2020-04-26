@@ -1,5 +1,4 @@
 #include "SmallEnemy.h"
-#include "../Device/Renderer.h"
 
 SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
@@ -62,7 +61,8 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				Actor::Destroy(this);
+				//Actor::Destroy(this);
+				Actor::Destroy(a);
 			}
 		}
 		if (a->Tag() == "Wall")

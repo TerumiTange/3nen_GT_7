@@ -23,7 +23,6 @@ Player::Player(const char* tag):
 {
 	Actor::SetPos(*mPos);
 	Actor::SetSize(*mSize);
-	mRenderer->LoadTexture(mFilename);
 	mInput->Init();
 }
 
@@ -49,7 +48,6 @@ Player::Player(const Vector2& position, const char* tag):
 	mPos->y = position.y;
 	Actor::SetPos(*mPos);
 	Actor::SetSize(*mSize);
-	mRenderer->LoadTexture(mFilename);
 	mInput->Init();
 }
 
@@ -132,7 +130,7 @@ void Player::Update()
 	printfDx("ジャンプしているかどうか_%d", mJump);
 	printfDx("浮遊しているかどうか_%d", mFloating);
 	mPos->x += mVelocity->x;//移動処理
-	mVelocity->x *= 0.8;//ここで慣性性が出る
+	mVelocity->x *= 0.9f;//ここで慣性性が出る
 }
 
 void Player::Draw()
@@ -197,7 +195,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				mGoal = true;
 			}
 		}
-		if (a->Tag() == "Enemy")
+		if (a->Tag() == "SmallEnemy")
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{

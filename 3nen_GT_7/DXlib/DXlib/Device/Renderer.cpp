@@ -6,7 +6,6 @@
 
 
 Renderer::Renderer():
-	texture(),
 	name("../Assets/Texture/")
 {
 	
@@ -21,17 +20,6 @@ void Renderer::Init()
 	//name = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
 	name = "./Assets/Texture/";
 }
-
-void Renderer::LoadTexture(const char* filename)
-{
-	//assets = name + *filename;
-	//assets = strcat(name, filename);
-	Init();
-	name = name + filename + ".png";
-	texture[name.c_str()] = LoadGraph(name.c_str());
-	Init();
-}
-
 
 void Renderer::Draw(const char* filename, Vector2& position)
 {
