@@ -1,5 +1,5 @@
 #pragma once
-
+#include <list>
 #include <memory>
 
 enum class ActorState
@@ -19,11 +19,13 @@ protected:
 public:
 	virtual ~Actor();
 
+	virtual void End() = 0;
+
 	virtual void Update() = 0;
 
 	virtual void Draw() = 0;
 
-	virtual void Hit() = 0;
+	virtual void Hit(std::list<std::shared_ptr<Actor>>) = 0;
 
 	void update();//全て更新用
 

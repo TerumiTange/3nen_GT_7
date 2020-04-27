@@ -1,19 +1,19 @@
 #pragma once
 #include "Actor.h"
-#include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
+#include "../Utility/Vector2.h"
 
-class Wall:
+class Goal :
 	public Actor
 {
 public:
-	Wall(const Vector2& position, const char* tag = "Wall");
-	~Wall();
+	Goal(const Vector2& pos, const char* tag = "Goal");
+	~Goal();
 	virtual void End()override;
 	virtual void Update()override;
 	virtual void Draw()override;
 	virtual void Hit(std::list<std::shared_ptr<Actor>>)override;
-public:
+private:
 	Vector2* mPos;
 	Vector2* mSize;
 	const char* mFilename;

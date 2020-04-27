@@ -138,9 +138,12 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\ActorManager.cpp" />
     <ClCompile Include="Actor\Collider.cpp" />
+    <ClCompile Include="Actor\Enemy.cpp" />
     <ClCompile Include="Actor\Floor.cpp" />
+    <ClCompile Include="Actor\Goal.cpp" />
+    <ClCompile Include="Actor\Metal.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
-    <ClCompile Include="Actor\TestEnemy.cpp" />
+    <ClCompile Include="Actor\SmallEnemy.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
@@ -159,15 +162,19 @@
     <ClCompile Include="System\Input.cpp" />
     <ClCompile Include="System\Timer.cpp" />
     <ClCompile Include="Utility\Rect.cpp" />
+    <ClCompile Include="Utility\Ui.cpp" />
     <ClCompile Include="Utility\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\ActorManager.h" />
     <ClInclude Include="Actor\Collider.h" />
+    <ClInclude Include="Actor\Enemy.h" />
     <ClInclude Include="Actor\Floor.h" />
+    <ClInclude Include="Actor\Goal.h" />
+    <ClInclude Include="Actor\Metal.h" />
     <ClInclude Include="Actor\Player.h" />
-    <ClInclude Include="Actor\TestEnemy.h" />
+    <ClInclude Include="Actor\SmallEnemy.h" />
     <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />
@@ -187,6 +194,7 @@
     <ClInclude Include="System\Input.h" />
     <ClInclude Include="System\Timer.h" />
     <ClInclude Include="Utility\Rect.h" />
+    <ClInclude Include="Utility\Ui.h" />
     <ClInclude Include="Utility\Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

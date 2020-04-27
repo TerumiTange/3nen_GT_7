@@ -3,20 +3,19 @@
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
 
-class Wall:
+class Metal:
 	public Actor
 {
 public:
-	Wall(const Vector2& position, const char* tag = "Wall");
-	~Wall();
+	Metal(const Vector2& pos, const char* tag = "Metal");
+	~Metal();
 	virtual void End()override;
 	virtual void Update()override;
 	virtual void Draw()override;
 	virtual void Hit(std::list<std::shared_ptr<Actor>>)override;
-public:
+private:
 	Vector2* mPos;
 	Vector2* mSize;
 	const char* mFilename;
 	Renderer* mRenderer;
-
 };

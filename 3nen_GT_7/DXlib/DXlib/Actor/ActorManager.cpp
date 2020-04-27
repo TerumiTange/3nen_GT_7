@@ -11,6 +11,14 @@ ActorManager::ActorManager():
 
 ActorManager::~ActorManager() = default;
 
+void ActorManager::End()
+{
+	for (auto&& actor : mActors)
+	{
+		actor->End();
+	}
+}
+
 void ActorManager::Init()
 {
 	for (auto&& actor : mActors)
@@ -37,7 +45,7 @@ void ActorManager::Hit()
 {
 	for (auto&& actor : mActors)
 	{
-		actor->Hit();
+		actor->Hit(mActors);
 	}
 }
 
@@ -88,6 +96,7 @@ void ActorManager::Remove()
 	while (itr != mActors.end()) 
 	{
 		if ((*itr)->GetState() == ActorState::DEAD) {
+			(*itr)->End();//€‚ñ‚¾‚çƒƒ‚ƒŠŠJ•ú
 			itr = mActors.erase(itr);
 		}
 		else 

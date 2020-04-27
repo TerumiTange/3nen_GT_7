@@ -4,47 +4,26 @@
 
 #define PI 3.1415926535897932384626433832795f
 
-
-Renderer::Renderer():
-	texture(),
-	name("../Assets/Texture/")
+Renderer::Renderer(const char* name):
+	mName("./Assets/Texture/"),
+	mGra(0)
 {
-	
+	mName = mName + name + ".png";
+	mGra = LoadGraph(mName.c_str());
 }
 
 Renderer::~Renderer()
 {
+	DeleteGraph(mGra);
 }
 
 void Renderer::Init()
 {
-	//name = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
-	name = "../Assets/Texture/";
+	//mName = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
+	mName = "./Assets/Texture/";
 }
 
-void Renderer::LoadTexture(const char* filename)
+void Renderer::Draw(const Vector2 & pos)
 {
-	//assets = name + *filename;
-	//assets = strcat(name, filename);
-	Init();
-	name += filename;
-	texture[name.c_str()] = LoadGraph(name.c_str());
-	Init();
-}
-
-
-void Renderer::Draw(const char* filename, Vector2& position)
-{
-	Init();
-	name += filename;
-	DrawGraph(position.x, position.y, texture[name.c_str()], TRUE);
-	Init();
-}
-
-void Renderer::Draw(const char* filename, int x, int y)
-{
-	Init();
-	name += filename;
-	DrawGraph(x, y, texture[name.c_str()], TRUE);
-	Init();
+	DrawGraph(pos.x, pos.y, mGra, TRUE);
 }

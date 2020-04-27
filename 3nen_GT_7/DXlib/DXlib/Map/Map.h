@@ -10,6 +10,8 @@ enum class Category
 	EMPTY,//‹ó”’
 	WALL, //•Ç
 	FLOOR,//°
+	METAL,//‹à‘®
+	GOAL,//ƒS[ƒ‹
 };
 
 struct GimmickData

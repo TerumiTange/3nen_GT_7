@@ -2,16 +2,24 @@
 
 Floor::Floor(const Vector2& position, const char* tag) :
 	Actor(tag),
-	mPos(new Vector2()),
+	mPos(new Vector2(0,0)),
+	mSize(new Vector2(32,32)),
 	mFilename(tag),
-	mRenderer(new Renderer())
+	mRenderer(new Renderer(tag))
 {
 	*mPos = position;
 	Actor::SetPos(*mPos);
-	Actor::SetSize(*new Vector2(32, 32));
+	Actor::SetSize(*mSize);
 }
 
 Floor::~Floor() = default;
+
+void Floor::End()
+{
+	delete(mPos);
+	delete(mSize);
+	delete(mRenderer);
+}
 
 void Floor::Update()
 {
@@ -20,12 +28,13 @@ void Floor::Update()
 
 void Floor::Draw()
 {
-	int a;
-	a = LoadGraph("./Assets/Texture/Floor.png");
-	DrawGraph(mPos->x, mPos->y, a, TRUE);
-	DeleteGraph(a);
+	mRenderer->Draw(*mPos);
+	//int a;
+	//a = LoadGraph("./Assets/Texture/Floor.png");
+	//DrawGraph(mPos->x, mPos->y, a, TRUE);
+	//DeleteGraph(a);
 }
 
-void Floor::Hit()
+void Floor::Hit(std::list<std::shared_ptr<Actor>>)
 {
 }

@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include <memory>
 
 SceneManager::SceneManager():
 	mNextScene(SceneNone)
@@ -8,6 +9,7 @@ SceneManager::SceneManager():
 
 SceneManager::~SceneManager()
 {
+	delete(mScene);
 	
 }
 

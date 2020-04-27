@@ -126,5 +126,7 @@ public:
 	bool PadUp();
 	bool PadDown();
 
-
+private:
+	int mCurrentKey;//現在押されているキー
+	int mPreviousKey;//1フレーム前のキー
 };

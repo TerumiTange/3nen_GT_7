@@ -1,5 +1,4 @@
 #pragma once
-
 #include <memory>
 #include <list>
 
@@ -11,6 +10,7 @@ class ActorManager
 public:
 	ActorManager();
 	~ActorManager();
+	void End();
 	void Init();
 	void Update();
 	void Hit();
