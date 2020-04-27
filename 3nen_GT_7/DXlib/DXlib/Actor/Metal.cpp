@@ -5,7 +5,7 @@ Metal::Metal(const Vector2& pos, const char* tag) :
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
-	mRenderer(new Renderer())
+	mRenderer(new Renderer(tag))
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -29,7 +29,7 @@ void Metal::Update()
 
 void Metal::Draw()
 {
-	mRenderer->Draw(mFilename, *mPos);
+	mRenderer->Draw(*mPos);
 }
 
 void Metal::Hit(std::list<std::shared_ptr<Actor>>)

@@ -4,42 +4,26 @@
 
 #define PI 3.1415926535897932384626433832795f
 
-
-Renderer::Renderer():
-	name("../Assets/Texture/")
+Renderer::Renderer(const char* name):
+	mName("./Assets/Texture/"),
+	mGra(0)
 {
-	
+	mName = mName + name + ".png";
+	mGra = LoadGraph(mName.c_str());
 }
 
 Renderer::~Renderer()
 {
+	DeleteGraph(mGra);
 }
 
 void Renderer::Init()
 {
-	//name = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
-	name = "./Assets/Texture/";
+	//mName = "./Assets/Texture/";//Main.h‚Å‚Ì•`‰æ—p	
+	mName = "./Assets/Texture/";
 }
 
-void Renderer::Draw(const char* filename, Vector2& position)
+void Renderer::Draw(const Vector2 & pos)
 {
-	Init();
-	name = name + filename + ".png";
-	//printfDx("‰æ‘œ–¼%s",name.c_str());
-	//DrawGraph(position.x, position.y, texture[name.c_str()], TRUE);
-	int mGra = LoadGraph(name.c_str());
-	DrawGraph(position.x, position.y, mGra, TRUE);
-	DeleteGraph(mGra);
-	Init();
-}
-
-void Renderer::Draw(const char* filename, int x, int y)
-{
-	Init();
-	name = name + filename + ".png";
-	//DrawGraph(x, y, texture[name.c_str()], TRUE);
-	int mGra = LoadGraph(name.c_str());
-	DrawGraph(x, y, mGra, TRUE);
-	DeleteGraph(mGra);
-	Init();
+	DrawGraph(pos.x, pos.y, mGra, TRUE);
 }

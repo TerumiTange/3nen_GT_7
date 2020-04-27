@@ -5,7 +5,7 @@ SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag) :
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
-	mRenderer(new Renderer()),
+	mRenderer(new Renderer(tag)),
 	mFall(true),
 	mRight(true)
 {
@@ -45,7 +45,7 @@ void SmallEnemy::Update()
 
 void SmallEnemy::Draw()
 {
-	mRenderer->Draw(mFilename, *mPos);
+	mRenderer->Draw(*mPos);
 	//test—p
 	//int a;
 	//a = LoadGraph("./Assets/Texture/Enemy.png");

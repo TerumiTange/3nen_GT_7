@@ -12,7 +12,7 @@ Player::Player(const char* tag):
 	mAcceleration(0.5),
 	mSize(new Vector2(64,64)),
 	mFilename(tag),
-	mRenderer(new Renderer()),
+	mRenderer(new Renderer(tag)),
 	mInput(new Input()),
 	mFall(true),
 	mJump(false),
@@ -35,7 +35,7 @@ Player::Player(const Vector2& position, const char* tag):
 	mAcceleration(0.5),
 	mSize(new Vector2(64, 64)),
     mFilename(tag),
-	mRenderer(new Renderer()),
+	mRenderer(new Renderer(tag)),
 	mInput(new Input()),
 	mFall(true),
 	mJump(false),
@@ -124,18 +124,18 @@ void Player::Update()
 	{
 		mElectricity = 0;
 	}
-	clsDx();
-	printfDx("落ちているかどうか_%d", mFall);
-	printfDx("現在のゲージ_%d", mElectricity);
-	printfDx("ジャンプしているかどうか_%d", mJump);
-	printfDx("浮遊しているかどうか_%d", mFloating);
+	//clsDx();
+	//printfDx("落ちているかどうか_%d", mFall);
+	//printfDx("現在のゲージ_%d", mElectricity);
+	//printfDx("ジャンプしているかどうか_%d", mJump);
+	//printfDx("浮遊しているかどうか_%d", mFloating);
 	mPos->x += mVelocity->x;//移動処理
 	mVelocity->x *= 0.9f;//ここで慣性性が出る
 }
 
 void Player::Draw()
 {
-	mRenderer->Draw(mFilename, *mPos);
+	mRenderer->Draw(*mPos);
 	//test用
 	//int a;
 	//a = LoadGraph("./Assets/Texture/Player.png");
@@ -180,7 +180,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				mRenderer->Draw("ThunderEffect", *mPos);
+				//mRenderer->Draw("ThunderEffect", *mPos);
 				mElectricity = 0;
 				mFall = false;//重力が発生していない
 				mJump = false;//ジャンプしていない
