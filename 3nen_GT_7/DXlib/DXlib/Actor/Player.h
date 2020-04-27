@@ -15,12 +15,12 @@ public :
 	void Init();
 	virtual void Update()override;
 	virtual void Draw() override;
+	void Move();
 	void SetPosition(const Vector2& position);
 	Vector2& GetPosition();
 	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;
 	bool CheckHit(int x, int y, int width, int height);
 	bool RGoal();//ÉSÅ[ÉãÇµÇΩÇ©Ç«Ç§Ç©
-	//void HitEnemy();
 
 private:
 	bool mGoal;//ÉSÅ[ÉãÇµÇΩÇ©Ç«Ç§Ç©

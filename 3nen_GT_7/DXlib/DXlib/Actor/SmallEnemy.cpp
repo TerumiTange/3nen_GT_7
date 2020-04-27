@@ -28,18 +28,18 @@ void SmallEnemy::Update()
 	Actor::SetPos(*mPos);
 	if (mFall)
 	{
-		mPos->y += 20;
+		mPos->y += 10;
 	}
 	mFall = true;
 	old_x = mPos->x;
 	old_y = mPos->y;
 	if (mRight)
 	{
-		mPos->x += 10;
+		mPos->x += 5;
 	}
 	else
 	{
-		mPos->x -= 10;
+		mPos->x -= 5;
 	}
 }
 
@@ -57,14 +57,6 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
 	{
-		if (a->Tag() == "Player")
-		{
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			{
-				//Actor::Destroy(this);
-				Actor::Destroy(a);
-			}
-		}
 		if (a->Tag() == "Wall")
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
@@ -82,6 +74,14 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 				//mPos->y = old_y;
 				mPos->y = a->Position()->y - mSize->y;
 			}
+		}
+		if (a->Tag() == "Metal")
+		{
+			//mFall = false;
+			//mPos->y = a->Position()->y - mSize->y;
+			//mPos->x = old_x;
+			if (mRight)mRight = false;
+			else mRight = true;
 		}
 	}
 }

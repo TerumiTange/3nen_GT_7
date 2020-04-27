@@ -8,7 +8,7 @@ Player::Player(const char* tag):
 	mGoal(false),
 	mPos(new Vector2(0,0)),
 	mVelocity(new Vector2(0,0)),
-	maxSpeed(10),
+	maxSpeed(7),
 	mAcceleration(0.5),
 	mSize(new Vector2(64,64)),
 	mFilename(tag),
@@ -31,7 +31,7 @@ Player::Player(const Vector2& position, const char* tag):
 	mGoal(false),
 	mPos(new Vector2(0,0)),
 	mVelocity(new Vector2(0, 0)),
-	maxSpeed(10),
+	maxSpeed(7),
 	mAcceleration(0.5),
 	mSize(new Vector2(64, 64)),
     mFilename(tag),
@@ -86,12 +86,42 @@ void Player::Update()
 	old_x = mPos->x;
 	old_y = mPos->y;
 
-	if (mInput->GetKey(A)||mInput->GetKey(LEFTARROW))//左
+	if (!mPoppedState)
+	{
+		Move();
+	}
+	
+	//clsDx();
+	//printfDx("落ちているかどうか_%d", mFall);
+	//printfDx("現在のゲージ_%d", mElectricity);
+	//printfDx("ジャンプしているかどうか_%d", mJump);
+	//printfDx("浮遊しているかどうか_%d", mFloating);
+	mPos->x += mVelocity->x;//移動処理
+	mVelocity->x *= 0.9f;//ここで慣性性が出る
+	if (abs(mVelocity->x) <= 0.5f)
+	{
+		mPoppedState = false;
+	}
+}
+
+void Player::Draw()
+{
+	mRenderer->Draw(*mPos);
+	//test用
+	//int a;
+	//a = LoadGraph("./Assets/Texture/Player.png");
+	//DrawGraph(mPos->x, mPos->y, a, TRUE);
+	//DeleteGraph(a);
+}
+
+void Player::Move()
+{
+	if (mInput->GetKey(A) || mInput->GetKey(LEFTARROW))//左
 	{
 		//mPos->x -= 10;
 		mVelocity->x = min(mVelocity->x - mAcceleration, -maxSpeed);
 	}
-	else if(mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))//右
+	else if (mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))//右
 	{
 		//mPos->x += 10;
 		mVelocity->x = max(mVelocity->x + mAcceleration, maxSpeed);
@@ -124,23 +154,6 @@ void Player::Update()
 	{
 		mElectricity = 0;
 	}
-	//clsDx();
-	//printfDx("落ちているかどうか_%d", mFall);
-	//printfDx("現在のゲージ_%d", mElectricity);
-	//printfDx("ジャンプしているかどうか_%d", mJump);
-	//printfDx("浮遊しているかどうか_%d", mFloating);
-	mPos->x += mVelocity->x;//移動処理
-	mVelocity->x *= 0.9f;//ここで慣性性が出る
-}
-
-void Player::Draw()
-{
-	mRenderer->Draw(*mPos);
-	//test用
-	//int a;
-	//a = LoadGraph("./Assets/Texture/Player.png");
-	//DrawGraph(mPos->x, mPos->y, a, TRUE);
-	//DeleteGraph(a);
 }
 
 void Player::SetPosition(const Vector2& position)
@@ -185,7 +198,10 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				mFall = false;//重力が発生していない
 				mJump = false;//ジャンプしていない
 				mFloating = false;//浮遊していない
-				mPos->y = a->Position()->y - mSize->y;
+				//mPos->y = a->Position()->y - mSize->y;
+				mPoppedState = true;
+				mPos->x = old_x;
+				mVelocity->x *= -5.f;
 			}
 		}
 		if (a->Tag() == "Goal")
@@ -199,7 +215,14 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				
+				if (mPoppedState)
+				{
+					Actor::Destroy(a);
+				}
+				else
+				{
+					Actor::Destroy(this);
+				}
 			}
 		}
 	}
@@ -226,6 +249,5 @@ bool Player::RGoal()
 {
 	return mGoal;
 }
-
 
 
