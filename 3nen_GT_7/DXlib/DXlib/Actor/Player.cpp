@@ -38,6 +38,7 @@ void Player::End()
 	delete(mVelocity);
 	delete(mSize);
 	delete(mRenderer);
+	delete(mStaticElectricity);
 	delete(mInput);
 }
 
@@ -180,15 +181,18 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				//mRenderer->Draw("ThunderEffect", *mPos);
-				mElectricity = 0;
-				mFall = false;//重力が発生していない
-				mJump = false;//ジャンプしていない
-				mFloating = false;//浮遊していない
-				//mPos->y = a->Position()->y - mSize->y;
-				mPoppedState = true;
-				mPos->x = old_x;
-				mVelocity->x *= -5.f;
+				if (!mPoppedState)
+				{
+					//mRenderer->Draw("ThunderEffect", *mPos);
+					mElectricity = 0;
+					mFall = false;//重力が発生していない
+					mJump = false;//ジャンプしていない
+					mFloating = false;//浮遊していない
+					//mPos->y = a->Position()->y - mSize->y;
+					mPoppedState = true;
+					mPos->x = old_x;
+					mVelocity->x *= -5.f;
+				}
 			}
 		}
 		if (a->Tag() == "Goal")

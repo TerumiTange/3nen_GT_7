@@ -61,7 +61,7 @@ private:
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//メモリーリーク検出
-	//_CrtSetBreakAlloc(218413);//メモリーリークが出たら()に数字を入れる
+	//_CrtSetBreakAlloc();//メモリーリークが出たら()に数字を入れる
 	// ウインドウモードで起動
 	ChangeWindowMode(TRUE);
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
@@ -73,7 +73,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetMainWindowText("ばっきゃろ～");
 
-	SetDrawScreen(DX_SCREEN_BACK);
+	
 	//背景色を変更
 	SetBackgroundColor(255, 255, 255);
 
@@ -88,6 +88,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		return -1;    // エラーが起きたら直ちに終了
 	}
+	SetDrawScreen(DX_SCREEN_BACK);
 	SceneManager manager;
 	manager.Init();
 	Input* input = new Input();
