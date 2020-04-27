@@ -3,28 +3,6 @@
 #define NOMINMAX
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
-Player::Player(const char* tag):
-	Actor(tag),
-	mGoal(false),
-	mPos(new Vector2(0,0)),
-	mVelocity(new Vector2(0,0)),
-	maxSpeed(7),
-	mAcceleration(0.5),
-	mSize(new Vector2(64,64)),
-	mFilename(tag),
-	mRenderer(new Renderer(tag)),
-	mInput(new Input()),
-	mFall(true),
-	mJump(false),
-	mFloating(false),
-	mElectricity(0),
-	mChargedState(false),
-	mPoppedState(false)
-{
-	Actor::SetPos(*mPos);
-	Actor::SetSize(*mSize);
-	mInput->Init();
-}
 
 Player::Player(const Vector2& position, const char* tag):
 	Actor(tag),
@@ -36,6 +14,7 @@ Player::Player(const Vector2& position, const char* tag):
 	mSize(new Vector2(64, 64)),
     mFilename(tag),
 	mRenderer(new Renderer(tag)),
+	mStaticElectricity(new Renderer("ThunderEffect")),
 	mInput(new Input()),
 	mFall(true),
 	mJump(false),
@@ -79,7 +58,7 @@ void Player::Update()
 
 	if (mFall&&(!mFloating))//重力
 	{
-		mPos->y += 20;
+		mPos->y += 16;
 	}
 
 	mFall = true;
@@ -96,8 +75,11 @@ void Player::Update()
 	//printfDx("現在のゲージ_%d", mElectricity);
 	//printfDx("ジャンプしているかどうか_%d", mJump);
 	//printfDx("浮遊しているかどうか_%d", mFloating);
+	mPos->y += mVelocity->y;
+	mVelocity->y *= 0.7f;
 	mPos->x += mVelocity->x;//移動処理
 	mVelocity->x *= 0.9f;//ここで慣性性が出る
+
 	if (abs(mVelocity->x) <= 0.5f)
 	{
 		mPoppedState = false;
@@ -107,6 +89,10 @@ void Player::Update()
 void Player::Draw()
 {
 	mRenderer->Draw(*mPos);
+	if (mPoppedState)
+	{
+		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
+	}
 	//test用
 	//int a;
 	//a = LoadGraph("./Assets/Texture/Player.png");
@@ -130,7 +116,8 @@ void Player::Move()
 	if (!mJump && mInput->GetKeyDown(SPACE) && mElectricity >= 10)//ジャンプ
 	{
 		mElectricity -= 10;
-		mPos->y -= 64;
+		//mPos->y -= 64;
+		mVelocity->y = -32;
 		mJump = true;
 	}
 	else if (mJump && mInput->GetKeyDown(SPACE))//浮遊

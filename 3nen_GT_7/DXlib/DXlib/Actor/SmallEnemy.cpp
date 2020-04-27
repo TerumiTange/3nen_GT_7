@@ -57,6 +57,17 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
 	{
+		if (a->Tag() == "Metal")
+		{
+			//mFall = false;
+			//mPos->y = a->Position()->y - mSize->y;
+			//mPos->x = old_x;
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				if (mRight)mRight = false;
+				else mRight = true;
+			}
+		}
 		if (a->Tag() == "Wall")
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
@@ -75,14 +86,7 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 				mPos->y = a->Position()->y - mSize->y;
 			}
 		}
-		if (a->Tag() == "Metal")
-		{
-			//mFall = false;
-			//mPos->y = a->Position()->y - mSize->y;
-			//mPos->x = old_x;
-			if (mRight)mRight = false;
-			else mRight = true;
-		}
+		
 	}
 }
 
