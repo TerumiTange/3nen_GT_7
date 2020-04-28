@@ -158,6 +158,13 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
 	{
+		if (a->Tag() == "DeathBlock")
+		{
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				Actor::Destroy(this);
+			}
+		}
 		if (a->Tag() == "Wall")
 		{
 			if (CheckHit( a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
