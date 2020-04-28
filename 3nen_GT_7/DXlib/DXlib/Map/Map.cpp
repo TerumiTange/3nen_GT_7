@@ -89,7 +89,7 @@ void Map::Create(const GimmickData & data)
 	}
 	else if(data.type==Category::DEATH)
 	{
-		//auto d = new DeathBlock(data.position);
+		auto d = new DeathBlock(data.position);
 	}
 }
 

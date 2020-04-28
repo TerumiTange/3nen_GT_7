@@ -226,20 +226,26 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 	}
 }
 
+
 bool Player::CheckHit(int x, int y, int width, int height)
 {
-	int L1 = mPos->x;
-	int R1 = mPos->x + mSize->x;
-	int L2 = x;
-	int R2 = x + width;
-	int U1 = mPos->y;
-	int D1 = mPos->y + mSize->y;
-	int U2 = y;
-	int D2 = y + height;
-	if (R1 < L2)return false;
-	if (R2 < L1)return false;
-	if (D1 < U2)return false;
-	if (D2 < U1)return false;
+	//int L1 = mPos->x;
+	//int R1 = mPos->x + mSize->x;
+	//int L2 = x;
+	//int R2 = x + width;
+	//if (R1 < L2)return false;
+	//if (R2 < L1)return false;
+	if (mPos->x + mSize->x < x)return false;
+	if (x + width < mPos->x)return false;
+
+	//int U1 = mPos->y;
+	//int D1 = mPos->y + mSize->y;
+	//int U2 = y;
+	//int D2 = y + height;
+	//if (D1 < U2)return false;
+	//if (D2 < U1)return false;
+	if (mPos->y + mSize->y < y)return false;
+	if (y + height < mPos->y)return false;
 	return true;
 }
 
