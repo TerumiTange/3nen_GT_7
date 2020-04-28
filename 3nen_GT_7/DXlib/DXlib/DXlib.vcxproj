@@ -138,6 +138,7 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\ActorManager.cpp" />
     <ClCompile Include="Actor\Collider.cpp" />
+    <ClCompile Include="Actor\DeathBlock.cpp" />
     <ClCompile Include="Actor\Enemy.cpp" />
     <ClCompile Include="Actor\Floor.cpp" />
     <ClCompile Include="Actor\Goal.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\ActorManager.h" />
     <ClInclude Include="Actor\Collider.h" />
+    <ClInclude Include="Actor\DeathBlock.h" />
     <ClInclude Include="Actor\Enemy.h" />
     <ClInclude Include="Actor\Floor.h" />
     <ClInclude Include="Actor\Goal.h" />

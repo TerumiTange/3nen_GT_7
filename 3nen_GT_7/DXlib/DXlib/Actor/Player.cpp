@@ -3,28 +3,6 @@
 #define NOMINMAX
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
-Player::Player(const char* tag):
-	Actor(tag),
-	mGoal(false),
-	mPos(new Vector2(0,0)),
-	mVelocity(new Vector2(0,0)),
-	maxSpeed(7),
-	mAcceleration(0.5),
-	mSize(new Vector2(64,64)),
-	mFilename(tag),
-	mRenderer(new Renderer(tag)),
-	mInput(new Input()),
-	mFall(true),
-	mJump(false),
-	mFloating(false),
-	mElectricity(0),
-	mChargedState(false),
-	mPoppedState(false)
-{
-	Actor::SetPos(*mPos);
-	Actor::SetSize(*mSize);
-	mInput->Init();
-}
 
 Player::Player(const Vector2& position, const char* tag):
 	Actor(tag),
@@ -36,6 +14,7 @@ Player::Player(const Vector2& position, const char* tag):
 	mSize(new Vector2(64, 64)),
     mFilename(tag),
 	mRenderer(new Renderer(tag)),
+	mStaticElectricity(new Renderer("ThunderEffect")),
 	mInput(new Input()),
 	mFall(true),
 	mJump(false),
@@ -59,6 +38,7 @@ void Player::End()
 	delete(mVelocity);
 	delete(mSize);
 	delete(mRenderer);
+	delete(mStaticElectricity);
 	delete(mInput);
 }
 
@@ -79,7 +59,7 @@ void Player::Update()
 
 	if (mFall&&(!mFloating))//重力
 	{
-		mPos->y += 20;
+		mPos->y += 16;
 	}
 
 	mFall = true;
@@ -96,8 +76,11 @@ void Player::Update()
 	//printfDx("現在のゲージ_%d", mElectricity);
 	//printfDx("ジャンプしているかどうか_%d", mJump);
 	//printfDx("浮遊しているかどうか_%d", mFloating);
+	mPos->y += mVelocity->y;
+	mVelocity->y *= 0.7f;
 	mPos->x += mVelocity->x;//移動処理
 	mVelocity->x *= 0.9f;//ここで慣性性が出る
+
 	if (abs(mVelocity->x) <= 0.5f)
 	{
 		mPoppedState = false;
@@ -107,6 +90,10 @@ void Player::Update()
 void Player::Draw()
 {
 	mRenderer->Draw(*mPos);
+	if (mPoppedState)
+	{
+		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
+	}
 	//test用
 	//int a;
 	//a = LoadGraph("./Assets/Texture/Player.png");
@@ -130,7 +117,8 @@ void Player::Move()
 	if (!mJump && mInput->GetKeyDown(SPACE) && mElectricity >= 10)//ジャンプ
 	{
 		mElectricity -= 10;
-		mPos->y -= 64;
+		//mPos->y -= 64;
+		mVelocity->y = -32;
 		mJump = true;
 	}
 	else if (mJump && mInput->GetKeyDown(SPACE))//浮遊
@@ -170,6 +158,13 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
 	{
+		if (a->Tag() == "DeathBlock")
+		{
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				Actor::Destroy(this);
+			}
+		}
 		if (a->Tag() == "Wall")
 		{
 			if (CheckHit( a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
@@ -193,15 +188,18 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				//mRenderer->Draw("ThunderEffect", *mPos);
-				mElectricity = 0;
-				mFall = false;//重力が発生していない
-				mJump = false;//ジャンプしていない
-				mFloating = false;//浮遊していない
-				//mPos->y = a->Position()->y - mSize->y;
-				mPoppedState = true;
-				mPos->x = old_x;
-				mVelocity->x *= -5.f;
+				if (!mPoppedState)
+				{
+					//mRenderer->Draw("ThunderEffect", *mPos);
+					mElectricity = 0;
+					mFall = false;//重力が発生していない
+					mJump = false;//ジャンプしていない
+					mFloating = false;//浮遊していない
+					//mPos->y = a->Position()->y - mSize->y;
+					mPoppedState = true;
+					mPos->x = old_x;
+					mVelocity->x *= -5.f;
+				}
 			}
 		}
 		if (a->Tag() == "Goal")
@@ -228,20 +226,26 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 	}
 }
 
+
 bool Player::CheckHit(int x, int y, int width, int height)
 {
-	int L1 = mPos->x;
-	int R1 = mPos->x + mSize->x;
-	int L2 = x;
-	int R2 = x + width;
-	int U1 = mPos->y;
-	int D1 = mPos->y + mSize->y;
-	int U2 = y;
-	int D2 = y + height;
-	if (R1 < L2)return false;
-	if (R2 < L1)return false;
-	if (D1 < U2)return false;
-	if (D2 < U1)return false;
+	//int L1 = mPos->x;
+	//int R1 = mPos->x + mSize->x;
+	//int L2 = x;
+	//int R2 = x + width;
+	//if (R1 < L2)return false;
+	//if (R2 < L1)return false;
+	if (mPos->x + mSize->x < x)return false;
+	if (x + width < mPos->x)return false;
+
+	//int U1 = mPos->y;
+	//int D1 = mPos->y + mSize->y;
+	//int U2 = y;
+	//int D2 = y + height;
+	//if (D1 < U2)return false;
+	//if (D2 < U1)return false;
+	if (mPos->y + mSize->y < y)return false;
+	if (y + height < mPos->y)return false;
 	return true;
 }
 

@@ -8,7 +8,6 @@ class Player:
 	public Actor
 {
 public :
-	Player(const char* tag = "Player");
 	Player(const Vector2& position, const char* tag = "Player");
 	~Player();
 	virtual void End()override;
@@ -32,6 +31,7 @@ private:
 	Vector2* mSize;//大きさ
 	const char* mFilename;//画像名
 	Renderer* mRenderer;//描画関数
+	Renderer* mStaticElectricity;//静電気画像
 	Input* mInput;//キー入力
 	bool mFall;//落ちているかどうか
 	bool mJump;//ジャンプしているかどうか

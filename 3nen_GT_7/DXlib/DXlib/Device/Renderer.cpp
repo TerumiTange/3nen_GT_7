@@ -27,3 +27,8 @@ void Renderer::Draw(const Vector2 & pos)
 {
 	DrawGraph(pos.x, pos.y, mGra, TRUE);
 }
+
+void Renderer::Draw(int x, int y)
+{
+	DrawGraph(x, y, mGra, TRUE);
+}

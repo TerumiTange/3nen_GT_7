@@ -15,6 +15,7 @@ public:
 	void Init();
 	//‰æ‘œ‚ð•`‰æ
 	void Draw(const Vector2& pos);
+	void Draw(int x, int y);
 private:
 	std::string mName;
 	int mGra;
