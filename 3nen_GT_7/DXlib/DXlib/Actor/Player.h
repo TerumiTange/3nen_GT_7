@@ -13,6 +13,8 @@ public :
 	virtual void End()override;
 	void Init();
 	virtual void Update()override;
+	void Jump();
+	void Floating();
 	virtual void Draw() override;
 	void Move();
 	void SetPosition(const Vector2& position);
@@ -22,9 +24,10 @@ public :
 	bool RGoal();//ゴールしたかどうか
 
 private:
+	int mHp;//体力
+	float mInvincibleTime;//無敵時間
 	bool mGoal;//ゴールしたかどうか
-	Vector2* mPos;
-	//Vector2* old_mPos;//移動前の位置
+	Vector2* mPos;//
 	Vector2* mVelocity;//ベクトル
 	float maxSpeed;//最大速度
 	float mAcceleration;//加速度

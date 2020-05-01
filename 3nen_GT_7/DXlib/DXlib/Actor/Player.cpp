@@ -49,6 +49,7 @@ void Player::Init()
 
 void Player::Update()
 {
+	mInput->JoyUpdate();
 	Actor::SetPos(*mPos);
 
 	if (!mFloating)//•‚—Vó‘Ô‚Å‚È‚¯‚ê‚Î
@@ -71,11 +72,7 @@ void Player::Update()
 		Move();
 	}
 	
-	//clsDx();
-	//printfDx("—Ž‚¿‚Ä‚¢‚é‚©‚Ç‚¤‚©_%d", mFall);
-	//printfDx("Œ»Ý‚ÌƒQ[ƒW_%d", mElectricity);
-	//printfDx("ƒWƒƒƒ“ƒv‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©_%d", mJump);
-	//printfDx("•‚—V‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©_%d", mFloating);
+
 	mPos->y += mVelocity->y;
 	mVelocity->y *= 0.7f;
 	mPos->x += mVelocity->x;//ˆÚ“®ˆ—
@@ -84,6 +81,64 @@ void Player::Update()
 	if (abs(mVelocity->x) <= 0.5f)
 	{
 		mPoppedState = false;
+	}
+}
+void Player::Move()
+{
+	if (mInput->GetKey(A) || mInput->GetKey(LEFTARROW))//¶
+	{
+		//mPos->x -= 10;
+		mVelocity->x = min(mVelocity->x - mAcceleration, -maxSpeed);
+	}
+	else if (mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))//‰E
+	{
+		//mPos->x += 10;
+		mVelocity->x = max(mVelocity->x + mAcceleration, maxSpeed);
+	}
+
+}
+
+void Player::Jump()
+{
+	if (!mJump && mInput->GetKeyDown(SPACE) && mElectricity >= 10)//ƒWƒƒƒ“ƒv
+	{
+		mElectricity -= 10;
+		//mPos->y -= 64;
+		mVelocity->y = -32;
+		mJump = true;
+	}
+
+	if (!mJump&&mElectricity >= 10 && mInput->PadDown(JoyCode::Joy_A))
+	{
+		mElectricity -= 10;
+		//mPos->y -= 64;
+		mVelocity->y = -32;
+		mJump = true;
+	}
+}
+
+void Player::Floating()
+{
+	if (mJump && (mInput->GetKeyDown(SPACE) || mInput->PadDown(JoyCode::Joy_A)))//•‚—V
+	{
+		if (mElectricity > 0)
+		{
+			mFloating = true;
+			mElectricity--;
+		}
+		else
+		{
+			mFloating = false;
+			mFall = true;
+		}
+	}
+	if (mInput->GetKeyUp(SPACE) && mInput->PadUp(JoyCode::Joy_A))
+	{
+		mFloating = false;
+	}
+	if (mElectricity < 0)//‚à‚µ0‚æ‚è‚à¬‚³‚­‚È‚Á‚½‚ç
+	{
+		mElectricity = 0;
 	}
 }
 
@@ -101,48 +156,7 @@ void Player::Draw()
 	//DeleteGraph(a);
 }
 
-void Player::Move()
-{
-	if (mInput->GetKey(A) || mInput->GetKey(LEFTARROW))//¶
-	{
-		//mPos->x -= 10;
-		mVelocity->x = min(mVelocity->x - mAcceleration, -maxSpeed);
-	}
-	else if (mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))//‰E
-	{
-		//mPos->x += 10;
-		mVelocity->x = max(mVelocity->x + mAcceleration, maxSpeed);
-	}
 
-	if (!mJump && mInput->GetKeyDown(SPACE) && mElectricity >= 10)//ƒWƒƒƒ“ƒv
-	{
-		mElectricity -= 10;
-		//mPos->y -= 64;
-		mVelocity->y = -32;
-		mJump = true;
-	}
-	else if (mJump && mInput->GetKeyDown(SPACE))//•‚—V
-	{
-		if (mElectricity > 0)
-		{
-			mFloating = true;
-			mElectricity--;
-		}
-		else
-		{
-			mFloating = false;
-			mFall = true;
-		}
-	}
-	if (mInput->GetKeyUp(SPACE))
-	{
-		mFloating = false;
-	}
-	if (mElectricity < 0)//‚à‚µ0‚æ‚è‚à¬‚³‚­‚È‚Á‚½‚ç
-	{
-		mElectricity = 0;
-	}
-}
 
 void Player::SetPosition(const Vector2& position)
 {
