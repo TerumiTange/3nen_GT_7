@@ -93,9 +93,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	manager.Init();
 	Input* input = new Input();
 
+
 	// メインループ(何かキーが押されたらループを抜ける)
-	while (ProcessMessage() == 0)
+	while (ProcessMessage() == 0)//ProcessMessage()
 	{
+
 		// １/６０秒立つまで待つ
 		//while (GetNowCount() - FrameStartTime < 1000 / 60) {}
 		// 現在のカウント値を保存
@@ -111,6 +113,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 画面のクリア
 		ClearDrawScreen();
 
+
 		manager.Update();
 		manager.Draw();
 		
@@ -121,7 +124,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	delete(input);
-	DxLib_End();        // ＤＸライブラリ使用の終了処理
+
+	DxLib_End();      // ＤＸライブラリ使用の終了処理
 
 	return 0;        // ソフトの終了
 }
