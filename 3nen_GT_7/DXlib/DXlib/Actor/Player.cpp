@@ -67,6 +67,7 @@ void Player::Update()
 	if ((mTeleportationCount <= 0) && (mTeleportationTimer->IsTime()))
 	{
 		mTeleportationCount = 1;
+		mFall = true;
 	}
 	
 
@@ -74,7 +75,7 @@ void Player::Update()
 	old_x = mPos->x;
 	old_y = mPos->y;
 	Fall();
-	mFall = true;
+	
 
 	if (mInput->GetKeyDown(SPACE) || mInput->PadDown(Joy_A))
 	{
