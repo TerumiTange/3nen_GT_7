@@ -44,7 +44,7 @@ void ActorManager::Hit()
 	for (auto&& a : mActors)
 	{
 		//a->Hit(mActors);
-		if (a->Tag() == "SmallEnemy")
+		if ((a->Tag() == "SmallEnemy") || (a->Tag() == "FlyEnemy"))
 		{
 			a->Hit(mActors);
 		}
