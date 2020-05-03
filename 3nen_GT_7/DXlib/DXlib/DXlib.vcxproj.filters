@@ -93,6 +93,7 @@
     <ClCompile Include="Utility\Ui.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Actor\Goal.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -106,6 +107,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Actor\FlyEnemy.cpp">
+=======
+    <ClCompile Include="Device\ScrollMap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Device\Fader.cpp">
+>>>>>>> origin/satotatsu
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,6 +198,7 @@
     <ClInclude Include="Utility\Ui.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Actor\Goal.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -204,6 +212,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Actor\FlyEnemy.h">
+=======
+    <ClInclude Include="Device\ScrollMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Device\Fader.h">
+>>>>>>> origin/satotatsu
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
