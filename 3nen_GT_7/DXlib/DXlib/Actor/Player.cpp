@@ -81,6 +81,11 @@ void Player::Update()
 		Teleportation();//uŠÔˆÚ“®
 	}
 
+	if (mInput->GetKeyDown(H))
+	{
+		Recovery();
+	}
+
 	Move();
 
 	Movement();
@@ -172,6 +177,7 @@ void Player::Teleportation()//uŠÔˆÚ“®
 
 void Player::Damage()//ƒ_ƒ[ƒW
 {
+	if (mTeleportation)return;//uŠÔˆÚ“®’†‚È‚ç
 	if (mCountTimer->IsTime())
 	{
 		mHp--;
