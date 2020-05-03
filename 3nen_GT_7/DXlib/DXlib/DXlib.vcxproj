@@ -148,7 +148,9 @@
     <ClCompile Include="Actor\SmallEnemy.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
+    <ClCompile Include="Device\Fader.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
+    <ClCompile Include="Device\ScrollMap.cpp" />
     <ClCompile Include="Device\Sound.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map\Map.cpp" />
@@ -182,7 +184,9 @@
     <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />
+    <ClInclude Include="Device\Fader.h" />
     <ClInclude Include="Device\Renderer.h" />
+    <ClInclude Include="Device\ScrollMap.h" />
     <ClInclude Include="Device\Sound.h" />
     <ClInclude Include="Device\WindowSize.h" />
     <ClInclude Include="Map\Map.h" />
