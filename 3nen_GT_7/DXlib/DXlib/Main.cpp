@@ -92,12 +92,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneManager manager;
 	manager.Init();
 	Input* input = new Input();
-
+	input->JoyInit();
 
 	// メインループ(何かキーが押されたらループを抜ける)
 	while (ProcessMessage() == 0)//ProcessMessage()
 	{
-
+		input->JoyUpdate();
+		if ((input->PadDown(JoyCode::Joy_R1)) && (input->PadDown(JoyCode::Joy_L1)) && (input->PadDown(JoyCode::Joy_Start)) && (input->PadDown(JoyCode::Joy_Back)))
+		{
+			break;
+		}
 		// １/６０秒立つまで待つ
 		//while (GetNowCount() - FrameStartTime < 1000 / 60) {}
 		// 現在のカウント値を保存

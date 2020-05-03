@@ -39,6 +39,7 @@ void ActorManager::Update()
 
 void ActorManager::Hit()
 {
+	if (!GetPlayer())return;
 	GetPlayer()->Hit(mActors);
 	for (auto&& a : mActors)
 	{

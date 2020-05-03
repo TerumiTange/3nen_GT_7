@@ -3,6 +3,7 @@
 #include "../System/Input.h"
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
+#include "../System/CountDownTimer.h"
 
 class Player:
 	public Actor
@@ -18,6 +19,7 @@ public :
 	void Floating();
 	virtual void Draw() override;
 	void Move();
+	void Damage();
 	void SetPosition(const Vector2& position);
 	Vector2& GetPosition();
 	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;
@@ -26,6 +28,7 @@ public :
 
 private:
 	int mHp;//体力
+	int mMaxHp;//最大体力
 	float mInvincibleTime;//無敵時間
 	bool mGoal;//ゴールしたかどうか
 	Vector2* mPos;//
@@ -37,6 +40,7 @@ private:
 	Renderer* mRenderer;//描画関数
 	Renderer* mStaticElectricity;//静電気画像
 	Input* mInput;//キー入力
+	CountDownTimer* mCountTimer;//カウントダウンタイマー
 	bool mFall;//落ちているかどうか
 	bool mJump;//ジャンプしているかどうか
 	bool mFloating;//浮遊しているかどうか

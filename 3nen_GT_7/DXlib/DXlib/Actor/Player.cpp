@@ -6,6 +6,9 @@
 
 Player::Player(const Vector2& position, const char* tag):
 	Actor(tag),
+	mMaxHp(4),
+	mHp(4),
+	mInvincibleTime(4),
 	mGoal(false),
 	mPos(new Vector2(0,0)),
 	mVelocity(new Vector2(0, 0)),
@@ -16,6 +19,7 @@ Player::Player(const Vector2& position, const char* tag):
 	mRenderer(new Renderer(tag)),
 	mStaticElectricity(new Renderer("ThunderEffect")),
 	mInput(new Input()),
+	mCountTimer(new CountDownTimer()),
 	mFall(true),
 	mJump(false),
 	mFloating(false),
@@ -49,6 +53,10 @@ void Player::Init()
 
 void Player::Update()
 {
+	//clsDx();
+	printfDx("‘Ì—Í%d", mHp);
+	printfDx("–³“GŽžŠÔ%.1f", mCountTimer->Now());
+	mCountTimer->Update();
 	mInput->JoyUpdate();
 	Actor::SetPos(*mPos);
 
@@ -109,6 +117,20 @@ void Player::Move()
 	else if (mInput->Horizontal() > 0)
 	{
 		mVelocity->x = max(mVelocity->x + mAcceleration, maxSpeed);
+	}
+}
+
+void Player::Damage()
+{
+	if (mCountTimer->IsTime())
+	{
+		mHp--;
+		mCountTimer->SetTime(mInvincibleTime);
+	}
+
+	if (mHp <= 0)
+	{
+		Destroy(this);
 	}
 }
 
@@ -247,7 +269,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				}
 				else
 				{
-					Actor::Destroy(this);
+					Damage();
 				}
 			}
 		}
