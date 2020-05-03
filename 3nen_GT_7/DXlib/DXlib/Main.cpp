@@ -71,7 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// Å‰‚Í 640x480 ‚É‚µ‚Ä‚¨‚­
 	SetWindowSize(ScreenWidth,ScreenHeight);//16:9//1024:576
 
-	SetMainWindowText("‚Î‚Á‚«‚á‚ë`");
+	SetMainWindowText("VOLT CHAIN");
 
 	
 	//”wŒiF‚ğ•ÏX
