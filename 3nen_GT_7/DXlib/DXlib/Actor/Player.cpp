@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Device/WindowSize.h"
+#include "../Map/Map.h"
 #include <algorithm>
 #define NOMINMAX
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
@@ -129,17 +130,17 @@ void Player::Movement()//ˆÚ“®ˆ—
 	{
 		mPos->x = 32;
 	}
-	if (mPos->x > ScreenWidth - 32)
+	if (mPos->x > Map::width * 32 - 32)
 	{
-		mPos->x = ScreenWidth - 32;
+		mPos->x = Map::width * 32 - 32;
 	}
 	if (mPos->y > ScreenHeight)
 	{
 		mPos->y = ScreenHeight;
 	}
-	if (mPos->y < 32)
+	if (mPos->y < Map::height * 32 - ScreenHeight - 32)
 	{
-		mPos->y = 32;
+		mPos->y = Map::height * 32 - ScreenHeight - 32;
 	}
 }
 
@@ -220,7 +221,7 @@ void Player::SetPosition(const Vector2& position)
 	*mPos = position;
 }
 
-Vector2 & Player::GetPosition()
+Vector2& Player::GetPosition()
 {
 	return *mPos;
 }

@@ -15,7 +15,8 @@ GamePlay::GamePlay(ISceneChanger* changer) :
 	BaseScene(changer),
 	mActorManager(new ActorManager()),
 	sound(),
-	input(new Input())
+	input(new Input()),
+	camera(new Camera2d())
 {
 	Actor::SetActorManager(mActorManager);
 }
@@ -26,6 +27,7 @@ GamePlay::~GamePlay()
 	mActorManager->Clear();
 	delete(mActorManager);
 	delete(input);
+	delete(camera);
 
 	sound.StopBGM("./Assets/Sound/a.mp3");
 	sound.Init();
@@ -70,13 +72,18 @@ void GamePlay::Init()
 	sound.Init();
 	sound.Load("./Assets/Sound/a.mp3");
 	input->Init();
-
+	camera->Init(Vector2(0, 0));
 }
 
 void GamePlay::Update()
 {
 	mActorManager->Update();
 	mActorManager->Hit();
+	if (mActorManager->GetPlayer())
+	{
+		camera->GetPPos(mActorManager->GetPlayer()->GetPosition());
+		camera->Update();
+	}
 	sound.PlayBGM("./Assets/Sound/a.mp3");
 	if (input->GetKeyDown(B))
 	{
@@ -102,6 +109,7 @@ void GamePlay::Update()
 	{
 		NextScene();
 	}
+
 }
 
 void GamePlay::Draw()
