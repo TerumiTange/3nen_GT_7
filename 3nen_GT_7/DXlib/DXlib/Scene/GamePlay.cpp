@@ -26,7 +26,7 @@ GamePlay::~GamePlay()
 	mActorManager->Clear();
 	delete(mActorManager);
 	delete(input);
-	
+
 	sound.StopBGM("./Assets/Sound/a.mp3");
 	sound.Init();
 }
