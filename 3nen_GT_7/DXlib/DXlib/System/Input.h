@@ -109,24 +109,44 @@ enum KeyCode//DELETEだけDelete
 
 enum JoyCode
 {
-	
+	Joy_A = PAD_INPUT_1,
+	Joy_B = PAD_INPUT_2,
+	Joy_X = PAD_INPUT_3,
+	Joy_Y = PAD_INPUT_4,
+	Joy_L1 = PAD_INPUT_5,
+	Joy_R1 = PAD_INPUT_6,
+	Joy_Up = PAD_INPUT_UP,
+	Joy_Down = PAD_INPUT_DOWN,
+	Joy_Right = PAD_INPUT_RIGHT,
+	Joy_Left = PAD_INPUT_LEFT,
+	Joy_Start = PAD_INPUT_8,
+	Joy_Back = PAD_INPUT_7,
+	Joy_LSticks = PAD_INPUT_10,
+	Joy_RSticks = PAD_INPUT_9,
 };
-
 class Input
 {
 public:
 	Input();
 	~Input();
 	void Init();
+	void JoyInit();//ジョイパッド用
 	void Update();
+	void JoyUpdate();//ジョイパッド用
 	bool GetKey(KeyCode key);
 	bool GetKeyUp(KeyCode key);
 	bool GetKeyDown(KeyCode key);
-	bool Pad();
-	bool PadUp();
-	bool PadDown();
+	bool Pad(JoyCode joy);//ジョイパッド用
+	bool PadUp(JoyCode joy);//ジョイパッド用
+	bool PadDown(JoyCode joy);//ジョイパッド用
+	float Horizontal();//左右移動
+	float Vertical();//上下移動
 
+	
 private:
+	int mPad;//ジョイパッド用
+	int AX, AY, ARX, ARY;//スティック
+	int mFlame;//フレーム
 	int mCurrentKey;//現在押されているキー
 	int mPreviousKey;//1フレーム前のキー
 };

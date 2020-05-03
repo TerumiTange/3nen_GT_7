@@ -5,6 +5,7 @@
 class CountUpTimer :
 	public Timer
 {
+public:
 	CountUpTimer();
 	CountUpTimer(float t);
 	~CountUpTimer();

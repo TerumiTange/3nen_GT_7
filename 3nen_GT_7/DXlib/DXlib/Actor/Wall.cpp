@@ -6,7 +6,7 @@ Wall::Wall(const Vector2& position, const char* tag):
 	mPos(new Vector2(0,0)),
 	mSize(new Vector2(32,32)),
 	mFilename(tag),
-	mRenderer(new Renderer())
+	mRenderer(new Renderer(tag))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -29,7 +29,7 @@ void Wall::Update()
 
 void Wall::Draw()
 {
-	mRenderer->Draw(mFilename, *mPos);
+	mRenderer->Draw(*mPos);
 	//int a;
 	//a = LoadGraph("./Assets/Texture/Wall.png");
 	//DrawGraph(mPos->x, mPos->y, a, TRUE);

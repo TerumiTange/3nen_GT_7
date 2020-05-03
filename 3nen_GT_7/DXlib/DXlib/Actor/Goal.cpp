@@ -3,9 +3,9 @@
 Goal::Goal(const Vector2& pos, const char* tag) :
 	Actor(tag),
 	mPos(new Vector2(0, 0)),
-	mSize(new Vector2(32, 32)),
+	mSize(new Vector2(64, 128)),
 	mFilename(tag),
-	mRenderer(new Renderer())
+	mRenderer(new Renderer(tag))
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -29,7 +29,7 @@ void Goal::Update()
 
 void Goal::Draw()
 {
-	mRenderer->Draw(mFilename, *mPos);
+	mRenderer->Draw(*mPos);
 }
 
 void Goal::Hit(std::list<std::shared_ptr<Actor>>)

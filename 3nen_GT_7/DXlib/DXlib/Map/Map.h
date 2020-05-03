@@ -12,6 +12,7 @@ enum class Category
 	FLOOR,//床
 	METAL,//金属
 	GOAL,//ゴール
+	DEATH,//デスブロック
 };
 
 struct GimmickData

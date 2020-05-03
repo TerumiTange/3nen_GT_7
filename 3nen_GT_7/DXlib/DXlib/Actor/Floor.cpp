@@ -5,7 +5,7 @@ Floor::Floor(const Vector2& position, const char* tag) :
 	mPos(new Vector2(0,0)),
 	mSize(new Vector2(32,32)),
 	mFilename(tag),
-	mRenderer(new Renderer())
+	mRenderer(new Renderer(tag))
 {
 	*mPos = position;
 	Actor::SetPos(*mPos);
@@ -28,7 +28,7 @@ void Floor::Update()
 
 void Floor::Draw()
 {
-	mRenderer->Draw(mFilename, *mPos);
+	mRenderer->Draw(*mPos);
 	//int a;
 	//a = LoadGraph("./Assets/Texture/Floor.png");
 	//DrawGraph(mPos->x, mPos->y, a, TRUE);

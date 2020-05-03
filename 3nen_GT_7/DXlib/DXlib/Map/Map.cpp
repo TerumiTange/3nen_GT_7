@@ -3,6 +3,7 @@
 #include "../Actor/Floor.h"
 #include "../Actor/Metal.h"
 #include "../Actor/Goal.h"
+#include "../Actor/DeathBlock.h"
 
 Map::Map():
 	mCSVReader(nullptr),
@@ -34,11 +35,13 @@ void Map::Init(const char* filename)
 		data.position = Vector2(i % mCSVReader->getWidth() * 32, i / mCSVReader->getWidth() * 32);
 		switch (mCSV[i])
 		{
-		case 0:data.type = Category::EMPTY; break;
-		case 1:data.type = Category::WALL; break;
-		case 2:data.type = Category::FLOOR; break;
-		case 3:data.type = Category::METAL; break;
-		case 4:data.type = Category::GOAL; break;
+		case 0:data.type = Category::EMPTY; break;//‹ó”’
+		case 1:data.type = Category::WALL; break; //•Ç
+		case 2:data.type = Category::FLOOR; break;//°
+		case 3:data.type = Category::METAL; break;//‹à‘®
+		case 4:data.type = Category::GOAL; break; //ƒS[ƒ‹
+		case 5:data.type = Category::DEATH; break;//€–S
+		case 99:data.type = Category::EMPTY; break;//—áŠOˆ——p
 		default:
 			break;
 		}
@@ -83,6 +86,10 @@ void Map::Create(const GimmickData & data)
 	else if (data.type == Category::GOAL)
 	{
 		auto g = new Goal(data.position);
+	}
+	else if(data.type==Category::DEATH)
+	{
+		auto d = new DeathBlock(data.position);
 	}
 }
 

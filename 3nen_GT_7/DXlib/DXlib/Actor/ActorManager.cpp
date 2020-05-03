@@ -21,10 +21,6 @@ void ActorManager::End()
 
 void ActorManager::Init()
 {
-	for (auto&& actor : mActors)
-	{
-		//actor->Init();
-	}
 }
 
 void ActorManager::Update()
@@ -43,9 +39,15 @@ void ActorManager::Update()
 
 void ActorManager::Hit()
 {
-	for (auto&& actor : mActors)
+	if (!GetPlayer())return;
+	GetPlayer()->Hit(mActors);
+	for (auto&& a : mActors)
 	{
-		actor->Hit(mActors);
+		//a->Hit(mActors);
+		if ((a->Tag() == "SmallEnemy") || (a->Tag() == "FlyEnemy"))
+		{
+			a->Hit(mActors);
+		}
 	}
 }
 

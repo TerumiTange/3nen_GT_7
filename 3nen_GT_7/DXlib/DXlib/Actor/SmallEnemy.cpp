@@ -5,7 +5,7 @@ SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag) :
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
-	mRenderer(new Renderer()),
+	mRenderer(new Renderer(tag)),
 	mFall(true),
 	mRight(true)
 {
@@ -28,24 +28,24 @@ void SmallEnemy::Update()
 	Actor::SetPos(*mPos);
 	if (mFall)
 	{
-		mPos->y += 20;
+		mPos->y += 10;
 	}
 	mFall = true;
 	old_x = mPos->x;
 	old_y = mPos->y;
 	if (mRight)
 	{
-		mPos->x += 10;
+		mPos->x += 5;
 	}
 	else
 	{
-		mPos->x -= 10;
+		mPos->x -= 5;
 	}
 }
 
 void SmallEnemy::Draw()
 {
-	mRenderer->Draw(mFilename, *mPos);
+	mRenderer->Draw(*mPos);
 	//test—p
 	//int a;
 	//a = LoadGraph("./Assets/Texture/Enemy.png");
@@ -57,13 +57,15 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
 	{
-		if (a->Tag() == "Player")
+		if (a->Tag() == "Metal")
 		{
+			//mFall = false;
+			//mPos->y = a->Position()->y - mSize->y;
+			//mPos->x = old_x;
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				Actor::Destroy(this);
-				//
-				Actor::Destroy(a);
+				if (mRight)mRight = false;
+				else mRight = true;
 			}
 		}
 		if (a->Tag() == "Wall")
@@ -84,22 +86,28 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 				mPos->y = a->Position()->y - mSize->y;
 			}
 		}
+		
 	}
 }
 
 bool SmallEnemy::CheckHit(int x, int y, int width, int height)
 {
-	int L1 = mPos->x;
-	int R1 = mPos->x + mSize->x;
-	int L2 = x;
-	int R2 = x + width;
-	int U1 = mPos->y;
-	int D1 = mPos->y + mSize->y;
-	int U2 = y;
-	int D2 = y + height;
-	if (R1 < L2)return false;
-	if (R2 < L1)return false;
-	if (D1 < U2)return false;
-	if (D2 < U1)return false;
+	//int L1 = mPos->x;
+	//int R1 = mPos->x + mSize->x;
+	//int L2 = x;
+	//int R2 = x + width;
+	//if (R1 < L2)return false;
+	//if (R2 < L1)return false;
+	if (mPos->x + mSize->x < x)return false;
+	if (x + width < mPos->x)return false;
+
+	//int U1 = mPos->y;
+	//int D1 = mPos->y + mSize->y;
+	//int U2 = y;
+	//int D2 = y + height;
+	//if (D1 < U2)return false;
+	//if (D2 < U1)return false;
+	if (mPos->y + mSize->y < y)return false;
+	if (y + height < mPos->y)return false;
 	return true;
 }
