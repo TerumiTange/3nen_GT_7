@@ -19,7 +19,8 @@ void Title::Init()
 
 void Title::Update()
 {
-	if (input->GetKeyDown(A))
+	input->JoyUpdate();
+	if (input->GetKeyDown(A) || input->PadDown(Joy_A))
 	{
 		NextScene();
 	}

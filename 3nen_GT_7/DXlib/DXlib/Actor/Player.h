@@ -13,6 +13,7 @@ public :
 	virtual void End()override;
 	void Init();
 	virtual void Update()override;
+	void Fall();
 	void Jump();
 	void Floating();
 	virtual void Draw() override;

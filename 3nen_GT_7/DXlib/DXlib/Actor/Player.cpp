@@ -58,10 +58,7 @@ void Player::Update()
 		if (mElectricity > 100)mElectricity = 100;
 	}
 
-	if (mFall&&(!mFloating))//重力
-	{
-		mPos->y += 16;
-	}
+	Fall();
 
 	mFall = true;
 	old_x = mPos->x;
@@ -72,6 +69,8 @@ void Player::Update()
 		Move();
 	}
 	
+	Jump();
+	Floating();
 
 	mPos->y += mVelocity->y;
 	mVelocity->y *= 0.7f;
@@ -83,19 +82,34 @@ void Player::Update()
 		mPoppedState = false;
 	}
 }
+void Player::Fall()
+{
+	if (mFall && (!mFloating))//重力
+	{
+		mPos->y += 16;
+	}
+}
 void Player::Move()
 {
-	if (mInput->GetKey(A) || mInput->GetKey(LEFTARROW))//左
+	//if (mInput->GetKey(A) || mInput->GetKey(LEFTARROW))//左
+	//{
+	//	//mPos->x -= 10;
+	//	mVelocity->x = min(mVelocity->x - mAcceleration, -maxSpeed);
+	//}
+	//else if (mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))//右
+	//{
+	//	//mPos->x += 10;
+	//	mVelocity->x = max(mVelocity->x + mAcceleration, maxSpeed);
+	//}
+
+	if (mInput->Horizontal() < 0)
 	{
-		//mPos->x -= 10;
 		mVelocity->x = min(mVelocity->x - mAcceleration, -maxSpeed);
 	}
-	else if (mInput->GetKey(D) || mInput->GetKey(RIGHTARROW))//右
+	else if (mInput->Horizontal() > 0)
 	{
-		//mPos->x += 10;
 		mVelocity->x = max(mVelocity->x + mAcceleration, maxSpeed);
 	}
-
 }
 
 void Player::Jump()
