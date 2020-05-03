@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "SmallEnemy.h"
+#include "FlyEnemy.h"
 
 Enemy::Enemy():
 	mCSV(std::make_unique<CSVReader>()),
@@ -44,6 +45,11 @@ void Enemy::Create(const EnemyData& data)
 	{
 		auto e = new SmallEnemy(data.position);
 	}
+
+	if (data.type == EnemyType::FLYENEMY)
+	{
+		auto e = new FlyEnemy(data.position);
+	}
 }
 
 void Enemy::Parse(unsigned row)
@@ -62,6 +68,11 @@ EnemyType Enemy::SelectType(const std::string & name)
 	if (name == "SmallEnemy")
 	{
 		return EnemyType::SMALLENEMY;
+	}
+
+	if (name == "FlyEnemy")
+	{
+		return EnemyType::FLYENEMY;
 	}
 
 	return EnemyType::SMALLENEMY;
