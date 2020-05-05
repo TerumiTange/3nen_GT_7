@@ -6,7 +6,6 @@
 //static int ScreenHeight = 576;
 #include <crtdbg.h>
 
-
 class Fps
 {
 public:
@@ -61,7 +60,7 @@ private:
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//メモリーリーク検出
-	//_CrtSetBreakAlloc();//メモリーリークが出たら()に数字を入れる
+	//_CrtSetBreakAlloc(105);//メモリーリークが出たら()に数字を入れる
 	// ウインドウモードで起動
 	ChangeWindowMode(TRUE);
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
@@ -79,6 +78,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// 垂直同期信号を待たない
 	SetWaitVSyncFlag(FALSE);
+
+	//あとでWindowサイズを変更しても問題ないようにする
+	//MakeScreen()
+	//SetDrawMode(DX_DRAWMODE_BILINEAR);
+	//DrawExtendGraph()
+	//ScreenFlip()
 
 	// ６０ＦＰＳ固定用、時間保存用変数を現在のカウント値にセット
 	//int FrameStartTime = GetNowCount();

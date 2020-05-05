@@ -9,7 +9,9 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	mFall(false),
 	mRight(true),
 	mStalker(false),
-	staSize(new Vector2(128, 128))
+	staSize(new Vector2(192, 192)),
+	sRenderer(new Renderer("StalEnemy"))/*,*/
+	/*paralRenderer(new Renderer("ここにファイルの名前を入れる")),*/
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -25,6 +27,8 @@ void FlyEnemy::End()
 	delete(mRenderer);
 
 	delete(staSize);
+	delete(sRenderer);
+	//delete(paralRenderer)
 }
 
 void FlyEnemy::Update()
@@ -34,7 +38,23 @@ void FlyEnemy::Update()
 
 void FlyEnemy::Draw()
 {
-	mRenderer->Draw(*mPos);
+	//mRenderer->Draw(*mPos);
+
+	//アイドル状態での描画
+	if (!mStalker)
+	{
+		mRenderer->Draw(*mPos);
+	}
+	//追跡状態での描画
+	if (mStalker)
+	{
+		sRenderer->Draw(*mPos);
+	}
+	//マヒ状態での描画
+	//if (ここにマヒ状態を表すboolを)
+	//{
+	//   paralRenderer->Draw(*mPos);
+	//}
 }
 
 void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
@@ -79,13 +99,20 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 
 			}*/
 
-			//プレイヤーが一定範囲内に入ったとき
-			if (CheckHit(a->Position()->x - 64, a->Position()->y - 64, 192, 192))
+			//プレイヤーが一定範囲内に入ったとき（追跡範囲に入ったとき）
+			if (CheckHit(a->Position()->x - 64, a->Position()->y - 64, staSize->x, staSize->y))
 			{
-				/*mStalker = true;
+				mStalker = true;
 				pPos.x = a->Position()->x;
-				pPos.y = a->Position()->y;*/
-				Actor::Destroy(a);
+				pPos.y = a->Position()->y;
+				//Actor::Destroy(a);
+			}
+
+			//プレイヤーが一定範囲から離れたとき（追跡範囲から出たとき）
+			//範囲の大きさに変更が必要な場合連絡を
+			if (!CheckHit(a->Position()->x - 64, a->Position()->y - 64, staSize->x, staSize->y))
+			{
+				mStalker = false;
 			}
 		}
 
@@ -128,18 +155,8 @@ void FlyEnemy::Move()
 
 		mPos->x += direction.x;
 		mPos->y += direction.y;
+
 	}
-	/*if (mStalker)
-	{
-		if (mRight)
-		{
-			mPos->x += 5;
-		}
-		else
-		{
-			mPos->x -= 5;
-		}
-	}*/
 }
 
 void FlyEnemy::Fall()

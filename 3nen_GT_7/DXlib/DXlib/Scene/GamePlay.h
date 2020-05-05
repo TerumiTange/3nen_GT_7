@@ -4,6 +4,7 @@
 
 #include "../Device/Sound.h"
 #include "../System/Input.h"
+#include "../Device/Camera2d.h"
 
 class ActorManager;
 class Camera;
@@ -22,4 +23,5 @@ private:
 	ActorManager* mActorManager;
 	Sound sound;
 	Input* input;
+	Camera2d* camera;
 };

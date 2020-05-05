@@ -1,6 +1,6 @@
 
 #include "Renderer.h"
-
+#include "Camera2d.h"
 
 #define PI 3.1415926535897932384626433832795f
 
@@ -25,7 +25,7 @@ void Renderer::Init()
 
 void Renderer::Draw(const Vector2 & pos)
 {
-	DrawGraph(pos.x, pos.y, mGra, TRUE);
+	DrawGraph(pos.x-Camera2d::CameraPos.x, pos.y, mGra, TRUE);
 }
 
 void Renderer::Draw(int x, int y)

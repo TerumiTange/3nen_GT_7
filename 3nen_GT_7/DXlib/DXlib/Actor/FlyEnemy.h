@@ -22,7 +22,7 @@ private:
 	Vector2* mPos;
 	Vector2* mSize;
 	const char* mFilename;
-	Renderer* mRenderer;
+	Renderer* mRenderer;//アイドル状態の画像
 	bool mFall;
 	bool mRight;//右に進んでいるかどうか
 	//仮の数値
@@ -33,4 +33,7 @@ private:
 	Vector2 pPos;
 	Vector2 direction;
 	Vector2* staSize;//追跡の範囲
+	Renderer* sRenderer;//追跡状態の画像
+	//Renderer* paralRenderer//マヒ状態の画像
+	//float* speed;//追いかける速度
 };
