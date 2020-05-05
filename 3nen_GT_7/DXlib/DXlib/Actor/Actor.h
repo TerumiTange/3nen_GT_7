@@ -10,6 +10,7 @@ enum class ActorState
 
 class ActorManager;
 class Vector2;
+class CountDownTimer;
 
 class Actor 
 {
@@ -32,6 +33,8 @@ public:
 	//アクター削除
 	static void Destroy(Actor* actor);
 	static void Destroy(std::shared_ptr<Actor> actor);
+	static void Destroy(Actor* actor, float sec);
+	static void Destroy(std::shared_ptr<Actor> actor, float sec);
 
 	//ゲッターセッター
 	void SetPos(Vector2& position);
@@ -40,16 +43,23 @@ public:
 	std::shared_ptr<Vector2>Size()const;
 	ActorState GetState() const;
 	const char* Tag() const;
+	void SetElectricShock(bool f);
+	bool GetElectricShock();
 
 	//ActorManagerの登録
 	static void SetActorManager(ActorManager* manager);
 	ActorManager* GetActorManager();
 
 private:
+	void DestroyTimer();
+
+private:
 	std::shared_ptr<Vector2> mPos;
 	std::shared_ptr<Vector2> mSize;
+	std::unique_ptr<CountDownTimer> mDestroyTimer;
 	ActorState mState;
 	const char* mTag;
+	bool mElectricShock;
 
 	static ActorManager* mActorManager;
 };

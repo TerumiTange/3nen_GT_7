@@ -1,12 +1,15 @@
 #include "Actor.h"
 #include "ActorManager.h"
 #include "../Utility/Vector2.h"
+#include "../System/CountDownTimer.h"
 
 Actor::Actor(const char * tag):
 	mPos(std::make_shared<Vector2>()),
 	mSize(std::make_shared<Vector2>()),
+	mDestroyTimer(nullptr),
 	mState(ActorState::ACTIVE),
-	mTag(tag)
+	mTag(tag),
+	mElectricShock(false)
 {
     if (mActorManager) 
     {
@@ -21,6 +24,7 @@ void Actor::update()
 	if (mState == ActorState::ACTIVE)
 	{
 		Update();
+		DestroyTimer();
 	}
 }
 
@@ -32,6 +36,18 @@ void Actor::Destroy(Actor* actor)
 void Actor::Destroy(std::shared_ptr<Actor> actor)
 {
 	actor->mState = ActorState::DEAD;
+}
+
+void Actor::Destroy(Actor * actor, float sec)
+{
+	if (actor->mDestroyTimer)return;
+	actor->mDestroyTimer = std::make_unique<CountDownTimer>(sec);
+}
+
+void Actor::Destroy(std::shared_ptr<Actor> actor, float sec)
+{
+	if (actor->mDestroyTimer)return;
+	actor->mDestroyTimer = std::make_unique<CountDownTimer>(sec);
 }
 
 void Actor::SetPos(Vector2& position)
@@ -65,6 +81,16 @@ const char* Actor::Tag() const
 	return mTag;
 }
 
+void Actor::SetElectricShock(bool f)
+{
+	mElectricShock = f;
+}
+
+bool Actor::GetElectricShock()
+{
+	return mElectricShock;
+}
+
 void Actor::SetActorManager(ActorManager * manager)
 {
 	mActorManager = manager;
@@ -73,6 +99,16 @@ void Actor::SetActorManager(ActorManager * manager)
 ActorManager* Actor::GetActorManager()
 {
 	return mActorManager;
+}
+
+void Actor::DestroyTimer()
+{
+	if (!mDestroyTimer)return;
+	mDestroyTimer->Update();
+	if (mDestroyTimer->IsTime())
+	{
+		mState = ActorState::DEAD;
+	}
 }
 
 ActorManager* Actor::mActorManager = nullptr;
