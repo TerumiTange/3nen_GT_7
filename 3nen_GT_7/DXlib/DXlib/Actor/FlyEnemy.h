@@ -13,6 +13,7 @@ public:
 	virtual void Draw()override;
 	virtual void Hit(std::list<std::shared_ptr<Actor>>actors)override;
 	bool CheckHit(int x, int y, int width, int height);
+	bool CheckHit2(int x, int y, int width, int height,int p);
 
 	void Move();
 	void Fall();
@@ -32,7 +33,7 @@ private:
 	bool mStalker;//true‚Å’ÇÕó‘Ô‚É
 	Vector2 pPos;
 	Vector2 direction;
-	Vector2* staSize;//’ÇÕ‚Ì”ÍˆÍ
+	int staSize;//’ÇÕ‚Ì”ÍˆÍ
 	Renderer* sRenderer;//’ÇÕó‘Ô‚Ì‰æ‘œ
 	//Renderer* paralRenderer//ƒ}ƒqó‘Ô‚Ì‰æ‘œ
 	//float* speed;//’Ç‚¢‚©‚¯‚é‘¬“x
