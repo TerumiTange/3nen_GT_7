@@ -25,10 +25,12 @@ Player::Player(const Vector2& position, const char* tag):
 	mFall(true),									  //落ちているかどうか
 	mMovingFast(false),								  //高速移動しているかどうか
 	mMovingFastCount(1),							  //高速移動できる回数
-	mMovingFastTime(0.5f),//0.5f							  //高速移動が回復するまでの時間
+	mMovingFastTime(0.5f),//0.5f					  //高速移動が回復するまでの時間
 	mMovingFastTimer(new CountDownTimer()),			  //高速移動回復用カウントダウンタイマー
 	mMovingFastAmount(200),							  //高速移動の移動量
-	mMovingFastDifference(*new Vector2(0,0)),		  //高速移動後の位置の差分
+	//mMovingFastDifference(new Vector2(0,0)),		  //高速移動後の位置の差分
+	mMovingFastDifferenceX(0),						  //高速移動後の位置の差分X
+	mMovingFastDifferenceY(0),						  //高速移動後の位置の差分Y
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
 	mNowMovingFast(false)							  //高速移動した瞬間
 {
@@ -50,7 +52,12 @@ void Player::End()
 	delete(mStaticElectricity);
 	delete(mInput);
 	delete(mCountTimer);
+
+	//delete(mMovingFastDifference);
+
 	delete(mMovingFastTimer);
+	delete(mNowMovingFastTimer);
+	
 	
 }
 
@@ -62,6 +69,9 @@ void Player::Update()
 	printfDx("無敵時間%.001f", mCountTimer->Now());
 	printfDx("瞬間移動できる回数%d", mMovingFastCount);
 	printfDx("瞬間移動できるようになるまでの時間%.01f", mMovingFastTimer->Now());
+	printfDx("xの値%.1f", mMovingFastDifferenceX);
+	printfDx("yの値%.1f", mMovingFastDifferenceY);
+	printfDx("落下中かどうか%d",mFall);
 
 	if (mHp <= 0)return;
 
@@ -77,14 +87,14 @@ void Player::Update()
 	if ((mMovingFastCount <= 0) && (mMovingFastTimer->IsTime()))
 	{
 		mFall = true;
-		if (mMovingFast)return;
+		//if (mMovingFast)return;
 		mMovingFastCount = 1;
-		
 	}
 	
 	if (mNowMovingFastTimer->IsTime())
 	{
 		mMovingFast = false;
+		mFall = true;
 	}
 
 	Actor::SetPos(*mPos);
@@ -110,10 +120,8 @@ void Player::Update()
 }
 void Player::Fall()//重力
 {
-	if (mFall)
-	{
-		mPos->y += 16;
-	}
+	if (!mFall)return;
+	mPos->y += 16;
 }
 void Player::Move()
 {
@@ -140,8 +148,11 @@ void Player::Movement()//移動処理
 		mVelocity->x = 0;
 		mVelocity->y = 0;
 		
-		mMovingFastDifference.x -= mPos->x;
-		mMovingFastDifference.y -= mPos->y;
+		//mMovingFastDifference->x -= mPos->x;
+		//mMovingFastDifference->y -= mPos->y;
+		mMovingFastDifferenceX -= mPos->x;
+		mMovingFastDifferenceY -= mPos->y;
+		mNowMovingFast = false;
 	}
 
 	//画面外に出た場合位置修正
@@ -168,12 +179,14 @@ void Player::MovingFast()//瞬間移動
 {
 	if (mMovingFastCount <= 0)return;//0以下ならリターン
 	if (mMovingFast)return;//瞬間移動中ならリターン
+	if (!mNowMovingFastTimer->IsTime())return;//一定時間たつまで無効
 	mMovingFast = true;
 	mFall = false;
 	mNowMovingFast = true;
 	mMovingFastCount--;
-	
-	mMovingFastDifference = *mPos;
+	//mMovingFastDifference = mPos;
+	mMovingFastDifferenceX = mPos->x;
+	mMovingFastDifferenceY = mPos->y;
 
 	if ((mInput->Horizontal() < 0) || (mInput->GetKey(A) || mInput->GetKey(LEFTARROW)))
 	{
@@ -291,10 +304,11 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		}
 		if (a->Tag() == "SmallEnemy")
 		{
-			if (mMovingFast)
+			if (mMovingFast)//高速移動中であれば
 			{
 				if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 				{
+					if (a->GetElectricShock())Destroy(a);
 					a->SetElectricShock(true);
 					mMovingFastCount++;
 				}
@@ -307,10 +321,11 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 
 		if (a->Tag() == "FlyEnemy")
 		{
-			if (mMovingFast)
+			if (mMovingFast)//高速移動中であれば
 			{
 				if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 				{
+					if (a->GetElectricShock())Destroy(a);
 					a->SetElectricShock(true);
 					mMovingFastCount++;
 				}
@@ -354,9 +369,9 @@ bool Player::CheckHitF(int x, int y, int width, int height)
 	//if (y + height < mPos->y - mMovingFastDifference.y)return false;
 
 	if (mPos->x + mSize->x < x)return false;
-	if (mPos->x - mMovingFastDifference.x > x + width)return false;
+	if (mPos->x - mMovingFastDifferenceX > x + width)return false;
 	if (mPos->y > y + height)return false;
-	if (y > mPos->y + mSize->y + mMovingFastDifference.y)return false;
+	if (y > mPos->y + mSize->y + mMovingFastDifferenceY)return false;
 	return true;
 }
 

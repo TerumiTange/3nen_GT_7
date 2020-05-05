@@ -50,7 +50,9 @@ private:
 	float mMovingFastTime;//高速移動回復時間
 	CountDownTimer* mMovingFastTimer;//高速移動回復用タイマー
 	int mMovingFastAmount;//高速移動の移動量
-	Vector2 mMovingFastDifference;//高速移動後の位置の差分
+	//Vector2* mMovingFastDifference;//高速移動後の位置の差分
+	float mMovingFastDifferenceX;//高速移動後の位置差分X
+	float mMovingFastDifferenceY;//高速移動後の位置差分Y
 	CountDownTimer* mNowMovingFastTimer;//高速移動状態のタイマー
 	bool mNowMovingFast;//高速移動した瞬間
 
