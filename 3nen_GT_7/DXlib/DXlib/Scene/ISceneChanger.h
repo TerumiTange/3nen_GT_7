@@ -5,6 +5,8 @@ typedef enum
 	SceneTitle,
 	SceneGamePlay,
 	SceneEnding,
+	SceneSelect,
+	SceneCredit,
 	SceneNone
 }SceneType;
 

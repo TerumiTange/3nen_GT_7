@@ -55,6 +55,17 @@ private:
 	static const int FPS = 60;//設定するFPSの値
 };
 
+void message_box()
+{
+	int flag;
+	flag = MessageBox(
+		NULL,
+		TEXT("フルスクリーンモードで起動しますか？"),
+		TEXT("スクリーン設定"),
+		MB_YESNO | MB_ICONQUESTION);
+	if (flag == IDNO)
+		ChangeWindowMode(TRUE);
+}
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -64,13 +75,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	// ウインドウモードで起動
-	ChangeWindowMode(TRUE);
+	//ChangeWindowMode(TRUE);
+	message_box();
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
 	//SetWindowSizeChangeEnableFlag(TRUE, TRUE);
 	// 画面サイズは最大の 1920x1080 にしておく
 	SetGraphMode(1024, 576, 32);
 	// 最初は 640x480 にしておく
-	SetWindowSize(ScreenWidth,ScreenHeight);//16:9//1024:576
+	//SetWindowSize(ScreenWidth,ScreenHeight);//16:9//1024:576
 
 	SetMainWindowText("VOLT CHAIN");
 
@@ -90,6 +102,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ６０ＦＰＳ固定用、時間保存用変数を現在のカウント値にセット
 	//int FrameStartTime = GetNowCount();
 	Fps fps;
+
+	
 	
 	if (DxLib_Init() == -1)    // ＤＸライブラリ初期化処理
 	{
