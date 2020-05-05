@@ -1,12 +1,12 @@
 ﻿  FlyEnemy.cpp
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
-  c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(69): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(77): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(79): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(86): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(103): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(113): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(150): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(151): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-  DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(69): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(77): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(79): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(86): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(103): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(113): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(159): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(160): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  DXlib.vcxproj -> C:\K018A1439\3nenGame\3nen_GT_7\DXlib\Debug\DXlib.exe
