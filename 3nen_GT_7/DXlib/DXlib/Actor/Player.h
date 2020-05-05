@@ -16,7 +16,7 @@ public :
 	void Fall();
 	void Move();
 	void Movement();//移動量計算
-	void Teleportation();//瞬間移動
+	void MovingFast();//瞬間移動
 	virtual void Draw() override;
 	void Damage();//ダメージ計算
 	void Recovery();//回復
@@ -24,7 +24,9 @@ public :
 	Vector2& GetPosition();
 	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;
 	bool CheckHit(int x, int y, int width, int height);//あたっているかどうか
+	bool CheckHitF(int x, int y, int width, int height);//高速移動中に当たっているかどうか
 	bool RGoal();//ゴールしたかどうか
+	bool GetMovingFast();//瞬間移動中かどうか
 
 private:
 	int mHp;//体力
@@ -43,11 +45,14 @@ private:
 	CountDownTimer* mCountTimer;//カウントダウンタイマー
 	bool mFall;//落ちているかどうか
 	
-	bool mTeleportation;//瞬間移動してるかどうか
-	int mTeleportationCount;//瞬間移動のカウント
-	float mTeleportationTime;//瞬間移動回復時間
-	CountDownTimer* mTeleportationTimer;//瞬間移動回復用タイマー
-	int mTeleportationAmount;//瞬間移動の移動量
+	bool mMovingFast;//高速移動してるかどうか
+	int mMovingFastCount;//高速移動のカウント
+	float mMovingFastTime;//高速移動回復時間
+	CountDownTimer* mMovingFastTimer;//高速移動回復用タイマー
+	int mMovingFastAmount;//高速移動の移動量
+	Vector2 mMovingFastDifference;//高速移動後の位置の差分
+	CountDownTimer* mNowMovingFastTimer;//高速移動状態のタイマー
+	bool mNowMovingFast;//高速移動した瞬間
 
 	//瞬間移動は一定距離移動
 

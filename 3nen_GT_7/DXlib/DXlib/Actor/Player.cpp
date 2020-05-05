@@ -23,11 +23,14 @@ Player::Player(const Vector2& position, const char* tag):
 	mInput(new Input()),							  //キー入力関数
 	mCountTimer(new CountDownTimer()),				  //無敵時間更新カウントダウンタイマー
 	mFall(true),									  //落ちているかどうか
-	mTeleportation(false),							  //瞬間移動しているかどうか
-	mTeleportationCount(1),							  //瞬間移動できる回数
-	mTeleportationTime(0.5f),						  //瞬間移動が回復するまでの時間
-	mTeleportationTimer(new CountDownTimer()),		  //瞬間移動回復用カウントダウンタイマー
-	mTeleportationAmount(200)						  //瞬間移動の移動量
+	mMovingFast(false),								  //高速移動しているかどうか
+	mMovingFastCount(1),							  //高速移動できる回数
+	mMovingFastTime(0.5f),//0.5f							  //高速移動が回復するまでの時間
+	mMovingFastTimer(new CountDownTimer()),			  //高速移動回復用カウントダウンタイマー
+	mMovingFastAmount(200),							  //高速移動の移動量
+	mMovingFastDifference(*new Vector2(0,0)),		  //高速移動後の位置の差分
+	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
+	mNowMovingFast(false)							  //高速移動した瞬間
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -47,40 +50,53 @@ void Player::End()
 	delete(mStaticElectricity);
 	delete(mInput);
 	delete(mCountTimer);
-	delete(mTeleportationTimer);
+	delete(mMovingFastTimer);
+	
 }
 
 void Player::Update()
 {
+	
 	//clsDx();
 	printfDx("体力%d", mHp);
 	printfDx("無敵時間%.001f", mCountTimer->Now());
-	printfDx("瞬間移動できる回数%d", mTeleportationCount);
-	printfDx("瞬間移動できるようになるまでの時間%.01f", mTeleportationTimer->Now());
+	printfDx("瞬間移動できる回数%d", mMovingFastCount);
+	printfDx("瞬間移動できるようになるまでの時間%.01f", mMovingFastTimer->Now());
+
+	if (mHp <= 0)return;
+
+	
 
 	mInput->JoyUpdate();//ジョイパッド更新
 	mCountTimer->Update();//無敵時間更新
 
-	if (!mTeleportation)//瞬間移動中でなければ
+	if (!mMovingFast)//瞬間移動中でなければ
 	{
-		mTeleportationTimer->Update();//瞬間移動時間更新
+		mMovingFastTimer->Update();//瞬間移動時間更新
 	}
-	if ((mTeleportationCount <= 0) && (mTeleportationTimer->IsTime()))
+	if ((mMovingFastCount <= 0) && (mMovingFastTimer->IsTime()))
 	{
-		mTeleportationCount = 1;
 		mFall = true;
+		if (mMovingFast)return;
+		mMovingFastCount = 1;
+		
 	}
 	
+	if (mNowMovingFastTimer->IsTime())
+	{
+		mMovingFast = false;
+	}
 
 	Actor::SetPos(*mPos);
 	old_x = mPos->x;
 	old_y = mPos->y;
 	Fall();
+	mNowMovingFastTimer->Update();
 	
 
 	if (mInput->GetKeyDown(SPACE) || mInput->PadDown(Joy_A))
 	{
-		Teleportation();//瞬間移動
+		MovingFast();//瞬間移動
 	}
 
 	if (mInput->GetKeyDown(H))
@@ -101,7 +117,7 @@ void Player::Fall()//重力
 }
 void Player::Move()
 {
-	if (mTeleportation)return;//瞬間移動中ならリターン
+	if (mMovingFast)return;//瞬間移動中ならリターン
 	if ((mInput->Horizontal() < 0) || (mInput->GetKey(A) || mInput->GetKey(LEFTARROW)))//左移動
 	{
 		mVelocity->x = min(mVelocity->x - mAcceleration, -maxSpeed);
@@ -118,11 +134,14 @@ void Player::Movement()//移動処理
 	mVelocity->y *= 0.7f;
 	mPos->x += mVelocity->x;//移動処理
 	mVelocity->x *= 0.9f;//ここで慣性性が出る
-	if (mTeleportation)
+	
+	if (mNowMovingFast)//高速移動なら慣性0
 	{
 		mVelocity->x = 0;
 		mVelocity->y = 0;
-		mTeleportation = false;
+		
+		mMovingFastDifference.x -= mPos->x;
+		mMovingFastDifference.y -= mPos->y;
 	}
 
 	//画面外に出た場合位置修正
@@ -142,44 +161,53 @@ void Player::Movement()//移動処理
 	{
 		mPos->y = Map::height * 32 - ScreenHeight - 32;
 	}
+
 }
 
-void Player::Teleportation()//瞬間移動
+void Player::MovingFast()//瞬間移動
 {
-	if (mTeleportationCount <= 0)return;//0以下ならリターン
-	if (mTeleportation)return;//瞬間移動中ならリターン
-	mTeleportation = true;
-	mTeleportationCount--;
+	if (mMovingFastCount <= 0)return;//0以下ならリターン
+	if (mMovingFast)return;//瞬間移動中ならリターン
+	mMovingFast = true;
+	mFall = false;
+	mNowMovingFast = true;
+	mMovingFastCount--;
 	
+	mMovingFastDifference = *mPos;
+
 	if ((mInput->Horizontal() < 0) || (mInput->GetKey(A) || mInput->GetKey(LEFTARROW)))
 	{
-		mVelocity->x = -mTeleportationAmount;
+		mVelocity->x = -mMovingFastAmount;
 	}
 	else if ((mInput->Horizontal() > 0) || (mInput->GetKey(D) || mInput->GetKey(RIGHTARROW)))
 	{
-		mVelocity->x = mTeleportationAmount;
+		mVelocity->x = mMovingFastAmount;
 	}
 
 	if (mInput->Vertical() < 0 || (mInput->GetKey(W) || mInput->GetKey(UPARROW)))
 	{
-		mVelocity->y = -mTeleportationAmount;
+		mVelocity->y = -mMovingFastAmount;
 	}
 	else if (mInput->Vertical() > 0 || (mInput->GetKey(S) || mInput->GetKey(DOWNARROW)))
 	{
-		mVelocity->y = mTeleportationAmount;
+		mVelocity->y = mMovingFastAmount;
 	}
+
+	mVelocity->x = mInput->Horizontal()*mMovingFastAmount;
+	mVelocity->y = mInput->Vertical()*mMovingFastAmount;
 
 	if (mVelocity->x == 0 && mVelocity->y == 0)//もし入力がなければ右に移動
 	{
-		mVelocity->x = mTeleportationAmount;
+		mVelocity->x = mMovingFastAmount;
 	}
 
-	mTeleportationTimer->SetTime(mTeleportationTime);
+	mMovingFastTimer->SetTime(mMovingFastTime);
+	mNowMovingFastTimer->SetTime(0.2f);
 }
 
 void Player::Damage()//ダメージ
 {
-	if (mTeleportation)return;//瞬間移動中なら
+	if (mMovingFast)return;//瞬間移動中なら
 	if (mCountTimer->IsTime())
 	{
 		mHp--;
@@ -188,7 +216,7 @@ void Player::Damage()//ダメージ
 
 	if (mHp <= 0)
 	{
-		Destroy(this);
+		Destroy(this, 3.f);//3秒後に死亡
 	}
 }
 
@@ -239,10 +267,10 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		}
 		if (a->Tag() == "Wall")
 		{
-			if (CheckHit( a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
 				mPos->x = old_x;
-				
+
 			}
 		}
 
@@ -263,7 +291,31 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		}
 		if (a->Tag() == "SmallEnemy")
 		{
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			if (mMovingFast)
+			{
+				if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+				{
+					a->SetElectricShock(true);
+					mMovingFastCount++;
+				}
+			}
+			else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			{
+				Damage();
+			}
+		}
+
+		if (a->Tag() == "FlyEnemy")
+		{
+			if (mMovingFast)
+			{
+				if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+				{
+					a->SetElectricShock(true);
+					mMovingFastCount++;
+				}
+			}
+			else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
 				Damage();
 			}
@@ -294,9 +346,28 @@ bool Player::CheckHit(int x, int y, int width, int height)
 	return true;
 }
 
+bool Player::CheckHitF(int x, int y, int width, int height)
+{
+	//if (mPos->x + mSize->x < x)return false;
+	//if (x + width < mPos->x - mMovingFastDifference.x) return false;
+	//if (mPos->y + mSize->y < y)return false;
+	//if (y + height < mPos->y - mMovingFastDifference.y)return false;
+
+	if (mPos->x + mSize->x < x)return false;
+	if (mPos->x - mMovingFastDifference.x > x + width)return false;
+	if (mPos->y > y + height)return false;
+	if (y > mPos->y + mSize->y + mMovingFastDifference.y)return false;
+	return true;
+}
+
 bool Player::RGoal()
 {
 	return mGoal;
+}
+
+bool Player::GetMovingFast()
+{
+	return mMovingFast;
 }
 
 
