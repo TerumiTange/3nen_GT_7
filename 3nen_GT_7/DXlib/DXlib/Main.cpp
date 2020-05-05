@@ -64,7 +64,10 @@ void message_box()
 		TEXT("スクリーン設定"),
 		MB_YESNO | MB_ICONQUESTION);
 	if (flag == IDNO)
+	{
 		ChangeWindowMode(TRUE);
+		SetWaitVSyncFlag(TRUE);
+	}
 }
 
 
@@ -73,6 +76,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//メモリーリーク検出
 	//_CrtSetBreakAlloc(6530);//メモリーリークが出たら()に数字を入れる
 
+	// 垂直同期信号を待たない
+	SetWaitVSyncFlag(FALSE);
 
 	// ウインドウモードで起動
 	//ChangeWindowMode(TRUE);
@@ -90,8 +95,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//背景色を変更
 	SetBackgroundColor(255, 255, 255);
 
-	// 垂直同期信号を待たない
-	SetWaitVSyncFlag(FALSE);
+	
 
 	//あとでWindowサイズを変更しても問題ないようにする
 	//MakeScreen()
@@ -103,7 +107,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//int FrameStartTime = GetNowCount();
 	Fps fps;
 
-	
 	
 	if (DxLib_Init() == -1)    // ＤＸライブラリ初期化処理
 	{
