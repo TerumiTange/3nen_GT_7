@@ -44,9 +44,12 @@ private:
 	Input* mInput;//キー入力
 	CountDownTimer* mCountTimer;//カウントダウンタイマー
 	bool mFall;//落ちているかどうか
+	float mGravity;//重力のスピード
+	float mMovingFastGravity;//高速移動中の重力
 	
 	bool mMovingFast;//高速移動してるかどうか
 	int mMovingFastCount;//高速移動のカウント
+	int mMovingFastMaxCount;//最大高速移動の回数
 	float mMovingFastTime;//高速移動回復時間
 	CountDownTimer* mMovingFastTimer;//高速移動回復用タイマー
 	int mMovingFastAmount;//高速移動の移動量

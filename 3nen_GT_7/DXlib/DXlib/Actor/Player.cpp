@@ -23,8 +23,11 @@ Player::Player(const Vector2& position, const char* tag):
 	mInput(new Input()),							  //キー入力関数
 	mCountTimer(new CountDownTimer()),				  //無敵時間更新カウントダウンタイマー
 	mFall(true),									  //落ちているかどうか
+	mGravity(16),									  //重力のスピード
+	mMovingFastGravity(8),							  //高速移動中の重力
 	mMovingFast(false),								  //高速移動しているかどうか
 	mMovingFastCount(1),							  //高速移動できる回数
+	mMovingFastMaxCount(1),							  //最大高速移動の回数
 	mMovingFastTime(0.5f),//0.5f					  //高速移動が回復するまでの時間
 	mMovingFastTimer(new CountDownTimer()),			  //高速移動回復用カウントダウンタイマー
 	mMovingFastAmount(200),							  //高速移動の移動量
@@ -63,7 +66,10 @@ void Player::End()
 
 void Player::Update()
 {
-	
+	if (mMovingFastCount > mMovingFastMaxCount)//最大回数をオーバーしたら
+	{
+		mMovingFastCount = mMovingFastMaxCount;
+	}
 	//clsDx();
 	printfDx("体力%d", mHp);
 	printfDx("無敵時間%.001f", mCountTimer->Now());
@@ -120,8 +126,13 @@ void Player::Update()
 }
 void Player::Fall()//重力
 {
+	if (mMovingFast)
+	{
+		mPos->y += mMovingFastGravity;
+		return;
+	}
 	if (!mFall)return;
-	mPos->y += 16;
+	mPos->y += mGravity;
 }
 void Player::Move()
 {
