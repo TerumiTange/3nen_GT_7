@@ -75,9 +75,8 @@ void Player::Update()
 	printfDx("–³“GŽžŠÔ%.001f", mCountTimer->Now());
 	printfDx("uŠÔˆÚ“®‚Å‚«‚é‰ñ”%d", mMovingFastCount);
 	printfDx("uŠÔˆÚ“®‚Å‚«‚é‚æ‚¤‚É‚È‚é‚Ü‚Å‚ÌŽžŠÔ%.01f", mMovingFastTimer->Now());
-	printfDx("x‚Ì’l%.1f", mMovingFastDifferenceX);
-	printfDx("y‚Ì’l%.1f", mMovingFastDifferenceY);
-	printfDx("—Ž‰º’†‚©‚Ç‚¤‚©%d",mFall);
+	//printfDx("x‚Ì’l%.1f", mMovingFastDifferenceX);
+	//printfDx("y‚Ì’l%.1f", mMovingFastDifferenceY);
 
 	if (mHp <= 0)return;
 

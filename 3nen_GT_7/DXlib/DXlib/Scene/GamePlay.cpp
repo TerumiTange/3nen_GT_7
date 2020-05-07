@@ -33,7 +33,7 @@ GamePlay::~GamePlay()
 	sound.Init();
 }
 
-void do_wark1()
+/*void do_wark1()
 {
 	Enemy* enemy = new Enemy();
 	enemy->Init("./Assets/Data/EnemyList.csv");
@@ -44,30 +44,31 @@ void do_wark2()
 	Map* map = new Map();
 	map->Init("./Assets/Data/map.csv");
 	delete(map);
-}
+}*/
 
 void GamePlay::Init()
 {
-	try
-	{
-		std::thread t1(do_wark1);
-		std::thread t2(do_wark2);
-		t1.join();
-		t2.join();
-	}
-	catch (std::exception &ex)
-	{
-		std::cerr << ex.what() << std::endl;
-	}
+	//try
+	//{
+	//	std::thread t1(do_wark1);
+	//	std::thread t2(do_wark2);
+	//	t1.join();
+	//	t2.join();
+	//}
+	//catch (std::exception &ex)
+	//{
+	//	std::cerr << ex.what() << std::endl;
+	//}
 	new Player(Vector2(50, 50));
 
-	/*Map* map = new Map();
+	Map* map = new Map();
 	map->Init("./Assets/Data/map.csv");
 	delete(map);
 
 	Enemy* enemy = new Enemy();
 	enemy->Init("./Assets/Data/EnemyList.csv");
-	delete(enemy);*/
+	mActorManager->SetEnemyCount(enemy->GetEnemyCount());//“G‚Ì”‚ğƒZƒbƒg
+	delete(enemy);
 
 	sound.Init();
 	sound.Load("./Assets/Sound/a.mp3");
@@ -77,7 +78,9 @@ void GamePlay::Init()
 
 void GamePlay::Update()
 {
+	
 	mActorManager->Update();
+	printfDx("“G‚Ì”%d", mActorManager->GetEnemyCount());
 	mActorManager->Hit();
 	if (mActorManager->GetPlayer())
 	{
@@ -105,7 +108,7 @@ void GamePlay::Update()
 		sound.StopBGM("./Assets/Sound/a.mp3");
 		Init();
 	}
-	if (mActorManager->GetPlayer()->RGoal())
+	if (mActorManager->GetPlayer()->RGoal() || mActorManager->GetEnemyCount() == 0)//ƒS[ƒ‹‚µ‚½‚Ü‚½‚Í“G‚ğ‚·‚×‚Ä“|‚µ‚½
 	{
 		NextScene();
 	}

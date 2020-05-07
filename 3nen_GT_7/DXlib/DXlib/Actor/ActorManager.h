@@ -18,6 +18,9 @@ public:
 	void Add(Actor* add);
 	void Clear();
 
+	void SetEnemyCount(size_t e);
+	size_t GetEnemyCount();
+
 	//アクター配列の中からプレイヤーを取得
 	std::shared_ptr<Player>GetPlayer() const;
 	//一番最初に見つかったActorの取得
@@ -56,4 +59,5 @@ private:
 	std::list<std::shared_ptr<Actor>>mActors;
 	std::list<std::shared_ptr<Actor>>mPendingActors;
 	bool mUpdatingActors;
+	size_t mEnemyCount;
 };

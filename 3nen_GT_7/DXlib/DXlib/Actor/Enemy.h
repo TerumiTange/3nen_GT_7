@@ -27,10 +27,12 @@ public:
 	void Create(const EnemyData& data);
 	void Parse(unsigned row);
 	EnemyType SelectType(const std::string& name);
+	size_t GetEnemyCount() const;
 
 private:
 	//CSVReader* mCSV;
 	std::unique_ptr<CSVReader> mCSV;
 	std::vector<std::string> mEnemyList;
 	std::list<EnemyData> mEnemyData;
+	size_t mEnemyCount;
 };

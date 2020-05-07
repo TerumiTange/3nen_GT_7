@@ -5,7 +5,8 @@
 Enemy::Enemy():
 	mCSV(std::make_unique<CSVReader>()),
 	mEnemyList(0),
-	mEnemyData(0)
+	mEnemyData(0),
+	mEnemyCount(0)
 {
 }
 
@@ -31,6 +32,7 @@ void Enemy::Init(const char * filename)
 	//}
 
 	auto j = mEnemyData.size();
+	mEnemyCount = mEnemyData.size();
 	for (int i = 0; i < j; ++i)
 	{
 		Create(mEnemyData.front());
@@ -76,4 +78,9 @@ EnemyType Enemy::SelectType(const std::string & name)
 	}
 
 	return EnemyType::SMALLENEMY;
+}
+
+size_t Enemy::GetEnemyCount() const
+{
+	return mEnemyCount;
 }
