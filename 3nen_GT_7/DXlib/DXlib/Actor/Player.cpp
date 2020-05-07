@@ -35,7 +35,9 @@ Player::Player(const Vector2& position, const char* tag):
 	mMovingFastDifferenceY(0),						  //高速移動後の位置の差分Y
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
 	mNowMovingFastTime(0.2f),						  //高速移動状態の時間
-	mNowMovingFast(false)							  //高速移動した瞬間
+	mNowMovingFast(false),							  //高速移動した瞬間
+	mFallTimer(new CountDownTimer()),				  //重力軽減の時間タイマー(IsTime()がfalseなら軽減中)
+	mFallTime(0.5f)									  //重力軽減の時間
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -59,7 +61,7 @@ void Player::End()//メモリの開放
 	delete(mMovingFastTimer);
 	delete(mNowMovingFastTimer);
 	
-	
+	delete(mFallTimer);
 }
 
 void Player::Update()
@@ -100,6 +102,7 @@ void Player::Update()
 	{
 		mMovingFast = false;
 		mFall = true;
+		mFallTimer->Update();
 	}
 
 	Actor::SetPos(*mPos);//現在の位置座標をアクターにセットする
@@ -125,7 +128,7 @@ void Player::Update()
 }
 void Player::Fall()//重力
 {
-	if (mMovingFast)//高速移動中なら
+	if (mMovingFast || !mFallTimer->IsTime())//高速移動中または重力軽減中なら
 	{
 		mPos->y += mMovingFastGravity;
 		return;
@@ -162,14 +165,14 @@ void Player::Movement()//移動処理
 	{
 		mVelocity->x = 0;
 		mVelocity->y = 0;
-		
+
 		//mMovingFastDifference->x -= mPos->x;
 		//mMovingFastDifference->y -= mPos->y;
 		mMovingFastDifferenceX -= mPos->x;//高速移動前との差分を計算
 		mMovingFastDifferenceY -= mPos->y;//高速移動前との差分を計算
 		mNowMovingFast = false;
+		mNowMovingFastTimer->SetTime(mFallTime);//重力発生まで軽減
 	}
-
 	//画面外に出た場合位置修正
 	if (mPos->x < 32)
 	{

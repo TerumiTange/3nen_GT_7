@@ -60,6 +60,9 @@ private:
 	float mNowMovingFastTime;//高速移動状態の時間
 	bool mNowMovingFast;//高速移動した瞬間
 
+	CountDownTimer* mFallTimer;//重力軽減の時間タイマー
+	float mFallTime;//重力軽減の時間
+
 	//瞬間移動は一定距離移動
 
 	//bool mJump;//ジャンプしているかどうか
