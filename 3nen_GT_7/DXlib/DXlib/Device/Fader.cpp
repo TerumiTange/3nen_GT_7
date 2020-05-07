@@ -2,6 +2,7 @@
 
 Fader::Fader()
 {
+	Init();
 }
 
 Fader::~Fader()
@@ -11,29 +12,70 @@ Fader::~Fader()
 //初期化
 void Fader::Init()
 {
-	limitTime = 0;
+	bright = 0;
+	setTime_in = 0;
+	setTime_out = 0;
+	inOut = false;
 }
 
-//0：フェードイン　1：フェードアウト　(時間指定はフレーム単位で)
-void Fader::Update(int fadetype, int limitTime)
+void Fader::Update()
 {
-	if (fadetype == 0)
+	if (!inOut)
 	{
-		FadeIn(limitTime);
+		FadeIn(setTime_in);
 	}
-	if (fadetype == 1)
+	if (inOut)
 	{
-		FadeOut(limitTime);
+		FadeOut(setTime_out);
 	}
+}
+
+void Fader::SetFadeIn(float setTime)
+{
+	setTime_in = 255 /( setTime * 60);
+}
+
+void Fader::SetFadeOut(float setTime)
+{
+	setTime_out = 255/(setTime * 60);
 }
 
 //フェードイン
-void Fader::FadeIn(int time)
+void Fader::FadeIn(float speed)
 {
+	if (bright > 255)
+	{
+		SetDrawBright(255, 255, 255);
+		return;
+	}
 
+	SetDrawBright(bright, bright, bright);
+
+	bright += speed;
 }
 
 //フェードアウト
-void Fader::FadeOut(int time)
+void Fader::FadeOut(float speed)
 {
+	if (bright <= 0)
+	{
+		SetDrawBright(0, 0, 0);
+		return;
+	}
+
+	SetDrawBright(bright, bright, bright);
+
+	bright -= speed;
+}
+
+//false：フェードイン　true：フェードアウト
+bool Fader::SwitchFade(bool value)
+{
+	return inOut = value;
+}
+
+void Fader::Draw()
+{
+	DrawFormatString(50, 100, GetColor(0, 0, 0), "%d", bright);
+
 }
