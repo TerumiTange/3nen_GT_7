@@ -9,11 +9,20 @@ public:
 	~Fader();
 
 	void Init();
-	void Update(int fadetype,int limitTime);
-	void FadeIn(int time);
-	void FadeOut(int time);
+	void Update();
+	void SetFadeIn(float setTime);
+	void SetFadeOut(float setTime);
+	void FadeIn(float time);
+	void FadeOut(float time);
+	bool SwitchFade(bool value);
+	bool GetNowFader();
+
+	void Draw();
 
 private:
-	int limitTime;
-
+	int bright;
+	float setTime_in;
+	float setTime_out;
+	bool inOut;  //true : out  false : in
+	bool mNowFader;//現在フェード out or in
 };

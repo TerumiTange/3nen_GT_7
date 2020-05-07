@@ -5,7 +5,8 @@
 #include <iterator>
 
 ActorManager::ActorManager():
-	mUpdatingActors(false)
+	mUpdatingActors(false),
+	mEnemyCount(0)
 {
 }
 
@@ -77,6 +78,16 @@ void ActorManager::Clear()
 	mActors.clear();
 }
 
+void ActorManager::SetEnemyCount(size_t e)
+{
+	mEnemyCount = e;
+}
+
+size_t ActorManager::GetEnemyCount()
+{
+	return mEnemyCount;
+}
+
 std::shared_ptr<Player> ActorManager::GetPlayer() const
 {
 	std::shared_ptr<Player> p = nullptr;
@@ -98,6 +109,10 @@ void ActorManager::Remove()
 	while (itr != mActors.end()) 
 	{
 		if ((*itr)->GetState() == ActorState::DEAD) {
+			if ((*itr)->Tag() != "Player")
+			{
+				mEnemyCount--;//プレイヤーでなければ減らす
+			}
 			(*itr)->End();//死んだらメモリ開放
 			itr = mActors.erase(itr);
 		}
