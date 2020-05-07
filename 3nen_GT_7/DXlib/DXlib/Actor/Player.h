@@ -13,16 +13,16 @@ public :
 	~Player();
 	virtual void End()override;
 	virtual void Update()override;//更新
-	void Fall();
-	void Move();
+	void Fall();//重力
+	void Move();//操作
 	void Movement();//移動量計算
 	void MovingFast();//瞬間移動
-	virtual void Draw() override;
+	virtual void Draw() override;//描画
 	void Damage();//ダメージ計算
 	void Recovery();//回復
-	void SetPosition(const Vector2& position);
-	Vector2& GetPosition();
-	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;
+	void SetPosition(const Vector2& position);//その位置座標に移動させる
+	Vector2& GetPosition();//現在の位置座標を渡す
+	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;//当たり判定
 	bool CheckHit(int x, int y, int width, int height);//あたっているかどうか
 	bool CheckHitF(int x, int y, int width, int height);//高速移動中に当たっているかどうか
 	bool RGoal();//ゴールしたかどうか
@@ -57,6 +57,7 @@ private:
 	float mMovingFastDifferenceX;//高速移動後の位置差分X
 	float mMovingFastDifferenceY;//高速移動後の位置差分Y
 	CountDownTimer* mNowMovingFastTimer;//高速移動状態のタイマー
+	float mNowMovingFastTime;//高速移動状態の時間
 	bool mNowMovingFast;//高速移動した瞬間
 
 	//瞬間移動は一定距離移動
@@ -68,6 +69,6 @@ private:
 	//bool mPoppedState;//はじけ状態かどうか
 	
 
-	int old_x;
-	int old_y;
+	int old_x;//動く前のX座標
+	int old_y;//動く前のY座標
 };

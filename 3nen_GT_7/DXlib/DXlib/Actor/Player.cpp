@@ -30,23 +30,23 @@ Player::Player(const Vector2& position, const char* tag):
 	mMovingFastMaxCount(1),							  //最大高速移動の回数
 	mMovingFastTime(0.5f),//0.5f					  //高速移動が回復するまでの時間
 	mMovingFastTimer(new CountDownTimer()),			  //高速移動回復用カウントダウンタイマー
-	mMovingFastAmount(200),							  //高速移動の移動量
-	//mMovingFastDifference(new Vector2(0,0)),		  //高速移動後の位置の差分
+	mMovingFastAmount(30),							  //高速移動の移動量
 	mMovingFastDifferenceX(0),						  //高速移動後の位置の差分X
 	mMovingFastDifferenceY(0),						  //高速移動後の位置の差分Y
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
+	mNowMovingFastTime(0.2f),						  //高速移動状態の時間
 	mNowMovingFast(false)							  //高速移動した瞬間
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
-	Actor::SetPos(*mPos);
-	Actor::SetSize(*mSize);
+	Actor::SetPos(*mPos);   //アクターにセット
+	Actor::SetSize(*mSize);	//アクターにセット
 	mInput->Init();
 }
 
 Player::~Player() = default;
 
-void Player::End()
+void Player::End()//メモリの開放
 {
 	delete(mPos);
 	delete(mVelocity);
@@ -55,8 +55,6 @@ void Player::End()
 	delete(mStaticElectricity);
 	delete(mInput);
 	delete(mCountTimer);
-
-	//delete(mMovingFastDifference);
 
 	delete(mMovingFastTimer);
 	delete(mNowMovingFastTimer);
@@ -68,9 +66,10 @@ void Player::Update()
 {
 	if (mMovingFastCount > mMovingFastMaxCount)//最大回数をオーバーしたら
 	{
-		mMovingFastCount = mMovingFastMaxCount;
+		mMovingFastCount = mMovingFastMaxCount;//最大回数にする
 	}
 	//clsDx();
+	//デバッグ用
 	printfDx("体力%d", mHp);
 	printfDx("無敵時間%.001f", mCountTimer->Now());
 	printfDx("瞬間移動できる回数%d", mMovingFastCount);
@@ -78,59 +77,60 @@ void Player::Update()
 	//printfDx("xの値%.1f", mMovingFastDifferenceX);
 	//printfDx("yの値%.1f", mMovingFastDifferenceY);
 
-	if (mHp <= 0)return;
+	if (mHp <= 0)return;//体力がなくなったら操作しないようにする
 
 	
 
 	mInput->JoyUpdate();//ジョイパッド更新
 	mCountTimer->Update();//無敵時間更新
 
-	if (!mMovingFast)//瞬間移動中でなければ
+	if (!mMovingFast)//高速移動中でなければ
 	{
-		mMovingFastTimer->Update();//瞬間移動時間更新
+		mMovingFastTimer->Update();//高速移動回復時間更新
 	}
-	if ((mMovingFastCount <= 0) && (mMovingFastTimer->IsTime()))
+
+	if ((mMovingFastCount <= 0) && (mMovingFastTimer->IsTime()))//高速移動回数が無く、高速移動回復時間が過ぎたら
 	{
 		mFall = true;
 		//if (mMovingFast)return;
-		mMovingFastCount = 1;
+		mMovingFastCount = 1;//高速移動回数を1にする
 	}
 	
-	if (mNowMovingFastTimer->IsTime())
+	if (mNowMovingFastTimer->IsTime())//高速移動した瞬間の処理が終了したら
 	{
 		mMovingFast = false;
 		mFall = true;
 	}
 
-	Actor::SetPos(*mPos);
-	old_x = mPos->x;
-	old_y = mPos->y;
-	Fall();
-	mNowMovingFastTimer->Update();
+	Actor::SetPos(*mPos);//現在の位置座標をアクターにセットする
+	old_x = mPos->x;//移動前に現在の座標Xを更新
+	old_y = mPos->y;//移動前に現在の座標Yを更新
+	Fall();//重力計算
+	mNowMovingFastTimer->Update();//高速移動した瞬間の処理を更新
 	
 
-	if (mInput->GetKeyDown(SPACE) || mInput->PadDown(Joy_A))
+	if (mInput->GetKeyDown(SPACE) || mInput->PadDown(Joy_A))//スペースまたはコントローラーのAを押したら
 	{
 		MovingFast();//瞬間移動
 	}
 
-	if (mInput->GetKeyDown(H))
+	if (mInput->GetKeyDown(H))//デバッグ用
 	{
-		Recovery();
+		Recovery();//体力回復
 	}
 
-	Move();
+	Move();//移動処理
 
-	Movement();
+	Movement();//移動計算
 }
 void Player::Fall()//重力
 {
-	if (mMovingFast)
+	if (mMovingFast)//高速移動中なら
 	{
 		mPos->y += mMovingFastGravity;
 		return;
 	}
-	if (!mFall)return;
+	if (!mFall)return;//地面に着地していなければリターン
 	mPos->y += mGravity;
 }
 void Player::Move()
@@ -148,20 +148,25 @@ void Player::Move()
 
 void Player::Movement()//移動処理
 {
-	mPos->y += mVelocity->y;
-	mVelocity->y *= 0.7f;
-	mPos->x += mVelocity->x;//移動処理
-	mVelocity->x *= 0.9f;//ここで慣性性が出る
+	mPos->y += mVelocity->y;//移動処理Y
+	mPos->x += mVelocity->x;//移動処理X
+
+
+	if (!mNowMovingFast)
+	{
+		mVelocity->y *= 0.7f;//ここで慣性性が出る
+		mVelocity->x *= 0.9f;//ここで慣性性が出る
+	}
 	
-	if (mNowMovingFast)//高速移動なら慣性0
+	if (mNowMovingFast&&mNowMovingFastTimer->IsTime())//高速移動なら慣性0
 	{
 		mVelocity->x = 0;
 		mVelocity->y = 0;
 		
 		//mMovingFastDifference->x -= mPos->x;
 		//mMovingFastDifference->y -= mPos->y;
-		mMovingFastDifferenceX -= mPos->x;
-		mMovingFastDifferenceY -= mPos->y;
+		mMovingFastDifferenceX -= mPos->x;//高速移動前との差分を計算
+		mMovingFastDifferenceY -= mPos->y;//高速移動前との差分を計算
 		mNowMovingFast = false;
 	}
 
@@ -195,49 +200,51 @@ void Player::MovingFast()//瞬間移動
 	mNowMovingFast = true;
 	mMovingFastCount--;
 	//mMovingFastDifference = mPos;
-	mMovingFastDifferenceX = mPos->x;
-	mMovingFastDifferenceY = mPos->y;
+	mMovingFastDifferenceX = mPos->x;//高速移動前の座標X
+	mMovingFastDifferenceY = mPos->y;//高速移動前の座標Y
 
-	if ((mInput->Horizontal() < 0) || (mInput->GetKey(A) || mInput->GetKey(LEFTARROW)))
+	mVelocity->x = mInput->Horizontal()*mMovingFastAmount;//コントローラでの移動
+	mVelocity->y = mInput->Vertical()*mMovingFastAmount;  //コントローラでの移動
+
+	//キーボードでの移動
+	if (mInput->GetKeyDown(LEFTARROW) || mInput->GetKeyDown(A))
 	{
 		mVelocity->x = -mMovingFastAmount;
 	}
-	else if ((mInput->Horizontal() > 0) || (mInput->GetKey(D) || mInput->GetKey(RIGHTARROW)))
+	else if (mInput->GetKeyDown(D) || mInput->GetKeyDown(RIGHTARROW))
 	{
 		mVelocity->x = mMovingFastAmount;
 	}
 
-	if (mInput->Vertical() < 0 || (mInput->GetKey(W) || mInput->GetKey(UPARROW)))
+	if (mInput->GetKeyDown(W) || mInput->GetKeyDown(UPARROW))
 	{
 		mVelocity->y = -mMovingFastAmount;
 	}
-	else if (mInput->Vertical() > 0 || (mInput->GetKey(S) || mInput->GetKey(DOWNARROW)))
+	else if (mInput->GetKeyDown(S) || mInput->GetKeyDown(DOWNARROW))
 	{
 		mVelocity->y = mMovingFastAmount;
 	}
 
-	mVelocity->x = mInput->Horizontal()*mMovingFastAmount;
-	mVelocity->y = mInput->Vertical()*mMovingFastAmount;
 
 	if (mVelocity->x == 0 && mVelocity->y == 0)//もし入力がなければ右に移動
 	{
 		mVelocity->x = mMovingFastAmount;
 	}
 
-	mMovingFastTimer->SetTime(mMovingFastTime);
-	mNowMovingFastTimer->SetTime(0.2f);
+	mMovingFastTimer->SetTime(mMovingFastTime);//回数を回復させるまでの時間
+	mNowMovingFastTimer->SetTime(mNowMovingFastTime);//処理に必要な時間
 }
 
 void Player::Damage()//ダメージ
 {
 	if (mMovingFast)return;//瞬間移動中なら
-	if (mCountTimer->IsTime())
+	if (mCountTimer->IsTime())//無敵時間でないなら
 	{
-		mHp--;
-		mCountTimer->SetTime(mInvincibleTime);
+		mHp--;//1ダメージ受ける
+		mCountTimer->SetTime(mInvincibleTime);//無敵時間をセット
 	}
 
-	if (mHp <= 0)
+	if (mHp <= 0)//体力がなくなったら
 	{
 		Destroy(this, 3.f);//3秒後に死亡
 	}
@@ -246,14 +253,14 @@ void Player::Damage()//ダメージ
 void Player::Recovery()//体力回復
 {
 	mHp++;
-	if (mMaxHp < mHp)
+	if (mMaxHp < mHp)//最大体力を超えたら
 	{
-		mHp = mMaxHp;
+		mHp = mMaxHp;//最大体力にする
 	}
 }
 
 
-void Player::Draw()
+void Player::Draw()//描画
 {
 	mRenderer->Draw(*mPos);
 	//if (mPoppedState)
