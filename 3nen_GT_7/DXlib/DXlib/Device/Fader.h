@@ -15,6 +15,7 @@ public:
 	void FadeIn(float time);
 	void FadeOut(float time);
 	bool SwitchFade(bool value);
+	bool GetNowFader();
 
 	void Draw();
 
@@ -23,5 +24,5 @@ private:
 	float setTime_in;
 	float setTime_out;
 	bool inOut;  //true : out  false : in
-
+	bool mNowFader;//現在フェード out or in
 };

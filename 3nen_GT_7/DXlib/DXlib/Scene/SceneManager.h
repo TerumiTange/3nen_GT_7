@@ -6,6 +6,7 @@
 #include "GamePlay.h"
 #include "Ending.h"
 
+#include "../Device/Fader.h"
 
 class SceneManager:
 	public ISceneChanger
@@ -21,5 +22,5 @@ public:
 private:
 	BaseScene* mScene;
 	SceneType mNextScene;
-	
+	Fader* mfader;//フェード
 };

@@ -2,7 +2,8 @@
 #include <memory>
 
 SceneManager::SceneManager():
-	mNextScene(SceneNone)
+	mNextScene(SceneNone),
+	mfader(new Fader())
 {
 	mScene = (BaseScene*) new Title(this);
 }
@@ -10,7 +11,7 @@ SceneManager::SceneManager():
 SceneManager::~SceneManager()
 {
 	delete(mScene);
-	
+	delete(mfader);
 }
 
 void SceneManager::Init()
@@ -20,6 +21,8 @@ void SceneManager::Init()
 
 void SceneManager::Update()
 {
+	mfader->Update();
+	if (mfader->GetNowFader())return;
 	if (mNextScene != SceneNone)
 	{
 		delete mScene;
@@ -38,17 +41,22 @@ void SceneManager::Update()
 		}
 		mNextScene = SceneNone;
 		mScene->Init();
+		mfader->SetFadeIn(1);
+		mfader->SwitchFade(false);
 	}
-	
+	if (mfader->GetNowFader())return;
 	mScene->Update();
 }
 
 void SceneManager::Draw()
 {
 	mScene->Draw();
+	mfader->Draw();
 }
 
 void SceneManager::ChangeScene(SceneType nextScene)
 {
+	mfader->SetFadeOut(1);
+	mfader->SwitchFade(true);
 	mNextScene = nextScene;
 }
