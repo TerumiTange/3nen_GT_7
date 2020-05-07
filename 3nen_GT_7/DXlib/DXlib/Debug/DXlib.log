@@ -1,3 +1,23 @@
-﻿  SceneManager.cpp
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
-  DXlib.vcxproj -> C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe
+﻿  Player.cpp
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(106): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(107): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(175): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(179): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(183): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(203): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(207): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(212): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(216): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(224): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(286): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(293): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(295): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(302): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(310): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(319): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(326): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(336): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(343): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
