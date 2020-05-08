@@ -10,8 +10,12 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	mRight(true),
 	mStalker(false),
 	staSize(192),
-	sRenderer(new Renderer("StalEnemy"))/*,*/
+	sRenderer(new Renderer("StalEnemy")),/*,*/
 	/*paralRenderer(new Renderer("ここにファイルの名前を入れる")),*/
+	speed((1.0f)),
+	paraTime((4.0f)),
+	paralimitTime(new CountDownTimer(paraTime)),
+	paral(false)
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -28,6 +32,7 @@ void FlyEnemy::End()
 	
 	delete(sRenderer);
 	//delete(paralRenderer)
+	delete(paralimitTime);
 }
 
 void FlyEnemy::Update()
@@ -151,7 +156,7 @@ bool FlyEnemy::CheckHit2(int x, int y, int width, int height, int p)
 
 void FlyEnemy::Move()
 {
-	if (mStalker)
+	if (mStalker&&!paral)
 	{
 		//ここに動く処理を
 		Actor::SetPos(*mPos);
@@ -161,8 +166,8 @@ void FlyEnemy::Move()
 		direction.y = pPos.y - old_y;
 		direction.normalize();
 
-		mPos->x += direction.x;
-		mPos->y += direction.y;
+		mPos->x += direction.x*speed;
+		mPos->y += direction.y*speed;
 
 	}
 }
@@ -170,4 +175,22 @@ void FlyEnemy::Move()
 void FlyEnemy::Fall()
 {
 
+}
+
+void FlyEnemy::Paralise()
+{
+	if (Actor::GetElectricShock())
+	{
+		paral = true;
+		Actor::SetElectricShock(false);
+	}
+	if (paral)
+	{
+		paralimitTime->Update();
+		if (paralimitTime->IsTime())
+		{
+			paral = false;
+			paralimitTime->SetTime(paraTime);
+		}
+	}
 }
