@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
+#include "../System/CountDownTimer.h"
 
 class FlyEnemy :public Actor
 {
@@ -18,6 +19,7 @@ public:
 	void Move();
 	void Fall();
 	void Stalker();
+	void Paralise();
 
 private:
 	Vector2* mPos;
@@ -36,5 +38,8 @@ private:
 	int staSize;//’ÇÕ‚Ì”ÍˆÍ
 	Renderer* sRenderer;//’ÇÕó‘Ô‚Ì‰æ‘œ
 	//Renderer* paralRenderer//ƒ}ƒqó‘Ô‚Ì‰æ‘œ
-	//float* speed;//’Ç‚¢‚©‚¯‚é‘¬“x
+	float speed;//’Ç‚¢‚©‚¯‚é‘¬“x
+	float paraTime;
+	CountDownTimer* paralimitTime;
+	bool paral;
 };

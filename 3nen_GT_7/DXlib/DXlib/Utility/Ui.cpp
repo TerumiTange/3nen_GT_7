@@ -22,18 +22,14 @@ void UI::Active(bool set)
 	active = set;
 }
 
-//gauzesize>>減少値
-void UI::Update(int gauzesize)
-{
-	//trueだったら長さを求める
-	if (active)
-	{
-		mVolum = mMaxVolum - gauzesize;
-	}
-}
 
 //描画（画像があったら要書き換え）
 void UI::Draw()
+{
+	
+}
+
+void UI::Gauge()
 {
 	//trueならゲージを表示
 	if (active)

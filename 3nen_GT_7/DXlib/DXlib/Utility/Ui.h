@@ -6,13 +6,14 @@
 class UI
 {
 public:
+	UI();
 	UI(const Vector2 &position,const Vector2 &size,const int &maxVolum, int texture);
 	~UI();
 
 	void Init();
 	void Active(bool set);
-	void Update(int gaugesize);
 	void Draw();
+	void Gauge();
 
 private:
 	Vector2* mPos;
