@@ -11,11 +11,12 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	mStalker(false),
 	staSize(192),
 	sRenderer(new Renderer("StalEnemy")),/*,*/
-	/*paralRenderer(new Renderer("ここにファイルの名前を入れる")),*/
+	paralRenderer(new Renderer("ThunderEffect")),//仮の画像
 	speed((1.0f)),
 	paraTime((4.0f)),
 	paralimitTime(new CountDownTimer(paraTime)),
-	paral(false)
+	paral(false),
+	playerHitTimer(new CountDownTimer())//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -31,18 +32,33 @@ void FlyEnemy::End()
 	delete(mRenderer);
 	
 	delete(sRenderer);
-	//delete(paralRenderer)
+	delete(paralRenderer);
 	delete(paralimitTime);
+	delete(playerHitTimer);
 }
 
 void FlyEnemy::Update()
 {
-	Move();
+	printfDx("麻痺状態かどうか%d", GetElectricShock());
+	playerHitTimer->Update();
+	Paralise();
+	if (!paral)//麻痺状態でないなら
+	{
+		Move();
+	}
 }
 
 void FlyEnemy::Draw()
 {
 	//mRenderer->Draw(*mPos);
+
+	//マヒ状態での描画
+	if (paral)
+	{
+		mRenderer->Draw(*mPos);
+		paralRenderer->Draw(mPos->x - 16, mPos->y + 32);
+		return;
+	}
 
 	//アイドル状態での描画
 	if (!mStalker)
@@ -54,11 +70,7 @@ void FlyEnemy::Draw()
 	{
 		sRenderer->Draw(*mPos);
 	}
-	//マヒ状態での描画
-	//if (ここにマヒ状態を表すboolを)
-	//{
-	//   paralRenderer->Draw(*mPos);
-	//}
+	
 }
 
 void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
@@ -98,10 +110,20 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 		if (a->Tag() == "Player")
 		{
 			//プレイヤーと普通にぶつかったとき
-			/*if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-
-			}*/
+				if (paral&&playerHitTimer->IsTime())//麻痺状態なら
+				{
+					//Destroy(this);//自分死亡
+					for (auto act : actors)
+					{
+						if (act->GetElectricShock())
+						{
+							Destroy(act);//麻痺状態の敵全部死亡
+						}
+					}
+				}
+			}
 
 			//プレイヤーが一定範囲内に入ったとき（追跡範囲に入ったとき）
 			if (CheckHit2(a->Position()->x - 64, a->Position()->y - 64, a->Size()->x, a->Size()->y, staSize))
@@ -109,7 +131,6 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 				mStalker = true;
 				pPos.x = a->Position()->x;
 				pPos.y = a->Position()->y;
-				//Actor::Destroy(a);
 			}
 
 			//プレイヤーが一定範囲から離れたとき（追跡範囲から出たとき）
@@ -120,6 +141,17 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 			}
 		}
 
+		if (a->Tag() == "FlyEnemy")
+		{
+			if (CheckHit2(a->Position()->x - 64, a->Position()->y - 64, a->Size()->x, a->Size()->y, 100))
+			{
+				if (paral && !(a->GetElectricShock()))
+				{
+					a->SetElectricShock(true);
+					paralimitTime->SetTime(paraTime);
+				}
+			}
+		}
 	}
 }
 
@@ -181,8 +213,11 @@ void FlyEnemy::Paralise()
 {
 	if (Actor::GetElectricShock())
 	{
+		if (playerHitTimer->IsTime() && !paral)
+		{
+			playerHitTimer->SetTime(0.3f);
+		}
 		paral = true;
-		Actor::SetElectricShock(false);
 	}
 	if (paral)
 	{
@@ -190,6 +225,7 @@ void FlyEnemy::Paralise()
 		if (paralimitTime->IsTime())
 		{
 			paral = false;
+			Actor::SetElectricShock(false);
 			paralimitTime->SetTime(paraTime);
 		}
 	}

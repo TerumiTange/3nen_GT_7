@@ -25,10 +25,15 @@ void Renderer::Init()
 
 void Renderer::Draw(const Vector2 & pos)
 {
-	DrawGraph(pos.x-Camera2d::CameraPos.x, pos.y, mGra, TRUE);
+	DrawGraph(pos.x - Camera2d::CameraPos.x, pos.y, mGra, TRUE);
 }
 
 void Renderer::Draw(int x, int y)
+{
+	DrawGraph(x - Camera2d::CameraPos.x, y, mGra, TRUE);
+}
+
+void Renderer::Drawb(int x, int y)
 {
 	DrawGraph(x, y, mGra, TRUE);
 }

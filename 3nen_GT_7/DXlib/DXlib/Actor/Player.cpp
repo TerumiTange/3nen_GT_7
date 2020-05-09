@@ -20,6 +20,7 @@ Player::Player(const Vector2& position, const char* tag):
     mFilename(tag),									  //画像名
 	mRenderer(new Renderer(tag)),					  //描画関数
 	mStaticElectricity(new Renderer("ThunderEffect")),//静電気の画像
+	mHeart(new Renderer("Metal")),					  //現在HPを表示する
 	mInput(new Input()),							  //キー入力関数
 	mCountTimer(new CountDownTimer()),				  //無敵時間更新カウントダウンタイマー
 	mFall(true),									  //落ちているかどうか
@@ -55,6 +56,7 @@ void Player::End()//メモリの開放
 	delete(mSize);
 	delete(mRenderer);
 	delete(mStaticElectricity);
+	delete(mHeart);
 	delete(mInput);
 	delete(mCountTimer);
 
@@ -266,15 +268,14 @@ void Player::Recovery()//体力回復
 void Player::Draw()//描画
 {
 	mRenderer->Draw(*mPos);
-	//if (mPoppedState)
-	//{
-	//	mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
-	//}
-	//test用
-	//int a;
-	//a = LoadGraph("./Assets/Texture/Player.png");
-	//DrawGraph(mPos->x, mPos->y, a, TRUE);
-	//DeleteGraph(a);
+	if (mNowMovingFast)
+	{
+		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
+	}
+	for (size_t i = 0; i < mHp; ++i)
+	{
+		mHeart->Drawb(10 + i * 36, 36);
+	}
 }
 
 void Player::SetPosition(const Vector2& position)
@@ -303,7 +304,10 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
 				mPos->x = old_x;
-
+				if (mMovingFast)
+				{
+					mMovingFastCount = 1;
+				}
 			}
 		}
 
@@ -324,34 +328,53 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		}
 		if (a->Tag() == "SmallEnemy")
 		{
-			if (mMovingFast)//高速移動中であれば
+			//if (mMovingFast)//高速移動中であれば
+			//{
+			//	if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			//	{
+			//		if (a->GetElectricShock())Destroy(a);
+			//		a->SetElectricShock(true);
+			//		mMovingFastCount++;
+			//	}
+			//}
+			//else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			//{
+			//	Damage();
+			//}
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+				if (a->GetElectricShock())Destroy(a);
+				if (mNowMovingFast)
 				{
-					if (a->GetElectricShock())Destroy(a);
 					a->SetElectricShock(true);
 					mMovingFastCount++;
 				}
-			}
-			else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			{
 				Damage();
 			}
 		}
 
 		if (a->Tag() == "FlyEnemy")
 		{
-			if (mMovingFast)//高速移動中であれば
+			//if (mMovingFast)//高速移動中であれば
+			//{
+			//	if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			//	{
+			//		if (a->GetElectricShock())Destroy(a);
+			//		a->SetElectricShock(true);
+			//		mMovingFastCount++;
+			//	}
+			//}
+			//else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			//{
+			//	Damage();
+			//}
+			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+				if (mNowMovingFast)
 				{
-					if (a->GetElectricShock())Destroy(a);
 					a->SetElectricShock(true);
 					mMovingFastCount++;
 				}
-			}
-			else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			{
 				Damage();
 			}
 		}
