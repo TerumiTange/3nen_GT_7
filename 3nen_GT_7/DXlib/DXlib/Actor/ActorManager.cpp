@@ -54,10 +54,19 @@ void ActorManager::Hit()
 
 void ActorManager::Draw()
 {
+	//for (auto&& actor : mActors)
+	//{
+	//	actor->Draw();
+	//}
 	for (auto&& actor : mActors)
 	{
-		actor->Draw();
+		if (actor->Tag() != "Player")
+		{
+			actor->Draw();
+		}
 	}
+	//プレイヤーを一番前にするため最後に表示する
+	GetPlayer()->Draw();
 }
 
 void ActorManager::Add(Actor* add)

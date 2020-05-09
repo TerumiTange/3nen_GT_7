@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
+#include "../System/CountDownTimer.h"
 
 class FlyEnemy :public Actor
 {
@@ -18,6 +19,7 @@ public:
 	void Move();
 	void Fall();
 	void Stalker();
+	void Paralise();
 
 private:
 	Vector2* mPos;
@@ -35,6 +37,10 @@ private:
 	Vector2 direction;
 	int staSize;//追跡の範囲
 	Renderer* sRenderer;//追跡状態の画像
-	//Renderer* paralRenderer//マヒ状態の画像
-	//float* speed;//追いかける速度
+	Renderer* paralRenderer;//マヒ状態の画像
+	float speed;//追いかける速度
+	float paraTime;
+	CountDownTimer* paralimitTime;
+	bool paral;
+	CountDownTimer* playerHitTimer;//プレイヤーと連続で当たらないためのタイマー
 };
