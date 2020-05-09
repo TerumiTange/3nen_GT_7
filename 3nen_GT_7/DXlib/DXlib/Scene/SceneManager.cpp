@@ -31,8 +31,11 @@ void SceneManager::Update()
 		case SceneTitle:
 			mScene = (BaseScene*)new Title(this);
 			break;
+		case SceneSelect:
+			mScene = (BaseScene*)new StageSelect(this);
+			break;
 		case SceneGamePlay:
-			mScene = (BaseScene*) new GamePlay(this);
+			mScene = (BaseScene*) new GamePlay(this,stageName);
 			break;
 		case SceneEnding:
 			mScene = (BaseScene*)new Ending(this);
@@ -60,3 +63,5 @@ void SceneManager::ChangeScene(SceneType nextScene)
 	mfader->SwitchFade(true);
 	mNextScene = nextScene;
 }
+
+const char* SceneManager::stageName = "";

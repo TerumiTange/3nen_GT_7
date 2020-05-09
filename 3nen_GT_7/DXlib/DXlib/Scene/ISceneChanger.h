@@ -17,4 +17,5 @@ public:
 	virtual ~ISceneChanger() = 0;
 	//指定シーンに変更する
 	virtual void ChangeScene(SceneType nextScene) = 0;
+
 };

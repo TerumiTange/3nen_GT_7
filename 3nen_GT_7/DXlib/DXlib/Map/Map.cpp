@@ -8,7 +8,8 @@
 Map::Map():
 	mCSVReader(nullptr),
 	mCSV(0),
-	mGimmickData(0)
+	mGimmickData(0),
+	mFilename("./Assets/Data/")
 	//mWall(0)
 {
 
@@ -18,12 +19,13 @@ Map::~Map()
 {
 }
 
-void Map::Init(const char* filename)
+void Map::Init(const char* file)
 {
+	mFilename = mFilename + file + ".csv";
 	mCSV.clear();
 	mGimmickData.clear();
-	mCSVReader = new CSVReader(filename);
-	mCSV = mCSVReader->load(filename);
+	mCSVReader = new CSVReader(mFilename.c_str());
+	mCSV = mCSVReader->load(mFilename.c_str());
 
 	width = mCSVReader->getWidth();
 	height = mCSVReader->getHeight();
