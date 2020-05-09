@@ -79,7 +79,6 @@ void GamePlay::Init()
 
 void GamePlay::Update()
 {
-	
 	mActorManager->Update();
 	printfDx("“G‚Ì”%d", mActorManager->GetEnemyCount());
 	mActorManager->Hit();
@@ -87,6 +86,10 @@ void GamePlay::Update()
 	{
 		camera->GetPPos(mActorManager->GetPlayer()->GetPosition());
 		camera->Update();
+		if (mStageName == "map")
+		{
+			camera->CameraPos.y -= 32;
+		}
 	}
 	sound.PlayBGM("./Assets/Sound/a.mp3");
 	if (input->GetKeyDown(B))

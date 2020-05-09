@@ -1,15 +1,9 @@
-﻿  FlyEnemy.cpp
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(4): warning C4099: 'Vector2': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
-  c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(59): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(85): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(93): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(95): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(102): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(113): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(129): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(138): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(146): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(195): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(196): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-  DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
+﻿  Camera2d.cpp
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\device\camera2d.cpp(35): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\device\camera2d.cpp(43): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  GamePlay.cpp
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\actor.h(12): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+  コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
+  DXlib.vcxproj -> C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe
