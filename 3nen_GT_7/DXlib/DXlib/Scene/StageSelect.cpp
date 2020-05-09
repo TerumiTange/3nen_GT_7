@@ -109,7 +109,7 @@ void StageSelect::Draw()
 	DrawString(stage3Pos->x, stage3Pos->y, "ステージ3", Cr);
 	DrawString(stage4Pos->x, stage4Pos->y, "ステージ4", Cr);
 	DrawString(stage5Pos->x, stage5Pos->y, "ステージ5", Cr);
-	DrawString(stage6Pos->x, stage6Pos->y, "ステージ6", Cr);
+	DrawString(stage6Pos->x, stage6Pos->y, "タイトルへ", Cr);
 
 	Vector2 xy;
 	switch (choice)
@@ -153,11 +153,11 @@ void StageSelect::NextScene()
 		SceneManager::stageName = "map";
 		break;
 	case stage5:
-		SceneManager::stageName = "map";
-		break;
-	case stage6:
 		SceneManager::stageName = "stage1";
 		break;
+	case stage6:
+		mSceneChanger->ChangeScene(SceneTitle);
+		return;
 	}
 	mSceneChanger->ChangeScene(SceneGamePlay);
 }
