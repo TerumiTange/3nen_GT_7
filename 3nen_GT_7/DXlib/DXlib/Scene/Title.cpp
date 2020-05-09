@@ -29,20 +29,36 @@ void Title::Update()
 	input->JoyUpdate();
 	timer->Update();
 
+
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
 	{
 		NextScene();
 	}
 	if (!timer->IsTime())return;
-	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down) || (input->Vertical() < 0))//‰º
+	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down))//‰º
 	{
 		choice = (choice + 1) % eMenuNum;//1‚Â‰º‚°‚é
-		timer->SetTime(0.2f);
+		timer->SetTime(0.3f);
+		return;
 	}
-	if (input->GetKeyDown(W) || input->GetKeyDown(UPARROW) || input->PadDown(JoyCode::Joy_Up) || (input->Vertical() > 0))
+	if (input->GetKeyDown(W) || input->GetKeyDown(UPARROW) || input->PadDown(JoyCode::Joy_Up))
 	{
 		choice = (choice + (eMenuNum - 1)) % eMenuNum;//1‚Âã‚°‚é
-		timer->SetTime(0.2f);
+		timer->SetTime(0.3f);
+		return;
+	}
+
+	if (input->Vertical() > 0)
+	{
+		choice = (choice + 1) % eMenuNum;//1‚Â‰º‚°‚é
+		timer->SetTime(0.3f);
+		return;
+	}
+	if (input->Vertical() < 0)
+	{
+		choice = (choice + (eMenuNum - 1)) % eMenuNum;//1‚Âã‚°‚é
+		timer->SetTime(0.3f);
+		return;
 	}
 }
 
@@ -79,11 +95,11 @@ void Title::NextScene()
 	{
 	case start:
 		//mSceneChanger->ChangeScene(SceneSelect);
-		mSceneChanger->ChangeScene(SceneGamePlay);
+		mSceneChanger->ChangeScene(SceneSelect);
 		break;
 	case credit:
 		//mSceneChanger->ChangeScene(SceneCredit);
-		mSceneChanger->ChangeScene(SceneGamePlay);
+		mSceneChanger->ChangeScene(SceneSelect);
 		break;
 	case full:
 		ChangeWindowMode(FALSE);

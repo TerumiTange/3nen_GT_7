@@ -26,7 +26,7 @@ class Map
 public:
 	Map();
 	~Map();
-	void Init(const char* filename);
+	void Init(const char* file);
 	int ReturnWidth();//マップ全体の横大きさ
 	int ReturnHeight();//マップ全体の縦大きさ
 	void Create(const GimmickData& data);
@@ -39,6 +39,7 @@ private:
 	CSVReader* mCSVReader;
 	std::vector<int> mCSV;
 	std::list<GimmickData> mGimmickData;
+	std::string mFilename;
 	//std::list<Wall> mWall;
 	//std::list<std::shared_ptr<Wall>> mWall;
 };

@@ -3,6 +3,7 @@
 
 #include "BaseScene.h"
 #include "Title.h"
+#include "StageSelect.h"
 #include "GamePlay.h"
 #include "Ending.h"
 
@@ -19,6 +20,8 @@ public:
 	void Draw();
 	void ChangeScene(SceneType nextScene)override;
 
+	static const char* stageName;
+	
 private:
 	BaseScene* mScene;
 	SceneType mNextScene;

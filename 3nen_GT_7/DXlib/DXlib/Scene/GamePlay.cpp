@@ -11,12 +11,13 @@
 
 #define SAFE_DELETE(x) if(x){delete x; x=0;}
 
-GamePlay::GamePlay(ISceneChanger* changer) :
+GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	BaseScene(changer),
 	mActorManager(new ActorManager()),
 	sound(),
 	input(new Input()),
-	camera(new Camera2d())
+	camera(new Camera2d()),
+	mStageName(sname)
 {
 	Actor::SetActorManager(mActorManager);
 }
@@ -62,7 +63,7 @@ void GamePlay::Init()
 	new Player(Vector2(50, 50));
 
 	Map* map = new Map();
-	map->Init("./Assets/Data/map.csv");
+	map->Init(mStageName);
 	delete(map);
 
 	Enemy* enemy = new Enemy();

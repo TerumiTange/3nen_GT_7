@@ -12,7 +12,7 @@ class Camera;
 class GamePlay : public BaseScene
 {
 public:
-	GamePlay(ISceneChanger* changer);
+	GamePlay(ISceneChanger* changer,const char* name);
 	~GamePlay();
 	void Init() override;
 	void Update() override;
@@ -24,4 +24,5 @@ private:
 	Sound sound;
 	Input* input;
 	Camera2d* camera;
+	const char* mStageName;//ステージの名前
 };
