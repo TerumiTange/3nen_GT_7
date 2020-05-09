@@ -37,7 +37,7 @@ Player::Player(const Vector2& position, const char* tag):
 	mNowMovingFastTime(0.2f),						  //‚‘¬ˆÚ“®ó‘Ô‚ÌŽžŠÔ
 	mNowMovingFast(false),							  //‚‘¬ˆÚ“®‚µ‚½uŠÔ
 	mFallTimer(new CountDownTimer()),				  //d—ÍŒyŒ¸‚ÌŽžŠÔƒ^ƒCƒ}[(IsTime()‚ªfalse‚È‚çŒyŒ¸’†)
-	mFallTime(0.5f)									  //d—ÍŒyŒ¸‚ÌŽžŠÔ
+	mFallTime(0.2f)									  //d—ÍŒyŒ¸‚ÌŽžŠÔ
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
