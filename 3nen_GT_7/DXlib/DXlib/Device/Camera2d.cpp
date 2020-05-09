@@ -22,6 +22,7 @@ void Camera2d::Update()
 {
 
 	CameraPos.x = pPos->x - (ScreenWidth / 2);
+	CameraPos.y = pPos->y - ((ScreenHeight / 3) * 2);
 	//position = VGet(pPos->x, pPos->y, 0);
 	// カメラの設定に反映する
 	//SetCameraPositionAndTarget_UpVecY(position, VGet(0, 0, 0));
@@ -32,6 +33,14 @@ void Camera2d::Update()
 	if (CameraPos.x > (Map::width) * 32 - ScreenWidth)//カメラの位置がステージ端を移しそうになったら
 	{
 		CameraPos.x = (Map::width) * 32 - ScreenWidth;
+	}
+	if (CameraPos.y < 0)
+	{
+		CameraPos.y = 0;
+	}
+	if (CameraPos.y > (Map::height) * 32 - ScreenHeight)
+	{
+		CameraPos.y = (Map::height) * 32 - ScreenHeight;
 	}
 }
 

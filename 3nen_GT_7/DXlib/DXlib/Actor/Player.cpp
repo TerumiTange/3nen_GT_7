@@ -184,6 +184,7 @@ void Player::Movement()//ˆÚ“®ˆ—
 	{
 		mPos->x = Map::width * 32 - 32;
 	}
+	//«Œã‚ÅC³
 	if (mPos->y > ScreenHeight)
 	{
 		mPos->y = ScreenHeight;
@@ -303,11 +304,45 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				mPos->x = old_x;
 				if (mMovingFast)
 				{
 					mMovingFastCount = 1;
 				}
+
+				if (old_y + mSize->y <= a->Position()->y)//Ž©•ª‚Ì‰º‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->y = a->Position()->y - mSize->y;
+					mFall = false;
+				}
+				else if (old_y > a->Position()->y + a->Size()->y)//Ž©•ª‚Ìã‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->y = a->Position()->y + a->Size()->y;
+					if (mVelocity->y < 0)
+					{
+						mVelocity->y = 0;
+					}
+				}
+				else if (old_x >= a->Position()->x + a->Size()->x)//Ž©•ª‚Ì¶‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->x = a->Position()->x + a->Size()->x + 1;
+					if (mVelocity->x < 0)
+					{
+						mVelocity->x = 0;
+					}
+				}
+
+				else if (old_x + mSize->x <= a->Position()->x)//Ž©•ª‚Ì‰E‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->x = a->Position()->x - mSize->x - 1;
+					if (mVelocity->x < 0)
+					{
+						mVelocity = 0;
+					}
+				}
+
+				
+
+				//mPos->x = old_x;
 			}
 		}
 
