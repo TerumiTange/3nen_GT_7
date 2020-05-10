@@ -12,6 +12,7 @@ public:
 	void Load(const char* filename);
 	void PlayBGM(const char* filename);
 	void PlaySE(const char* filename);
+	void PlaySEF(const char* filename);
 	void StopBGM(const char* filename);
 	
 private:

@@ -34,6 +34,15 @@ void Sound::PlayBGM(const char * filename)
 
 void Sound::PlaySE(const char * filename)
 {
+	//if (!CheckSoundMem(mSound[filename]))
+	//{
+	//	PlaySoundMem(mSound[filename], DX_PLAYTYPE_BACK, FALSE);
+	//}
+	PlaySoundMem(mSound[filename], DX_PLAYTYPE_BACK, TRUE);
+}
+
+void Sound::PlaySEF(const char * filename)
+{
 	if (!CheckSoundMem(mSound[filename]))
 	{
 		PlaySoundMem(mSound[filename], DX_PLAYTYPE_BACK, FALSE);
