@@ -28,6 +28,7 @@ void Ending::Update()
 void Ending::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
+	SetFontSize(16);
 	DrawString(50, 50, "Ending  Y PUSH", Cr);
 }
 

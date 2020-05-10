@@ -1,4 +1,5 @@
 #include "FlyEnemy.h"
+#include "ActorManager.h"
 
 FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
@@ -13,11 +14,11 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	sRenderer(new Renderer("StalEnemy")),/*,*/
 	paralRenderer(new Renderer("ThunderEffect")),//仮の画像
 	speed((1.0f)),
-	paraTime((4.0f)),
-	paralimitTime(new CountDownTimer()),
-	paral(false),
+	paraTime(4.0f),//麻痺時間
+	paralimitTime(new CountDownTimer()),//麻痺時間のタイマー
+	paral(false),//麻痺状態かどうか
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
-	paralimitTimer(new CountDownTimer())
+	paralimitTimer(new CountDownTimer()) //連続で麻痺状態にならないためのタイマー
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -41,9 +42,9 @@ void FlyEnemy::End()
 
 void FlyEnemy::Update()
 {
-	playerHitTimer->Update();
-	paralimitTimer->Update();
-	Paralise();
+	playerHitTimer->Update();//
+	paralimitTimer->Update();//
+	Paralise();//
 	if (!paral)//麻痺状態でないなら
 	{
 		Move();
@@ -111,17 +112,20 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 
 		if (a->Tag() == "Player")
 		{
-			//プレイヤーと普通にぶつかったとき
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			if (playerHitTimer->IsTime())//プレイヤーと連続ヒットを防ぐため
 			{
-				if (paral&&playerHitTimer->IsTime())//麻痺状態なら
+				//プレイヤーと普通にぶつかったとき
+				if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 				{
-					//Destroy(this);//自分死亡
-					for (auto act : actors)
+					if (paral&&playerHitTimer->IsTime())//麻痺状態なら
 					{
-						if (act->GetElectricShock())
+						//Destroy(this);//自分死亡
+						for (auto act : actors)
 						{
-							Destroy(act);//麻痺状態の敵全部死亡
+							if (act->GetElectricShock())
+							{
+								Destroy(act);//麻痺状態の敵全部死亡
+							}
 						}
 					}
 				}
@@ -147,10 +151,11 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit2(a->Position()->x - 64, a->Position()->y - 64, a->Size()->x, a->Size()->y, 100))
 			{
-				if (paral)
+				if (!a->GetElectricShock() && paral)//自身がマヒ状態で相手がマヒ状態でないなら
 				{
 					a->SetElectricShock(true);
-					SetElectricShock(true);
+					//SetElectricShock(true);
+					//paralimitTime->SetTime(paraTime);
 				}
 			}
 		}
@@ -190,7 +195,7 @@ bool FlyEnemy::CheckHit2(int x, int y, int width, int height, int p)
 
 void FlyEnemy::Move()
 {
-	if (mStalker&&!paral)
+	if (mStalker && !paral)
 	{
 		//ここに動く処理を
 		Actor::SetPos(*mPos);
@@ -211,27 +216,46 @@ void FlyEnemy::Fall()
 
 }
 
-void FlyEnemy::Paralise()
+void FlyEnemy::Paralise()//麻痺状態の処理
 {
-	if (!paralimitTimer->IsTime() && !paralimitTime->IsTime())
+	//if (!paralimitTimer->IsTime() && !paralimitTime->IsTime())
+	//{
+	//	SetElectricShock(false);
+	//}
+	//else if (Actor::GetElectricShock())
+	//{
+	//	paral = true;
+	//	Actor::SetElectricShock(false);
+	//	paralimitTime->SetTime(paraTime);
+	//}
+	//if (paral)
+	//{
+	//	paralimitTime->Update();
+	//	if (paralimitTime->IsTime())
+	//	{
+	//		paral = false;
+	//		Actor::SetElectricShock(false);
+	//		playerHitTimer->SetTime(0.3f);
+	//		paralimitTimer->SetTime(0.2f);
+	//	}
+	//}
+	if (!paralimitTimer->IsTime())
 	{
 		SetElectricShock(false);
 	}
-	else if (Actor::GetElectricShock())
+	paralimitTime->Update();
+	if (GetElectricShock() && !paral)
 	{
 		paral = true;
-		Actor::SetElectricShock(false);
 		paralimitTime->SetTime(paraTime);
+		mElectricTimer->SetTime(paraTime);
+		playerHitTimer->SetTime(0.3f);
 	}
-	if (paral)
+
+	if (mElectricTimer->IsTime())//(paralimitTime->IsTime())
 	{
-		paralimitTime->Update();
-		if (paralimitTime->IsTime())
-		{
-			paral = false;
-			Actor::SetElectricShock(false);
-			playerHitTimer->SetTime(0.3f);
-			paralimitTimer->SetTime(0.2f);
-		}
+		paral = false;
+		SetElectricShock(false);
+		paralimitTimer->SetTime(0.01f);
 	}
 }

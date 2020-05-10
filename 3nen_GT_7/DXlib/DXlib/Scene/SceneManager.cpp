@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "../Actor/Actor.h"
 #include <memory>
 
 SceneManager::SceneManager():
@@ -12,6 +13,8 @@ SceneManager::~SceneManager()
 {
 	delete(mScene);
 	delete(mfader);
+	delete(mElapsedTime);
+	delete(Actor::mElectricTimer);//ÅŒã‚Éƒƒ‚ƒŠ‚ğ‰ğ•ú‚·‚é‚½‚ß
 }
 
 void SceneManager::Init()

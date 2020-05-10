@@ -74,6 +74,7 @@ void GamePlay::Init()
 	map->Init(mStageName);
 	delete(map);
 
+	//マップの後にエネミーを実装すること
 	Enemy* enemy = new Enemy();
 	enemy->Init("./Assets/Data/EnemyList.csv");
 	mActorManager->SetEnemyCount(enemy->GetEnemyCount());//敵の数をセット

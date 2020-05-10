@@ -69,6 +69,8 @@ void Player::End()//ƒƒ‚ƒŠ‚ÌŠJ•ú
 
 void Player::Update()
 {
+	mElectricTimer->Update();//“G‚Ì–ƒáƒ—p
+
 	if (mMovingFastCount > mMovingFastMaxCount)//Å‘å‰ñ”‚ðƒI[ƒo[‚µ‚½‚ç
 	{
 		mMovingFastCount = mMovingFastMaxCount;//Å‘å‰ñ”‚É‚·‚é
@@ -183,7 +185,6 @@ void Player::Movement()//ˆÚ“®ˆ—
 	{
 		mPos->x = Map::width * 32 - 32;
 	}
-	//«Œã‚ÅC³
 	if (mPos->y < 32)
 	{
 		mPos->y = 32;
@@ -279,8 +280,10 @@ void Player::Draw()//•`‰æ
 	}
     //DrawString(0, 0, "", mMovingFastCount);
 	//DrawFormatString(10, 0, GetColor(255, 0, 0), "uŠÔˆÚ“®‚Å‚«‚é‰ñ”%d", mMovingFastCount);
+	SetFontSize(32);
 	DrawString(0, 0, "uŠÔˆÚ“®‚Å‚«‚é‰ñ”:", GetColor(255, 0, 0));
-	mNumber->DrawIntegerNumber(Vector2(150, 0), mMovingFastCount);
+
+	mNumber->DrawIntegerNumber(Vector2(350, 0), mMovingFastCount);
 }
 
 void Player::SetPosition(const Vector2& position)
