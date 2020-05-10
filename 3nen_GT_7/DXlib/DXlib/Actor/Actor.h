@@ -50,6 +50,8 @@ public:
 	static void SetActorManager(ActorManager* manager);
 	ActorManager* GetActorManager();
 
+	static CountDownTimer* mElectricTimer;//–ƒáƒó‘Ô—p	
+
 private:
 	void DestroyTimer();
 

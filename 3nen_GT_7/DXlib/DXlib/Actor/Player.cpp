@@ -27,18 +27,19 @@ Player::Player(const Vector2& position, const char* tag):
 	mGravity(16),									  //重力のスピード
 	mMovingFastGravity(8),							  //高速移動中の重力
 	mMovingFast(false),								  //高速移動しているかどうか
-	mMovingFastCount(1),							  //高速移動できる回数
-	mMovingFastMaxCount(1),							  //最大高速移動の回数
+	mMovingFastCount(4),							  //高速移動できる回数
+	mMovingFastMaxCount(4),							  //最大高速移動の回数
 	mMovingFastTime(0.5f),//0.5f					  //高速移動が回復するまでの時間
 	mMovingFastTimer(new CountDownTimer()),			  //高速移動回復用カウントダウンタイマー
-	mMovingFastAmount(30),							  //高速移動の移動量
+	mMovingFastAmount(35),							  //高速移動の移動量
 	mMovingFastDifferenceX(0),						  //高速移動後の位置の差分X
 	mMovingFastDifferenceY(0),						  //高速移動後の位置の差分Y
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
 	mNowMovingFastTime(0.2f),						  //高速移動状態の時間
 	mNowMovingFast(false),							  //高速移動した瞬間
 	mFallTimer(new CountDownTimer()),				  //重力軽減の時間タイマー(IsTime()がfalseなら軽減中)
-	mFallTime(0.2f)									  //重力軽減の時間
+	mFallTime(0.2f),								  //重力軽減の時間
+	mNumber(new Renderer("Number"))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -62,24 +63,24 @@ void Player::End()//メモリの開放
 
 	delete(mMovingFastTimer);
 	delete(mNowMovingFastTimer);
-	
+	delete(mNumber);
 	delete(mFallTimer);
 }
 
 void Player::Update()
 {
+	mElectricTimer->Update();//敵の麻痺用
+
 	if (mMovingFastCount > mMovingFastMaxCount)//最大回数をオーバーしたら
 	{
 		mMovingFastCount = mMovingFastMaxCount;//最大回数にする
 	}
 	//clsDx();
 	//デバッグ用
-	printfDx("体力%d", mHp);
-	printfDx("無敵時間%.001f", mCountTimer->Now());
-	printfDx("瞬間移動できる回数%d", mMovingFastCount);
-	printfDx("瞬間移動できるようになるまでの時間%.01f", mMovingFastTimer->Now());
-	//printfDx("xの値%.1f", mMovingFastDifferenceX);
-	//printfDx("yの値%.1f", mMovingFastDifferenceY);
+	//printfDx("体力%d", mHp);
+	//printfDx("無敵時間%.001f", mCountTimer->Now());
+	//printfDx("瞬間移動できる回数%d", mMovingFastCount);
+	//printfDx("瞬間移動できるようになるまでの時間%.01f", mMovingFastTimer->Now());
 
 	if (mHp <= 0)return;//体力がなくなったら操作しないようにする
 
@@ -97,7 +98,7 @@ void Player::Update()
 	{
 		mFall = true;
 		//if (mMovingFast)return;
-		mMovingFastCount = 1;//高速移動回数を1にする
+		//mMovingFastCount = 1;//高速移動回数を1にする
 	}
 	
 	if (mNowMovingFastTimer->IsTime())//高速移動した瞬間の処理が終了したら
@@ -184,16 +185,15 @@ void Player::Movement()//移動処理
 	{
 		mPos->x = Map::width * 32 - 32;
 	}
-	//↓後で修正
-	if (mPos->y > ScreenHeight)
+	if (mPos->y < 32)
 	{
-		mPos->y = ScreenHeight;
+		mPos->y = 32;
 	}
-	if (mPos->y < Map::height * 32 - ScreenHeight - 32)
+	if (mPos->y > Map::height * 32 - 32)
 	{
-		mPos->y = Map::height * 32 - ScreenHeight - 32;
+		mPos->y = Map::height * 32 - 32;
 	}
-
+	
 }
 
 void Player::MovingFast()//瞬間移動
@@ -268,7 +268,8 @@ void Player::Recovery()//体力回復
 
 void Player::Draw()//描画
 {
-	mRenderer->Draw(*mPos);
+	//mRenderer->Draw(*mPos);
+	mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
 		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
@@ -277,6 +278,12 @@ void Player::Draw()//描画
 	{
 		mHeart->Drawb(10 + i * 36, 36);
 	}
+    //DrawString(0, 0, "", mMovingFastCount);
+	//DrawFormatString(10, 0, GetColor(255, 0, 0), "瞬間移動できる回数%d", mMovingFastCount);
+	SetFontSize(32);
+	DrawString(0, 0, "瞬間移動できる回数:", GetColor(255, 0, 0));
+
+	mNumber->DrawIntegerNumber(Vector2(350, 0), mMovingFastCount);
 }
 
 void Player::SetPosition(const Vector2& position)
@@ -304,10 +311,11 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				if (mMovingFast)
-				{
-					mMovingFastCount = 1;
-				}
+				//if (mMovingFast)
+				//{
+				//	mMovingFastCount = 4;
+				//}
+				mMovingFastCount = 4;
 
 				if (old_y + mSize->y <= a->Position()->y)//自分の下に当たったとき
 				{
@@ -352,6 +360,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 			{
 				mFall = false;//重力が発生していない
 				mPos->y = a->Position()->y - mSize->y;
+				mMovingFastCount = 4;
 			}
 		}
 		if (a->Tag() == "Goal")
@@ -408,7 +417,8 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				if (mNowMovingFast)
 				{
 					a->SetElectricShock(true);
-					mMovingFastCount++;
+					//mMovingFastCount++;
+					mMovingFastCount = 4;
 				}
 				Damage();
 			}

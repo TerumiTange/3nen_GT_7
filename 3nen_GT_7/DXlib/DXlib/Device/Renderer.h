@@ -17,7 +17,12 @@ public:
 	void Draw(const Vector2& pos);
 	void Draw(int x, int y);
 	void Drawb(int x, int y);
+	void DrawE(const Vector2& pos, int e);
+	void DrawIntegerNumber(const Vector2& pos, int num);//®”ê—p
+	void DrawNumber(const Vector2& pos, float num);
 private:
 	std::string mName;
 	int mGra;
+
+	int width;
 };

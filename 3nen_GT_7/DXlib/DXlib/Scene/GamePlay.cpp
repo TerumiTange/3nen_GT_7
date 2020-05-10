@@ -7,6 +7,8 @@
 #include "../Utility/Vector2.h"
 #include "Load.h"
 
+#include "SceneManager.h"
+
 #include <thread>
 
 #define SAFE_DELETE(x) if(x){delete x; x=0;}
@@ -16,10 +18,13 @@ GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	mActorManager(new ActorManager()),
 	sound(),
 	input(new Input()),
-	camera(new Camera2d()),
-	mStageName(sname)
+	mStageName(sname),
+	pose(false),
+	mInputTimers(new CountDownTimer()),
+	mRenderer(new Renderer("Number"))
 {
 	Actor::SetActorManager(mActorManager);
+	
 }
 
 GamePlay::~GamePlay()
@@ -28,10 +33,12 @@ GamePlay::~GamePlay()
 	mActorManager->Clear();
 	delete(mActorManager);
 	delete(input);
-	delete(camera);
+	delete(mInputTimers);
+	delete(mRenderer);
 
 	sound.StopBGM("./Assets/Sound/a.mp3");
 	sound.Init();
+	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
 }
 
 /*void do_wark1()
@@ -66,6 +73,7 @@ void GamePlay::Init()
 	map->Init(mStageName);
 	delete(map);
 
+	//マップの後にエネミーを実装すること
 	Enemy* enemy = new Enemy();
 	enemy->Init("./Assets/Data/EnemyList.csv");
 	mActorManager->SetEnemyCount(enemy->GetEnemyCount());//敵の数をセット
@@ -74,47 +82,82 @@ void GamePlay::Init()
 	sound.Init();
 	sound.Load("./Assets/Sound/a.mp3");
 	input->Init();
-	camera->Init(Vector2(0, 0));
+	input->JoyInit();
+	SceneManager::mCamera->Init(Vector2(0, 0));
+	pose = false;
+	SceneManager::mElapsedTime->Init();
 }
 
 void GamePlay::Update()
 {
-	mActorManager->Update();
-	printfDx("敵の数%d", mActorManager->GetEnemyCount());
-	mActorManager->Hit();
-	if (mActorManager->GetPlayer())
+	input->JoyUpdate();//ポーズ中でもコントローラーをいじれるように
+	mInputTimers->Update();//操作遅延用	
+	int Cr = GetColor(255, 255, 255);
+	//DrawFormatString(500, 0, Cr, "%d:%0.2f", SceneManager::mElapsedTime->Now(), SceneManager::mElapsedTime->Rate() - int(SceneManager::mElapsedTime->Rate()));
+	//DrawFormatString(500, 0, Cr, "%d", int(SceneManager::mElapsedTime->Now()));
+	if (pose)//ポーズ中
 	{
-		camera->GetPPos(mActorManager->GetPlayer()->GetPosition());
-		camera->Update();
-		if (mStageName == "map")
+		
+		DrawString(300, 100, "ポーズ中  ゲームパッド or キーボード", Cr);
+		DrawString(300, 150, "ゲームに戻る　START    or     P", Cr);
+		DrawString(300, 200, "リセット　　　 X       or     R", Cr);
+		DrawString(300, 250, "終了　　　　　BACK     or     B", Cr);
+		if (mInputTimers->IsTime())
 		{
-			camera->CameraPos.y -= 32;
+			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
+			{
+				pose = false;
+				mInputTimers->SetTime(0.3f);
+			}
+			if (input->PadDown(JoyCode::Joy_X) || input->GetKeyDown(R))
+			{
+				Reset();
+			}
+			if (input->PadDown(JoyCode::Joy_Back) || input->GetKeyDown(B))
+			{
+				NextScene();
+			}
 		}
 	}
-	sound.PlayBGM("./Assets/Sound/a.mp3");
-	if (input->GetKeyDown(B))
+	else//ポーズでないなら
 	{
-		NextScene();
-	}
+		SceneManager::mElapsedTime->Update();//時間を更新
+		mActorManager->Update();
+		mActorManager->Hit();
+		if (mActorManager->GetPlayer())
+		{
+			SceneManager::mCamera->GetPPos(mActorManager->GetPlayer()->GetPosition());
+			SceneManager::mCamera->Update();
+			if (mStageName == "map")
+			{
+				SceneManager::mCamera->CameraPos.y -= 32;
+			}
+		}
+		sound.PlayBGM("./Assets/Sound/a.mp3");
+		if (input->GetKeyDown(B))
+		{
+			NextScene();
+		}
 
-	if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
-	{
-		//リセット
-		mActorManager->End();
-		mActorManager->Clear();
-		sound.StopBGM("./Assets/Sound/a.mp3");
-		Init();
-	}
-	if (input->GetKeyDown(R))
-	{
-		mActorManager->End();
-		mActorManager->Clear();
-		sound.StopBGM("./Assets/Sound/a.mp3");
-		Init();
-	}
-	if (mActorManager->GetPlayer()->RGoal() || mActorManager->GetEnemyCount() == 0)//ゴールしたまたは敵をすべて倒した
-	{
-		NextScene();
+		if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
+		{
+			//リセット
+			Reset();
+		}
+
+		if (mActorManager->GetPlayer()->RGoal() || mActorManager->GetEnemyCount() == 0)//ゴールしたまたは敵をすべて倒した
+		{
+			NextScene();
+		}
+
+		if (mInputTimers->IsTime())
+		{
+			if (input->GetKeyDown(P) || input->PadDown(Joy_Start))
+			{
+				pose = true;
+				mInputTimers->SetTime(0.3f);
+			}
+		}
 	}
 
 }
@@ -122,9 +165,18 @@ void GamePlay::Update()
 void GamePlay::Draw()
 {
 	mActorManager->Draw();
+	mRenderer->DrawNumber(Vector2(500, 0), SceneManager::mElapsedTime->Now());
 }
 
 void GamePlay::NextScene()
 {
 	mSceneChanger->ChangeScene(SceneEnding);
+}
+
+void GamePlay::Reset()
+{
+	mActorManager->End();
+	mActorManager->Clear();
+	sound.StopBGM("./Assets/Sound/a.mp3");
+	Init();
 }

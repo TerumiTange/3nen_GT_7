@@ -1,4 +1,5 @@
 #include "FlyEnemy.h"
+#include "ActorManager.h"
 
 FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
@@ -13,10 +14,11 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	sRenderer(new Renderer("StalEnemy")),/*,*/
 	paralRenderer(new Renderer("ThunderEffect")),//仮の画像
 	speed((1.0f)),
-	paraTime((4.0f)),
-	paralimitTime(new CountDownTimer(paraTime)),
-	paral(false),
-	playerHitTimer(new CountDownTimer())//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
+	paraTime(4.0f),//麻痺時間
+	paralimitTime(new CountDownTimer()),//麻痺時間のタイマー
+	paral(false),//麻痺状態かどうか
+	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
+	paralimitTimer(new CountDownTimer()) //連続で麻痺状態にならないためのタイマー
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -34,14 +36,15 @@ void FlyEnemy::End()
 	delete(sRenderer);
 	delete(paralRenderer);
 	delete(paralimitTime);
+	delete(paralimitTimer);
 	delete(playerHitTimer);
 }
 
 void FlyEnemy::Update()
 {
-	printfDx("麻痺状態かどうか%d", GetElectricShock());
-	playerHitTimer->Update();
-	Paralise();
+	playerHitTimer->Update();//
+	paralimitTimer->Update();//
+	Paralise();//
 	if (!paral)//麻痺状態でないなら
 	{
 		Move();
@@ -92,9 +95,29 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				mPos->x = old_x;
-				if (mRight)mRight = false;
-				else mRight = true;
+				//mPos->x = old_x;
+				//if (mRight)mRight = false;
+				//else mRight = true;
+
+				if (old_y + mSize->y <= a->Position()->y)//自分の下に当たったとき
+				{
+					mPos->y = a->Position()->y - mSize->y;
+				}
+				else if (old_y > a->Position()->y + a->Size()->y)//自分の上に当たったとき
+				{
+					mPos->y = a->Position()->y + a->Size()->y;
+				}
+				else if (old_x >= a->Position()->x + a->Size()->x)//自分の左に当たったとき
+				{
+					mPos->x = a->Position()->x + a->Size()->x + 1;
+					mRight = true;
+				}
+
+				else if (old_x + mSize->x <= a->Position()->x)//自分の右に当たったとき
+				{
+					mPos->x = a->Position()->x - mSize->x - 1;
+					mRight = false;
+				}
 			}
 		}
 		if (a->Tag() == "Floor")
@@ -109,17 +132,20 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 
 		if (a->Tag() == "Player")
 		{
-			//プレイヤーと普通にぶつかったとき
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			if (playerHitTimer->IsTime())//プレイヤーと連続ヒットを防ぐため
 			{
-				if (paral&&playerHitTimer->IsTime())//麻痺状態なら
+				//プレイヤーと普通にぶつかったとき
+				if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 				{
-					//Destroy(this);//自分死亡
-					for (auto act : actors)
+					if (paral&&playerHitTimer->IsTime())//麻痺状態なら
 					{
-						if (act->GetElectricShock())
+						//Destroy(this);//自分死亡
+						for (auto act : actors)
 						{
-							Destroy(act);//麻痺状態の敵全部死亡
+							if (act->GetElectricShock())
+							{
+								Destroy(act);//麻痺状態の敵全部死亡
+							}
 						}
 					}
 				}
@@ -145,10 +171,11 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit2(a->Position()->x - 64, a->Position()->y - 64, a->Size()->x, a->Size()->y, 100))
 			{
-				if (paral && !(a->GetElectricShock()))
+				if (!a->GetElectricShock() && paral)//自身がマヒ状態で相手がマヒ状態でないなら
 				{
 					a->SetElectricShock(true);
-					paralimitTime->SetTime(paraTime);
+					//SetElectricShock(true);
+					//paralimitTime->SetTime(paraTime);
 				}
 			}
 		}
@@ -188,7 +215,7 @@ bool FlyEnemy::CheckHit2(int x, int y, int width, int height, int p)
 
 void FlyEnemy::Move()
 {
-	if (mStalker&&!paral)
+	if (mStalker && !paral)
 	{
 		//ここに動く処理を
 		Actor::SetPos(*mPos);
@@ -209,24 +236,46 @@ void FlyEnemy::Fall()
 
 }
 
-void FlyEnemy::Paralise()
+void FlyEnemy::Paralise()//麻痺状態の処理
 {
-	if (Actor::GetElectricShock())
+	//if (!paralimitTimer->IsTime() && !paralimitTime->IsTime())
+	//{
+	//	SetElectricShock(false);
+	//}
+	//else if (Actor::GetElectricShock())
+	//{
+	//	paral = true;
+	//	Actor::SetElectricShock(false);
+	//	paralimitTime->SetTime(paraTime);
+	//}
+	//if (paral)
+	//{
+	//	paralimitTime->Update();
+	//	if (paralimitTime->IsTime())
+	//	{
+	//		paral = false;
+	//		Actor::SetElectricShock(false);
+	//		playerHitTimer->SetTime(0.3f);
+	//		paralimitTimer->SetTime(0.2f);
+	//	}
+	//}
+	if (!paralimitTimer->IsTime())
 	{
-		if (playerHitTimer->IsTime() && !paral)
-		{
-			playerHitTimer->SetTime(0.3f);
-		}
-		paral = true;
+		SetElectricShock(false);
 	}
-	if (paral)
+	//paralimitTime->Update();
+	if (GetElectricShock() && !paral)
 	{
-		paralimitTime->Update();
-		if (paralimitTime->IsTime())
-		{
-			paral = false;
-			Actor::SetElectricShock(false);
-			paralimitTime->SetTime(paraTime);
-		}
+		paral = true;
+		//paralimitTime->SetTime(paraTime);
+		mElectricTimer->SetTime(paraTime);
+		playerHitTimer->SetTime(0.3f);
+	}
+
+	if (mElectricTimer->IsTime())//(paralimitTime->IsTime())
+	{
+		paral = false;
+		SetElectricShock(false);
+		paralimitTimer->SetTime(0.01f);
 	}
 }

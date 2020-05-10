@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "SmallEnemy.h"
 #include "FlyEnemy.h"
+#include "../Map/Map.h"
 
 Enemy::Enemy():
 	mCSV(std::make_unique<CSVReader>()),
@@ -60,7 +61,7 @@ void Enemy::Parse(unsigned row)
 	const int num = mCSV->getWidth()*row;
 	data.type = SelectType(mEnemyList.at(num+1));
 	data.position.x = atoi(mEnemyList.at(num + 2).c_str());//3s–Ú
-	data.position.y = atoi(mEnemyList.at(num + 3).c_str());//4s–Ú
+	data.position.y = Map::height * 32 - atoi(mEnemyList.at(num + 3).c_str());//4s–Ú
 
 	mEnemyData.emplace_back(data);
 }

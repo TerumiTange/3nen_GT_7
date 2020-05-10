@@ -150,7 +150,7 @@ void StageSelect::NextScene()
 		SceneManager::stageName = "map";
 		break;
 	case stage4:
-		SceneManager::stageName = "map";
+		SceneManager::stageName = "rei";
 		break;
 	case stage5:
 		SceneManager::stageName = "stage1";

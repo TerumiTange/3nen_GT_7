@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "../System/Input.h"
+#include "../Device/Renderer.h"
 
 class Ending :public BaseScene
 {
@@ -14,5 +15,6 @@ public:
 
 private:
 	Input* input;
+	Renderer* mNumber;
 };
 

@@ -112,3 +112,5 @@ void Actor::DestroyTimer()
 }
 
 ActorManager* Actor::mActorManager = nullptr;
+
+CountDownTimer* Actor::mElectricTimer = new CountDownTimer();
