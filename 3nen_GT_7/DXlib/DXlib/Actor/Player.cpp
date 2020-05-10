@@ -335,7 +335,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				}
 				else if (old_y > a->Position()->y + a->Size()->y)//Ž©•ª‚Ìã‚É“–‚½‚Á‚½‚Æ‚«
 				{
-					sound->PlaySE("./Assets/Sound/crash.wav");
+					sound->PlaySEF("./Assets/Sound/crash.wav");
 					mPos->y = a->Position()->y + a->Size()->y;
 					if (mVelocity->y < 0)
 					{
@@ -344,7 +344,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				}
 				else if (old_x >= a->Position()->x + a->Size()->x)//Ž©•ª‚Ì¶‚É“–‚½‚Á‚½‚Æ‚«
 				{
-					sound->PlaySE("./Assets/Sound/crash.wav");
+					sound->PlaySEF("./Assets/Sound/crash.wav");
 					mPos->x = a->Position()->x + a->Size()->x + 1;
 					if (mVelocity->x < 0)
 					{
@@ -354,7 +354,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 
 				else if (old_x + mSize->x <= a->Position()->x)//Ž©•ª‚Ì‰E‚É“–‚½‚Á‚½‚Æ‚«
 				{
-					sound->PlaySE("./Assets/Sound/crash.wav");
+					sound->PlaySEF("./Assets/Sound/crash.wav");
 					mPos->x = a->Position()->x - mSize->x - 1;
 					if (mVelocity->x < 0)
 					{
