@@ -25,7 +25,8 @@ void Title::Init()
 {
 	input->Init();
 	sound->Init();
-	sound->Load("./Assets/Sound/kettei.wav");
+	sound->Load("./Assets/Sound/kettei.wav");//Œˆ’è
+	sound->Load("./Assets/Sound/migration.wav");//ƒJ[ƒ\ƒ‹
 }
 
 void Title::Update()
@@ -42,12 +43,14 @@ void Title::Update()
 	if (!timer->IsTime())return;
 	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down))//‰º
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % eMenuNum;//1‚Â‰º‚°‚é
 		timer->SetTime(0.3f);
 		return;
 	}
 	if (input->GetKeyDown(W) || input->GetKeyDown(UPARROW) || input->PadDown(JoyCode::Joy_Up))
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eMenuNum - 1)) % eMenuNum;//1‚Âã‚°‚é
 		timer->SetTime(0.3f);
 		return;
@@ -55,12 +58,14 @@ void Title::Update()
 
 	if (input->Vertical() > 0)
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % eMenuNum;//1‚Â‰º‚°‚é
 		timer->SetTime(0.3f);
 		return;
 	}
 	if (input->Vertical() < 0)
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eMenuNum - 1)) % eMenuNum;//1‚Âã‚°‚é
 		timer->SetTime(0.3f);
 		return;

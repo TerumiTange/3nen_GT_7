@@ -4,6 +4,7 @@
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
 #include "../System/CountDownTimer.h"
+#include "../Device/Sound.h"
 
 class Player:
 	public Actor
@@ -64,6 +65,8 @@ private:
 
 	CountDownTimer* mFallTimer;//重力軽減の時間タイマー
 	float mFallTime;//重力軽減の時間
+
+	Sound* sound;
 
 	//瞬間移動は一定距離移動
 

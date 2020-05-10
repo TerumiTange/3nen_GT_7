@@ -26,6 +26,7 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	Actor::SetSize(*mSize);
 	sound->Init();
 	sound->Load("./Assets/Sound/deth.wav");
+	sound->Load("./Assets/Sound/paral.wav");
 }
 
 FlyEnemy::~FlyEnemy() = default;
@@ -273,6 +274,7 @@ void FlyEnemy::Paralise()//–ƒáƒó‘Ô‚Ìˆ—
 	if (GetElectricShock() && !paral)
 	{
 		paral = true;
+		sound->PlaySE("./Assets/Sound/paral.wav");
 		//paralimitTime->SetTime(paraTime);
 		mElectricTimer->SetTime(paraTime);
 		playerHitTimer->SetTime(0.3f);

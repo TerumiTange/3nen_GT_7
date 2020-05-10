@@ -26,6 +26,7 @@ void Ending::Init()
 	input->Init();
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
+	sound->Load("./Assets/Sound/migration.wav");
 }
 
 void Ending::Update()
@@ -41,12 +42,14 @@ void Ending::Update()
 
 	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down))//‰º
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % endNum;//1‚Â‰º‚°‚é
 		timer->SetTime(0.3f);
 		return;
 	}
 	if (input->GetKeyDown(W) || input->GetKeyDown(UPARROW) || input->PadDown(JoyCode::Joy_Up))
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (endNum - 1)) % endNum;//1‚Âã‚°‚é
 		timer->SetTime(0.3f);
 		return;
@@ -54,12 +57,14 @@ void Ending::Update()
 
 	if (input->Vertical() > 0)
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % endNum;//1‚Â‰º‚°‚é
 		timer->SetTime(0.3f);
 		return;
 	}
 	if (input->Vertical() < 0)
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (endNum - 1)) % endNum;//1‚Âã‚°‚é
 		timer->SetTime(0.3f);
 		return;

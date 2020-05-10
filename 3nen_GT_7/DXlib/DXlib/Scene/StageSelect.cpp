@@ -33,6 +33,7 @@ void StageSelect::Init()
 	mInput->Init();
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
+	sound->Load("./Assets/Sound/migration.wav");
 }
 
 void StageSelect::Update()
@@ -50,6 +51,7 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(D) || mInput->GetKeyDown(RIGHTARROW) || mInput->PadDown(JoyCode::Joy_Right))//‰E
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -57,6 +59,7 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(A) || mInput->GetKeyDown(LEFTARROW) || mInput->PadDown(JoyCode::Joy_Left))//¶
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 1)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -64,6 +67,7 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(W) || mInput->GetKeyDown(UPARROW) || mInput->PadDown(JoyCode::Joy_Up))//ã
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 3)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -71,6 +75,7 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(S) || mInput->GetKeyDown(DOWNARROW) || mInput->PadDown(JoyCode::Joy_Down))//‰º
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 3) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -79,12 +84,14 @@ void StageSelect::Update()
 
 	if (mInput->Horizontal() > 0)//‰E
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
 	}
 	if (mInput->Horizontal() < 0)//¶
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 1)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -92,6 +99,7 @@ void StageSelect::Update()
 
 	if (mInput->Vertical() > 0)//ã
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 3)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -99,6 +107,7 @@ void StageSelect::Update()
 
 	if (mInput->Vertical() > 0)//‰º
 	{
+		sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 3) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;

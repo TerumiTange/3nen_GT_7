@@ -39,13 +39,20 @@ Player::Player(const Vector2& position, const char* tag):
 	mNowMovingFast(false),							  //高速移動した瞬間
 	mFallTimer(new CountDownTimer()),				  //重力軽減の時間タイマー(IsTime()がfalseなら軽減中)
 	mFallTime(0.2f),								  //重力軽減の時間
-	mNumber(new Renderer("Number"))
+	mNumber(new Renderer("Number")),
+	sound(new Sound())
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
 	Actor::SetPos(*mPos);   //アクターにセット
 	Actor::SetSize(*mSize);	//アクターにセット
 	mInput->Init();
+	sound->Init();
+	sound->Load("./Assets/Sound/damage.wav");//ダメージ
+	sound->Load("./Assets/Sound/pdeth.wav");//死亡
+	sound->Load("./Assets/Sound/movingfast.wav");//高速移動
+	sound->Load("./Assets/Sound/crash.wav");//壁との衝突
+
 }
 
 Player::~Player() = default;
@@ -65,6 +72,7 @@ void Player::End()//メモリの開放
 	delete(mNowMovingFastTimer);
 	delete(mNumber);
 	delete(mFallTimer);
+	delete(sound);
 }
 
 void Player::Update()
@@ -201,6 +209,7 @@ void Player::MovingFast()//瞬間移動
 	if (mMovingFastCount <= 0)return;//0以下ならリターン
 	if (mMovingFast)return;//瞬間移動中ならリターン
 	if (!mNowMovingFastTimer->IsTime())return;//一定時間たつまで無効
+	sound->PlaySE("./Assets/Sound/movingfast.wav");
 	mMovingFast = true;
 	mFall = false;
 	mNowMovingFast = true;
@@ -247,11 +256,13 @@ void Player::Damage()//ダメージ
 	if (mCountTimer->IsTime())//無敵時間でないなら
 	{
 		mHp--;//1ダメージ受ける
+		sound->PlaySE("./Assets/Sound/damage.wav");
 		mCountTimer->SetTime(mInvincibleTime);//無敵時間をセット
 	}
 
 	if (mHp <= 0)//体力がなくなったら
 	{
+		sound->PlaySE("./Assets/Sound/pdeth.wav");
 		Destroy(this, 3.f);//3秒後に死亡
 	}
 }
@@ -324,6 +335,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				}
 				else if (old_y > a->Position()->y + a->Size()->y)//自分の上に当たったとき
 				{
+					sound->PlaySE("./Assets/Sound/crash.wav");
 					mPos->y = a->Position()->y + a->Size()->y;
 					if (mVelocity->y < 0)
 					{
@@ -332,6 +344,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				}
 				else if (old_x >= a->Position()->x + a->Size()->x)//自分の左に当たったとき
 				{
+					sound->PlaySE("./Assets/Sound/crash.wav");
 					mPos->x = a->Position()->x + a->Size()->x + 1;
 					if (mVelocity->x < 0)
 					{
@@ -341,6 +354,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 
 				else if (old_x + mSize->x <= a->Position()->x)//自分の右に当たったとき
 				{
+					sound->PlaySE("./Assets/Sound/crash.wav");
 					mPos->x = a->Position()->x - mSize->x - 1;
 					if (mVelocity->x < 0)
 					{
