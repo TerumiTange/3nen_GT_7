@@ -26,7 +26,6 @@ private:
 	ActorManager* mActorManager;
 	Sound sound;
 	Input* input;
-	Camera2d* camera;
 	const char* mStageName;//ステージの名前
 	bool pose;//ポーズ用
 	CountDownTimer* mInputTimers;//経過した時間

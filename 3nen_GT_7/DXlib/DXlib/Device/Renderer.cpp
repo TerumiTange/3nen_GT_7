@@ -62,6 +62,7 @@ void Renderer::DrawIntegerNumber(const Vector2 & pos, int num)//Numverのみ使用で
 
 void Renderer::DrawNumber(const Vector2& pos, float num)//Numberのみ使用できる
 {
+	SetDrawBright(255, 0, 0);
 	if (num < 0.f)//マイナスなら0に
 	{
 		num = 0.f;
@@ -85,4 +86,5 @@ void Renderer::DrawNumber(const Vector2& pos, float num)//Numberのみ使用できる
 		x += width;
 		if (count >= 2)break;
 	}
+	SetDrawBright(255, 255, 255);
 }

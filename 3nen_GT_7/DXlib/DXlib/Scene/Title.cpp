@@ -65,6 +65,7 @@ void Title::Update()
 void Title::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
+	SetFontSize(16);
 	DrawString(150, 50, "Title B PUSH　どっち選んでもゲームプレイに行くけどね", Cr);
 	DrawString(150, startY, "スタート", Cr);
 	DrawString(150, creditY, "クレジット", Cr);

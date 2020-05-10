@@ -18,7 +18,6 @@ GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	mActorManager(new ActorManager()),
 	sound(),
 	input(new Input()),
-	camera(new Camera2d()),
 	mStageName(sname),
 	pose(false),
 	mInputTimers(new CountDownTimer()),
@@ -34,12 +33,12 @@ GamePlay::~GamePlay()
 	mActorManager->Clear();
 	delete(mActorManager);
 	delete(input);
-	delete(camera);
 	delete(mInputTimers);
 	delete(mRenderer);
 
 	sound.StopBGM("./Assets/Sound/a.mp3");
 	sound.Init();
+	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
 }
 
 /*void do_wark1()
@@ -84,7 +83,7 @@ void GamePlay::Init()
 	sound.Load("./Assets/Sound/a.mp3");
 	input->Init();
 	input->JoyInit();
-	camera->Init(Vector2(0, 0));
+	SceneManager::mCamera->Init(Vector2(0, 0));
 	pose = false;
 	SceneManager::mElapsedTime->Init();
 }
@@ -99,10 +98,10 @@ void GamePlay::Update()
 	if (pose)//ポーズ中
 	{
 		
-		DrawString(300, 100, "ポーズ中", Cr);
-		DrawString(300, 150, "ゲームに戻る　START or P", Cr);
-		DrawString(300, 200, "リセット　　　RB or R", Cr);
-		DrawString(300, 250, "終了　　　　　BACK or B", Cr);
+		DrawString(300, 100, "ポーズ中  ゲームパッド or キーボード", Cr);
+		DrawString(300, 150, "ゲームに戻る　START    or     P", Cr);
+		DrawString(300, 200, "リセット　　　 X       or     R", Cr);
+		DrawString(300, 250, "終了　　　　　BACK     or     B", Cr);
 		if (mInputTimers->IsTime())
 		{
 			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
@@ -110,7 +109,7 @@ void GamePlay::Update()
 				pose = false;
 				mInputTimers->SetTime(0.3f);
 			}
-			if (input->PadDown(JoyCode::Joy_R1) || input->GetKeyDown(R))
+			if (input->PadDown(JoyCode::Joy_X) || input->GetKeyDown(R))
 			{
 				Reset();
 			}
@@ -127,11 +126,11 @@ void GamePlay::Update()
 		mActorManager->Hit();
 		if (mActorManager->GetPlayer())
 		{
-			camera->GetPPos(mActorManager->GetPlayer()->GetPosition());
-			camera->Update();
+			SceneManager::mCamera->GetPPos(mActorManager->GetPlayer()->GetPosition());
+			SceneManager::mCamera->Update();
 			if (mStageName == "map")
 			{
-				camera->CameraPos.y -= 32;
+				SceneManager::mCamera->CameraPos.y -= 32;
 			}
 		}
 		sound.PlayBGM("./Assets/Sound/a.mp3");

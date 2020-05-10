@@ -95,9 +95,29 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				mPos->x = old_x;
-				if (mRight)mRight = false;
-				else mRight = true;
+				//mPos->x = old_x;
+				//if (mRight)mRight = false;
+				//else mRight = true;
+
+				if (old_y + mSize->y <= a->Position()->y)//Ž©•ª‚Ì‰º‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->y = a->Position()->y - mSize->y;
+				}
+				else if (old_y > a->Position()->y + a->Size()->y)//Ž©•ª‚Ìã‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->y = a->Position()->y + a->Size()->y;
+				}
+				else if (old_x >= a->Position()->x + a->Size()->x)//Ž©•ª‚Ì¶‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->x = a->Position()->x + a->Size()->x + 1;
+					mRight = true;
+				}
+
+				else if (old_x + mSize->x <= a->Position()->x)//Ž©•ª‚Ì‰E‚É“–‚½‚Á‚½‚Æ‚«
+				{
+					mPos->x = a->Position()->x - mSize->x - 1;
+					mRight = false;
+				}
 			}
 		}
 		if (a->Tag() == "Floor")
@@ -243,11 +263,11 @@ void FlyEnemy::Paralise()//–ƒáƒó‘Ô‚Ìˆ—
 	{
 		SetElectricShock(false);
 	}
-	paralimitTime->Update();
+	//paralimitTime->Update();
 	if (GetElectricShock() && !paral)
 	{
 		paral = true;
-		paralimitTime->SetTime(paraTime);
+		//paralimitTime->SetTime(paraTime);
 		mElectricTimer->SetTime(paraTime);
 		playerHitTimer->SetTime(0.3f);
 	}

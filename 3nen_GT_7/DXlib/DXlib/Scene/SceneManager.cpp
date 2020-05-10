@@ -15,6 +15,7 @@ SceneManager::~SceneManager()
 	delete(mfader);
 	delete(mElapsedTime);
 	delete(Actor::mElectricTimer);//ÅŒã‚Éƒƒ‚ƒŠ‚ğ‰ğ•ú‚·‚é‚½‚ß
+	delete(mCamera);
 }
 
 void SceneManager::Init()
@@ -69,3 +70,4 @@ void SceneManager::ChangeScene(SceneType nextScene)
 
 const char* SceneManager::stageName = "";
 CountUpTimer* SceneManager::mElapsedTime = new CountUpTimer();
+Camera2d* SceneManager::mCamera = new Camera2d();

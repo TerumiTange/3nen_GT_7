@@ -10,6 +10,7 @@
 #include "../Device/Fader.h"
 
 #include "../System/CountUpTimer.h"
+#include "../Device/Camera2d.h"
 
 class SceneManager:
 	public ISceneChanger
@@ -24,7 +25,8 @@ public:
 
 	static const char* stageName;
 	static CountUpTimer* mElapsedTime;//ステージ上の経過時間
-	
+	static Camera2d* mCamera;
+
 private:
 	BaseScene* mScene;
 	SceneType mNextScene;
