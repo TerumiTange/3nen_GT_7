@@ -19,4 +19,8 @@ c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(359): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(379): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp(406): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Ui.cpp
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\ui.cpp(44): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\ui.cpp(51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  コードを生成中...
   DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
