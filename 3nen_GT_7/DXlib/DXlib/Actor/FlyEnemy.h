@@ -3,6 +3,7 @@
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
 #include "../System/CountDownTimer.h"
+#include "../Device/Sound.h"
 
 class FlyEnemy :public Actor
 {
@@ -44,4 +45,6 @@ private:
 	bool paral;
 	CountDownTimer* playerHitTimer;//プレイヤーと連続で当たらないためのタイマー
 	CountDownTimer* paralimitTimer;//連続で麻痺状態にならないためのタイマー
+
+	Sound* sound;//音
 };

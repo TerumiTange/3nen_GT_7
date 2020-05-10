@@ -8,6 +8,7 @@
 #include "../System/CountDownTimer.h"
 #include "../Utility/Vector2.h"
 #include "SceneManager.h"
+#include "../Device/Sound.h"
 
 class StageSelect :public BaseScene
 {
@@ -29,6 +30,7 @@ private:
 	Vector2* stage5Pos;
 	Vector2* stage6Pos;
 	int choice;//Œ»İ‘I‘ğ’†
+	Sound* sound;
 };
 
 enum eStage

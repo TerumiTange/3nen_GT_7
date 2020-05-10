@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "../System/Input.h"
 #include "../System/CountDownTimer.h"
+#include "../Device/Sound.h"
 
 class Title :public BaseScene
 {
@@ -20,6 +21,7 @@ private:
 	int configModeY;//ウィンドウ
 	int choice;//現在選択中
 	CountDownTimer* timer;//入力遅延をわざと起こすよう
+	Sound* sound;
 };
 
 enum eMenu

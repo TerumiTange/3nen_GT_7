@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "../System/Input.h"
 #include "../Device/Renderer.h"
+#include "../Device/Sound.h"
 
 class Ending :public BaseScene
 {
@@ -16,5 +17,6 @@ public:
 private:
 	Input* input;
 	Renderer* mNumber;
+	Sound* sound;
 };
 

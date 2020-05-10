@@ -9,9 +9,11 @@ StageSelect::StageSelect(ISceneChanger* changer):
 	stage3Pos(new Vector2(300,100)),
 	stage4Pos(new Vector2(100,150)),
 	stage5Pos(new Vector2(200,150)),
-	stage6Pos(new Vector2(300,150))
+	stage6Pos(new Vector2(300,150)),
+	sound(new Sound())
 {
 	choice = stage1;//最初はステージ1
+	
 }
 
 StageSelect::~StageSelect()
@@ -29,6 +31,8 @@ StageSelect::~StageSelect()
 void StageSelect::Init()
 {
 	mInput->Init();
+	sound->Init();
+	sound->Load("./Assets/Sound/kettei.wav");
 }
 
 void StageSelect::Update()
@@ -38,6 +42,7 @@ void StageSelect::Update()
 
 	if (mInput->PadDown(JoyCode::Joy_B) || mInput->GetKeyDown(B))
 	{
+		sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
 	}
 

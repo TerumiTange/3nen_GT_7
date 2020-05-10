@@ -4,7 +4,8 @@
 Ending::Ending(ISceneChanger * changer) :
 	BaseScene(changer),
 	input(new Input()),
-	mNumber(new Renderer("Number"))
+	mNumber(new Renderer("Number")),
+	sound(new Sound())
 {
 }
 
@@ -17,6 +18,8 @@ Ending::~Ending()
 void Ending::Init()
 {
 	input->Init();
+	sound->Init();
+	sound->Load("./Assets/Sound/kettei.wav");
 }
 
 void Ending::Update()
@@ -24,6 +27,7 @@ void Ending::Update()
 	input->JoyUpdate();
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
 	{
+		sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
 	}
 }
