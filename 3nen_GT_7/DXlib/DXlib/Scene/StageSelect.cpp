@@ -117,6 +117,7 @@ void StageSelect::Update()
 void StageSelect::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
+	SetFontSize(16);
 	DrawString(50, 50, "ステージ選択", Cr);
 	DrawString(stage1Pos->x, stage1Pos->y, "ステージ1", Cr);
 	DrawString(stage2Pos->x, stage2Pos->y, "ステージ2", Cr);
