@@ -3,6 +3,7 @@
 #include "../System/Input.h"
 #include "../Device/Renderer.h"
 #include "../Device/Sound.h"
+#include "../System/CountDownTimer.h"
 
 class Ending :public BaseScene
 {
@@ -18,5 +19,19 @@ private:
 	Input* input;
 	Renderer* mNumber;
 	Sound* sound;
+	int t;//タイトル
+	int s;//セレクト
+	int r;//リスタート
+	int choice;//現在選択中
+	CountDownTimer* timer;//遅延用
+};
+
+enum EndMenu
+{
+	e_title,
+	e_select,
+	e_restart,
+
+	endNum
 };
 
