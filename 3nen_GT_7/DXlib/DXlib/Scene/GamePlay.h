@@ -5,6 +5,8 @@
 #include "../Device/Sound.h"
 #include "../System/Input.h"
 #include "../Device/Camera2d.h"
+#include "../System/CountDownTimer.h"
+#include "../Device/Renderer.h"
 
 class ActorManager;
 class Camera;
@@ -18,6 +20,7 @@ public:
 	void Update() override;
 	void Draw() override;
 	void NextScene();
+	void Reset();
 
 private:
 	ActorManager* mActorManager;
@@ -25,4 +28,7 @@ private:
 	Input* input;
 	Camera2d* camera;
 	const char* mStageName;//ステージの名前
+	bool pose;//ポーズ用
+	CountDownTimer* mInputTimers;//経過した時間
+	Renderer* mRenderer;//描画用
 };

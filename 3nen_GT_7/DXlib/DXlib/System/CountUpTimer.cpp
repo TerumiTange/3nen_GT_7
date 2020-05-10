@@ -1,6 +1,6 @@
 #include "CountUpTimer.h"
 
-CountUpTimer::CountUpTimer():Timer()
+CountUpTimer::CountUpTimer():Timer(1.0f)
 {
 	Init();
 }
@@ -21,7 +21,8 @@ void CountUpTimer::Init()
 
 void CountUpTimer::Update()
 {
-	currentTime = std::fminf(currentTime + 1.0f, limitTime);
+	//currentTime = std::fminf(currentTime + 1.0f, limitTime);//limitTime
+	currentTime = currentTime + 0.016666f;
 }
 
 bool CountUpTimer::IsTime()
@@ -40,6 +41,6 @@ float CountUpTimer::Rate()
 
 float CountUpTimer::Now()
 {
-	return 0.0f;
+	return currentTime;
 }
 

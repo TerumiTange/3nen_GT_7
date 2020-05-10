@@ -43,4 +43,5 @@ private:
 	CountDownTimer* paralimitTime;
 	bool paral;
 	CountDownTimer* playerHitTimer;//プレイヤーと連続で当たらないためのタイマー
+	CountDownTimer* paralimitTimer;//連続で麻痺状態にならないためのタイマー
 };

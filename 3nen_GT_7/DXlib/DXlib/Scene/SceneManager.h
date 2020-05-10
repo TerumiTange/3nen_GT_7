@@ -9,6 +9,8 @@
 
 #include "../Device/Fader.h"
 
+#include "../System/CountUpTimer.h"
+
 class SceneManager:
 	public ISceneChanger
 {
@@ -21,6 +23,7 @@ public:
 	void ChangeScene(SceneType nextScene)override;
 
 	static const char* stageName;
+	static CountUpTimer* mElapsedTime;//ステージ上の経過時間
 	
 private:
 	BaseScene* mScene;

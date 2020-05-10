@@ -65,3 +65,4 @@ void SceneManager::ChangeScene(SceneType nextScene)
 }
 
 const char* SceneManager::stageName = "";
+CountUpTimer* SceneManager::mElapsedTime = new CountUpTimer();

@@ -14,9 +14,10 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	paralRenderer(new Renderer("ThunderEffect")),//仮の画像
 	speed((1.0f)),
 	paraTime((4.0f)),
-	paralimitTime(new CountDownTimer(paraTime)),
+	paralimitTime(new CountDownTimer()),
 	paral(false),
-	playerHitTimer(new CountDownTimer())//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
+	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
+	paralimitTimer(new CountDownTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -34,13 +35,14 @@ void FlyEnemy::End()
 	delete(sRenderer);
 	delete(paralRenderer);
 	delete(paralimitTime);
+	delete(paralimitTimer);
 	delete(playerHitTimer);
 }
 
 void FlyEnemy::Update()
 {
-	printfDx("麻痺状態かどうか%d", GetElectricShock());
 	playerHitTimer->Update();
+	paralimitTimer->Update();
 	Paralise();
 	if (!paral)//麻痺状態でないなら
 	{
@@ -145,10 +147,10 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit2(a->Position()->x - 64, a->Position()->y - 64, a->Size()->x, a->Size()->y, 100))
 			{
-				if (paral && !(a->GetElectricShock()))
+				if (paral)
 				{
 					a->SetElectricShock(true);
-					paralimitTime->SetTime(paraTime);
+					SetElectricShock(true);
 				}
 			}
 		}
@@ -211,13 +213,15 @@ void FlyEnemy::Fall()
 
 void FlyEnemy::Paralise()
 {
-	if (Actor::GetElectricShock())
+	if (!paralimitTimer->IsTime() && !paralimitTime->IsTime())
 	{
-		if (playerHitTimer->IsTime() && !paral)
-		{
-			playerHitTimer->SetTime(0.3f);
-		}
+		SetElectricShock(false);
+	}
+	else if (Actor::GetElectricShock())
+	{
 		paral = true;
+		Actor::SetElectricShock(false);
+		paralimitTime->SetTime(paraTime);
 	}
 	if (paral)
 	{
@@ -226,7 +230,8 @@ void FlyEnemy::Paralise()
 		{
 			paral = false;
 			Actor::SetElectricShock(false);
-			paralimitTime->SetTime(paraTime);
+			playerHitTimer->SetTime(0.3f);
+			paralimitTimer->SetTime(0.2f);
 		}
 	}
 }

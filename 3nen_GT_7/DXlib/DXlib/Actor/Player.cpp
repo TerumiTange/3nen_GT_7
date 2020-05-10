@@ -27,18 +27,19 @@ Player::Player(const Vector2& position, const char* tag):
 	mGravity(16),									  //d—Í‚ÌƒXƒs[ƒh
 	mMovingFastGravity(8),							  //‚‘¬ˆÚ“®’†‚Ìd—Í
 	mMovingFast(false),								  //‚‘¬ˆÚ“®‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
-	mMovingFastCount(1),							  //‚‘¬ˆÚ“®‚Å‚«‚é‰ñ”
-	mMovingFastMaxCount(1),							  //Å‘å‚‘¬ˆÚ“®‚Ì‰ñ”
+	mMovingFastCount(4),							  //‚‘¬ˆÚ“®‚Å‚«‚é‰ñ”
+	mMovingFastMaxCount(4),							  //Å‘å‚‘¬ˆÚ“®‚Ì‰ñ”
 	mMovingFastTime(0.5f),//0.5f					  //‚‘¬ˆÚ“®‚ª‰ñ•œ‚·‚é‚Ü‚Å‚ÌŽžŠÔ
 	mMovingFastTimer(new CountDownTimer()),			  //‚‘¬ˆÚ“®‰ñ•œ—pƒJƒEƒ“ƒgƒ_ƒEƒ“ƒ^ƒCƒ}[
-	mMovingFastAmount(30),							  //‚‘¬ˆÚ“®‚ÌˆÚ“®—Ê
+	mMovingFastAmount(35),							  //‚‘¬ˆÚ“®‚ÌˆÚ“®—Ê
 	mMovingFastDifferenceX(0),						  //‚‘¬ˆÚ“®Œã‚ÌˆÊ’u‚Ì·•ªX
 	mMovingFastDifferenceY(0),						  //‚‘¬ˆÚ“®Œã‚ÌˆÊ’u‚Ì·•ªY
 	mNowMovingFastTimer(new CountDownTimer()),        //‚‘¬ˆÚ“®ó‘Ô‚Ìƒ^ƒCƒ}[
 	mNowMovingFastTime(0.2f),						  //‚‘¬ˆÚ“®ó‘Ô‚ÌŽžŠÔ
 	mNowMovingFast(false),							  //‚‘¬ˆÚ“®‚µ‚½uŠÔ
 	mFallTimer(new CountDownTimer()),				  //d—ÍŒyŒ¸‚ÌŽžŠÔƒ^ƒCƒ}[(IsTime()‚ªfalse‚È‚çŒyŒ¸’†)
-	mFallTime(0.2f)									  //d—ÍŒyŒ¸‚ÌŽžŠÔ
+	mFallTime(0.2f),								  //d—ÍŒyŒ¸‚ÌŽžŠÔ
+	mNumber(new Renderer("Number"))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -62,7 +63,7 @@ void Player::End()//ƒƒ‚ƒŠ‚ÌŠJ•ú
 
 	delete(mMovingFastTimer);
 	delete(mNowMovingFastTimer);
-	
+	delete(mNumber);
 	delete(mFallTimer);
 }
 
@@ -74,12 +75,10 @@ void Player::Update()
 	}
 	//clsDx();
 	//ƒfƒoƒbƒO—p
-	printfDx("‘Ì—Í%d", mHp);
-	printfDx("–³“GŽžŠÔ%.001f", mCountTimer->Now());
-	printfDx("uŠÔˆÚ“®‚Å‚«‚é‰ñ”%d", mMovingFastCount);
-	printfDx("uŠÔˆÚ“®‚Å‚«‚é‚æ‚¤‚É‚È‚é‚Ü‚Å‚ÌŽžŠÔ%.01f", mMovingFastTimer->Now());
-	//printfDx("x‚Ì’l%.1f", mMovingFastDifferenceX);
-	//printfDx("y‚Ì’l%.1f", mMovingFastDifferenceY);
+	//printfDx("‘Ì—Í%d", mHp);
+	//printfDx("–³“GŽžŠÔ%.001f", mCountTimer->Now());
+	//printfDx("uŠÔˆÚ“®‚Å‚«‚é‰ñ”%d", mMovingFastCount);
+	//printfDx("uŠÔˆÚ“®‚Å‚«‚é‚æ‚¤‚É‚È‚é‚Ü‚Å‚ÌŽžŠÔ%.01f", mMovingFastTimer->Now());
 
 	if (mHp <= 0)return;//‘Ì—Í‚ª‚È‚­‚È‚Á‚½‚ç‘€ì‚µ‚È‚¢‚æ‚¤‚É‚·‚é
 
@@ -97,7 +96,7 @@ void Player::Update()
 	{
 		mFall = true;
 		//if (mMovingFast)return;
-		mMovingFastCount = 1;//‚‘¬ˆÚ“®‰ñ”‚ð1‚É‚·‚é
+		//mMovingFastCount = 1;//‚‘¬ˆÚ“®‰ñ”‚ð1‚É‚·‚é
 	}
 	
 	if (mNowMovingFastTimer->IsTime())//‚‘¬ˆÚ“®‚µ‚½uŠÔ‚Ìˆ—‚ªI—¹‚µ‚½‚ç
@@ -185,15 +184,15 @@ void Player::Movement()//ˆÚ“®ˆ—
 		mPos->x = Map::width * 32 - 32;
 	}
 	//«Œã‚ÅC³
-	if (mPos->y > ScreenHeight)
+	if (mPos->y < 32)
 	{
-		mPos->y = ScreenHeight;
+		mPos->y = 32;
 	}
-	if (mPos->y < Map::height * 32 - ScreenHeight - 32)
+	if (mPos->y > Map::height * 32 - 32)
 	{
-		mPos->y = Map::height * 32 - ScreenHeight - 32;
+		mPos->y = Map::height * 32 - 32;
 	}
-
+	
 }
 
 void Player::MovingFast()//uŠÔˆÚ“®
@@ -268,7 +267,8 @@ void Player::Recovery()//‘Ì—Í‰ñ•œ
 
 void Player::Draw()//•`‰æ
 {
-	mRenderer->Draw(*mPos);
+	//mRenderer->Draw(*mPos);
+	mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
 		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
@@ -277,6 +277,10 @@ void Player::Draw()//•`‰æ
 	{
 		mHeart->Drawb(10 + i * 36, 36);
 	}
+    //DrawString(0, 0, "", mMovingFastCount);
+	//DrawFormatString(10, 0, GetColor(255, 0, 0), "uŠÔˆÚ“®‚Å‚«‚é‰ñ”%d", mMovingFastCount);
+	DrawString(0, 0, "uŠÔˆÚ“®‚Å‚«‚é‰ñ”:", GetColor(255, 0, 0));
+	mNumber->DrawIntegerNumber(Vector2(150, 0), mMovingFastCount);
 }
 
 void Player::SetPosition(const Vector2& position)
@@ -304,10 +308,11 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 		{
 			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
 			{
-				if (mMovingFast)
-				{
-					mMovingFastCount = 1;
-				}
+				//if (mMovingFast)
+				//{
+				//	mMovingFastCount = 4;
+				//}
+				mMovingFastCount = 4;
 
 				if (old_y + mSize->y <= a->Position()->y)//Ž©•ª‚Ì‰º‚É“–‚½‚Á‚½‚Æ‚«
 				{
@@ -352,6 +357,7 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 			{
 				mFall = false;//d—Í‚ª”­¶‚µ‚Ä‚¢‚È‚¢
 				mPos->y = a->Position()->y - mSize->y;
+				mMovingFastCount = 4;
 			}
 		}
 		if (a->Tag() == "Goal")
@@ -408,7 +414,8 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 				if (mNowMovingFast)
 				{
 					a->SetElectricShock(true);
-					mMovingFastCount++;
+					//mMovingFastCount++;
+					mMovingFastCount = 4;
 				}
 				Damage();
 			}

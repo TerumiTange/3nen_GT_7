@@ -35,7 +35,7 @@ public:
 	{
 		//DrawFormatString(0, 0, GetColor(255, 0, 0), "%.1f", mFps);
 		clsDx();
-		printfDx("%.1f", mFps);
+		//printfDx("%.1f", mFps);
 	}
 	void Wait()
 	{
@@ -80,8 +80,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWaitVSyncFlag(FALSE);
 
 	// ウインドウモードで起動
-	//ChangeWindowMode(TRUE);
-	message_box();
+	ChangeWindowMode(TRUE);
+	//message_box();
 	// ウインドウのサイズを手動ではできず、且つウインドウのサイズに合わせて拡大もしないようにする
 	//SetWindowSizeChangeEnableFlag(TRUE, TRUE);
 	// 画面サイズは最大の 1920x1080 にしておく
@@ -93,7 +93,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	
 	//背景色を変更
-	SetBackgroundColor(255, 255, 255);
+	SetBackgroundColor(0,0,0);
 
 	
 
