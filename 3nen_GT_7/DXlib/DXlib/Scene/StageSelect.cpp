@@ -156,23 +156,25 @@ void StageSelect::NextScene()
 	switch (choice)
 	{
 	case stage1:
-		SceneManager::stageName = "map";
+		SceneManager::stageName = "stage1";
 		break;
 	case stage2:
-		SceneManager::stageName = "map";
+		SceneManager::stageName = "stage2";
 		break;
 	case stage3:
-		SceneManager::stageName = "map";
+		SceneManager::stageName = "stage3";
 		break;
 	case stage4:
-		SceneManager::stageName = "rei";
+		SceneManager::stageName = "stage4";
 		break;
 	case stage5:
-		SceneManager::stageName = "stage1";
+		SceneManager::stageName = "stage5";
 		break;
 	case stage6:
 		mSceneChanger->ChangeScene(SceneTitle);
 		return;
+	default:
+		SceneManager::stageName = "rei";
 	}
 	mSceneChanger->ChangeScene(SceneGamePlay);
 }
