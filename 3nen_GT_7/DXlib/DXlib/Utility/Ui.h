@@ -13,7 +13,8 @@ public:
 	void Init();
 	void Active(bool set);
 	void Draw();
-	void Gauge();
+	void Gauge(int volum,int maxVolum);
+	void Cell(int volum, int maxVolum);
 
 private:
 	Vector2* mPos;
