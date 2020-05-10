@@ -9,6 +9,7 @@ Sound::Sound():
 
 Sound::~Sound()
 {
+	Init();
 }
 
 void Sound::Init()

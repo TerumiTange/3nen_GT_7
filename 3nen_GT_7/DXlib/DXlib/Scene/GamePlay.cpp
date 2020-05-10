@@ -16,7 +16,7 @@
 GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	BaseScene(changer),
 	mActorManager(new ActorManager()),
-	sound(),
+	sound(new Sound()),
 	input(new Input()),
 	mStageName(sname),
 	pose(false),
@@ -36,8 +36,9 @@ GamePlay::~GamePlay()
 	delete(mInputTimers);
 	delete(mRenderer);
 
-	sound.StopBGM("./Assets/Sound/a.mp3");
-	sound.Init();
+	sound->StopBGM("./Assets/Sound/a.mp3");
+	sound->Init();
+	delete(sound);
 	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
 }
 
@@ -79,8 +80,9 @@ void GamePlay::Init()
 	mActorManager->SetEnemyCount(enemy->GetEnemyCount());//敵の数をセット
 	delete(enemy);
 
-	sound.Init();
-	sound.Load("./Assets/Sound/a.mp3");
+	sound->Init();
+	sound->Load("./Assets/Sound/a.mp3");//BGM
+	sound->Load("./Assets/Sound/kettei.wav");
 	input->Init();
 	input->JoyInit();
 	SceneManager::mCamera->Init(Vector2(0, 0));
@@ -106,15 +108,18 @@ void GamePlay::Update()
 		{
 			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
 			{
+				sound->PlaySE("./Assets/Sound/kettei.wav");
 				pose = false;
 				mInputTimers->SetTime(0.3f);
 			}
 			if (input->PadDown(JoyCode::Joy_X) || input->GetKeyDown(R))
 			{
+				sound->PlaySE("./Assets/Sound/kettei.wav");
 				Reset();
 			}
 			if (input->PadDown(JoyCode::Joy_Back) || input->GetKeyDown(B))
 			{
+				sound->PlaySE("./Assets/Sound/kettei.wav");
 				NextScene();
 			}
 		}
@@ -133,7 +138,7 @@ void GamePlay::Update()
 				SceneManager::mCamera->CameraPos.y -= 32;
 			}
 		}
-		sound.PlayBGM("./Assets/Sound/a.mp3");
+		sound->PlayBGM("./Assets/Sound/a.mp3");
 		if (input->GetKeyDown(B))
 		{
 			NextScene();
@@ -154,6 +159,7 @@ void GamePlay::Update()
 		{
 			if (input->GetKeyDown(P) || input->PadDown(Joy_Start))
 			{
+				sound->PlaySE("./Assets/Sound/kettei.wav");
 				pose = true;
 				mInputTimers->SetTime(0.3f);
 			}
@@ -177,6 +183,6 @@ void GamePlay::Reset()
 {
 	mActorManager->End();
 	mActorManager->Clear();
-	sound.StopBGM("./Assets/Sound/a.mp3");
+	sound->StopBGM("./Assets/Sound/a.mp3");
 	Init();
 }

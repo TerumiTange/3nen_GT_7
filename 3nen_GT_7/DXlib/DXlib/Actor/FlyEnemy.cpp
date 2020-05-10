@@ -18,17 +18,21 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	paralimitTime(new CountDownTimer()),//麻痺時間のタイマー
 	paral(false),//麻痺状態かどうか
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
-	paralimitTimer(new CountDownTimer()) //連続で麻痺状態にならないためのタイマー
+	paralimitTimer(new CountDownTimer()), //連続で麻痺状態にならないためのタイマー
+	sound(new Sound())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
 	Actor::SetSize(*mSize);
+	sound->Init();
+	sound->Load("./Assets/Sound/deth.wav");
 }
 
 FlyEnemy::~FlyEnemy() = default;
 
 void FlyEnemy::End()
 {
+	sound->PlaySE("./Assets/Sound/deth.wav");
 	delete(mPos);
 	delete(mSize);
 	delete(mRenderer);
@@ -38,6 +42,8 @@ void FlyEnemy::End()
 	delete(paralimitTime);
 	delete(paralimitTimer);
 	delete(playerHitTimer);
+	sound->Init();
+	delete(sound);
 }
 
 void FlyEnemy::Update()

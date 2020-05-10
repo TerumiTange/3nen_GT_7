@@ -8,7 +8,8 @@ Title::Title(ISceneChanger* changer)
 	creditY(150),
 	configFllY(200),
 	configModeY(250),
-	timer(new CountDownTimer())
+	timer(new CountDownTimer()),
+	sound(new Sound())
 {
 	choice = start;//最初はゲームスタートを選択
 }
@@ -17,11 +18,14 @@ Title::~Title()
 {
 	delete(input);
 	delete(timer);
+	delete(sound);
 }
 
 void Title::Init()
 {
 	input->Init();
+	sound->Init();
+	sound->Load("./Assets/Sound/kettei.wav");
 }
 
 void Title::Update()
@@ -32,6 +36,7 @@ void Title::Update()
 
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
 	{
+		sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
 	}
 	if (!timer->IsTime())return;
