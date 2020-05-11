@@ -68,7 +68,7 @@ void GamePlay::Init()
 	//{
 	//	std::cerr << ex.what() << std::endl;
 	//}
-	new Player(Vector2(50, 50));
+	//new Player(Vector2(50, 50));
 
 	Map* map = new Map();
 	map->Init(mStageName);
