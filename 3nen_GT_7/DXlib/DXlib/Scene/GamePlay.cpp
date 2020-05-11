@@ -112,6 +112,10 @@ void GamePlay::Init()
 	SceneManager::mCamera->Init(Vector2(0, 0));
 	pose = false;
 	SceneManager::mElapsedTime->Init();
+	if (!mActorManager->GetPlayer())//ƒvƒŒƒCƒ„[‚ª‚¢‚È‚¯‚ê‚Î
+	{
+		new Player(Vector2(50, 50));
+	}
 }
 
 void GamePlay::Update()
