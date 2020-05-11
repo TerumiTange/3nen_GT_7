@@ -116,6 +116,8 @@ void GamePlay::Init()
 	{
 		new Player(Vector2(50, 50));
 	}
+	SceneManager::mCamera->Init(mActorManager->GetPlayer()->GetPosition());//ƒJƒƒ‰‚ÌˆÊ’u
+	SceneManager::mCamera->Update();//ˆê‰ñ“¯Šú‚³‚¹‚é
 }
 
 void GamePlay::Update()
