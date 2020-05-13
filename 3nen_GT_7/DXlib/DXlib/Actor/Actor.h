@@ -27,6 +27,7 @@ public:
 	virtual void Draw() = 0;
 
 	virtual void Hit(std::list<std::shared_ptr<Actor>>) = 0;
+	virtual void Hit(const char* tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size) = 0;
 
 	void update();//全て更新用
 

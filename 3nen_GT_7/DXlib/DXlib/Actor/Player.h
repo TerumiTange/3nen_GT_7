@@ -24,6 +24,7 @@ public :
 	void SetPosition(const Vector2& position);//その位置座標に移動させる
 	Vector2& GetPosition();//現在の位置座標を渡す
 	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;//当たり判定
+	virtual void Hit(const char* tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)override;
 	bool CheckHit(int x, int y, int width, int height);//あたっているかどうか
 	bool CheckHitF(int x, int y, int width, int height);//高速移動中に当たっているかどうか
 	bool RGoal();//ゴールしたかどうか

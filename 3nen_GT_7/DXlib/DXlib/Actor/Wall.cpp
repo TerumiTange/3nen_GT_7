@@ -39,3 +39,7 @@ void Wall::Draw()
 void Wall::Hit(std::list<std::shared_ptr<Actor>>)
 {
 }
+
+void Wall::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
+{
+}

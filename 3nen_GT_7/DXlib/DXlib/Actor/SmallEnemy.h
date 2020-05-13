@@ -13,6 +13,7 @@ public:
 	virtual void Update()override;
 	virtual void Draw()override;
 	virtual void Hit(std::list<std::shared_ptr<Actor>>actors)override;
+	virtual void Hit(const char* tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)override;
 	bool CheckHit(int x, int y, int width, int height);
 
 private:
