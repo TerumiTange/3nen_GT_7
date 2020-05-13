@@ -452,6 +452,59 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 	}
 }
 
+void Player::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
+{
+	if (tag == "Wall")
+	{
+		mMovingFastCount = 4;//‰ñ•œ
+
+		if (old_y + mSize->y <= pos->y)//Ž©•ª‚Ì‰º‚É“–‚½‚Á‚½‚Æ‚«
+		{
+			mPos->y = pos->y - mSize->y;
+			mFall = false;
+		}
+		else if (old_y > pos->y + size->y)//Ž©•ª‚Ìã‚É“–‚½‚Á‚½‚Æ‚«
+		{
+			sound->PlaySEF("./Assets/Sound/crash.wav");
+			mPos->y = pos->y + size->y;
+			if (mVelocity->y < 0)
+			{
+				mVelocity->y = 0;
+			}
+		}
+		else if (old_x >= pos->x + size->x)//Ž©•ª‚Ì¶‚É“–‚½‚Á‚½‚Æ‚«
+		{
+			sound->PlaySEF("./Assets/Sound/crash.wav");
+			mPos->x = pos->x + size->x + 1;
+			if (mVelocity->x < 0)
+			{
+				mVelocity->x = 0;
+			}
+		}
+
+		else if (old_x + mSize->x <= pos->x)//Ž©•ª‚Ì‰E‚É“–‚½‚Á‚½‚Æ‚«
+		{
+			sound->PlaySEF("./Assets/Sound/crash.wav");
+			mPos->x = pos->x - mSize->x - 1;
+			if (mVelocity->x < 0)
+			{
+				mVelocity = 0;
+			}
+		}
+	}
+
+	if (tag == "FlyEnemy")
+	{
+		if (mNowMovingFast)
+		{
+			//a->SetElectricShock(true);
+			//mMovingFastCount++;
+			mMovingFastCount = 4;
+		}
+		Damage();
+	}
+}
+
 
 bool Player::CheckHit(int x, int y, int width, int height)
 {

@@ -189,6 +189,42 @@ void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 	}
 }
 
+void FlyEnemy::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
+{
+	if (tag == "Wall")
+	{
+		if (old_y + mSize->y <= pos->y)//自分の下に当たったとき
+		{
+			mPos->y = pos->y - mSize->y;
+		}
+		else if (old_y > pos->y + size->y)//自分の上に当たったとき
+		{
+			mPos->y = pos->y + size->y;
+		}
+		else if (old_x >= pos->x + size->x)//自分の左に当たったとき
+		{
+			mPos->x = pos->x + size->x + 1;
+		}
+
+		else if (old_x + mSize->x <= pos->x)//自分の右に当たったとき
+		{
+			mPos->x = pos->x - mSize->x - 1;
+		}
+	}
+
+	if (tag == "Player")
+	{
+		if (playerHitTimer->IsTime())//プレイヤーと連続ヒットを防ぐため
+		{
+			SetElectricShock(true);
+			if (paral)
+			{
+				Destroy(this);
+			}
+		}
+	}
+}
+
 bool FlyEnemy::CheckHit(int x, int y, int width, int height)
 {
 	//int L1 = mPos->x;

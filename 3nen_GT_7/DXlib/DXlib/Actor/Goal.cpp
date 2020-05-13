@@ -35,3 +35,7 @@ void Goal::Draw()
 void Goal::Hit(std::list<std::shared_ptr<Actor>>)
 {
 }
+
+void Goal::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
+{
+}
