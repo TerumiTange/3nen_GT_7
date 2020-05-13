@@ -68,7 +68,7 @@ void GamePlay::Init()
 	//{
 	//	std::cerr << ex.what() << std::endl;
 	//}
-	new Player(Vector2(50, 50));
+	//new Player(Vector2(50, 50));
 
 	Map* map = new Map();
 	map->Init(mStageName);
@@ -76,7 +76,31 @@ void GamePlay::Init()
 
 	//マップの後にエネミーを実装すること
 	Enemy* enemy = new Enemy();
-	enemy->Init("./Assets/Data/EnemyList.csv");
+	if (mStageName == "stage1")
+	{
+		enemy->Init("./Assets/Data/EnemyList1.csv");
+	}
+	else if (mStageName == "stage2")
+	{
+		enemy->Init("./Assets/Data/EnemyList2.csv");
+	}
+	else if (mStageName == "stage3")
+	{
+		enemy->Init("./Assets/Data/EnemyList3.csv");
+	}
+	else if (mStageName == "stage4")
+	{
+		enemy->Init("./Assets/Data/EnemyList4.csv");
+	}
+	else if (mStageName == "stage5")
+	{
+		enemy->Init("./Assets/Data/EnemyList5.csv");
+	}
+	else//例外処理
+	{
+		enemy->Init("./Assets/Data/EnemyList.csv");
+	}
+	//enemy->Init("./Assets/Data/EnemyList.csv");
 	mActorManager->SetEnemyCount(enemy->GetEnemyCount());//敵の数をセット
 	delete(enemy);
 
@@ -88,6 +112,12 @@ void GamePlay::Init()
 	SceneManager::mCamera->Init(Vector2(0, 0));
 	pose = false;
 	SceneManager::mElapsedTime->Init();
+	if (!mActorManager->GetPlayer())//プレイヤーがいなければ
+	{
+		new Player(Vector2(50, 50));
+	}
+	SceneManager::mCamera->Init(mActorManager->GetPlayer()->GetPosition());//カメラの位置
+	SceneManager::mCamera->Update();//一回同期させる
 }
 
 void GamePlay::Update()

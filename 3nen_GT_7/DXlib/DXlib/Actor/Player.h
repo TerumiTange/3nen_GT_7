@@ -68,6 +68,9 @@ private:
 
 	Sound* sound;
 
+	Renderer* mContent;//‰ñ”‚Ì’†g
+	Renderer* mFrame;//‰ñ”‚Ìü‚è
+
 	//uŠÔˆÚ“®‚Íˆê’è‹——£ˆÚ“®
 
 	//bool mJump;//ƒWƒƒƒ“ƒv‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©

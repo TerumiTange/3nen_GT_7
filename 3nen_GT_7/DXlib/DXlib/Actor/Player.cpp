@@ -40,7 +40,9 @@ Player::Player(const Vector2& position, const char* tag):
 	mFallTimer(new CountDownTimer()),				  //d—ÍŒyŒ¸‚ÌŠÔƒ^ƒCƒ}[(IsTime()‚ªfalse‚È‚çŒyŒ¸’†)
 	mFallTime(0.2f),								  //d—ÍŒyŒ¸‚ÌŠÔ
 	mNumber(new Renderer("Number")),
-	sound(new Sound())
+	sound(new Sound()),
+	mContent(new Renderer("content")),
+	mFrame(new Renderer("frame"))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -73,6 +75,8 @@ void Player::End()//ƒƒ‚ƒŠ‚ÌŠJ•ú
 	delete(mNumber);
 	delete(mFallTimer);
 	delete(sound);
+	delete(mContent);
+	delete(mFrame);
 }
 
 void Player::Update()
@@ -262,7 +266,7 @@ void Player::Damage()//ƒ_ƒ[ƒW
 
 	if (mHp <= 0)//‘Ì—Í‚ª‚È‚­‚È‚Á‚½‚ç
 	{
-		sound->PlaySE("./Assets/Sound/pdeth.wav");
+		sound->PlaySEF("./Assets/Sound/pdeth.wav");
 		Destroy(this, 3.f);//3•bŒã‚É€–S
 	}
 }
@@ -291,10 +295,18 @@ void Player::Draw()//•`‰æ
 	}
     //DrawString(0, 0, "", mMovingFastCount);
 	//DrawFormatString(10, 0, GetColor(255, 0, 0), "uŠÔˆÚ“®‚Å‚«‚é‰ñ”%d", mMovingFastCount);
-	SetFontSize(32);
-	DrawString(0, 0, "uŠÔˆÚ“®‚Å‚«‚é‰ñ”:", GetColor(255, 0, 0));
+	//SetFontSize(32);
+	//DrawString(0, 0, "uŠÔˆÚ“®‚Å‚«‚é‰ñ”:", GetColor(255, 0, 0));
+	//mNumber->DrawIntegerNumber(Vector2(350, 0), mMovingFastCount);
 
-	mNumber->DrawIntegerNumber(Vector2(350, 0), mMovingFastCount);
+	for (int i = 0; i < mMovingFastMaxCount; ++i)
+	{
+		mFrame->Drawb(i * 32, 0);
+	}
+	for (int i = 0; i < mMovingFastCount; ++i)
+	{
+		mContent->Drawb(i * 32, 0);
+	}
 }
 
 void Player::SetPosition(const Vector2& position)

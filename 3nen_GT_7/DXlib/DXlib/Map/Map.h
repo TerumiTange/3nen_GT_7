@@ -13,6 +13,7 @@ enum class Category
 	METAL,//金属
 	GOAL,//ゴール
 	DEATH,//デスブロック
+	PLAYER,//プレイヤー
 };
 
 struct GimmickData
