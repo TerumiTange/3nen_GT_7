@@ -4,6 +4,7 @@
 #include "../Device/Renderer.h"
 #include "../System/CountDownTimer.h"
 #include "../Device/Sound.h"
+#include "../Collider/ColliderComponent.h"
 
 class FlyEnemy :public Actor
 {
@@ -13,7 +14,7 @@ public:
 	virtual void End()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-	virtual void Hit(std::list<std::shared_ptr<Actor>>actors)override;
+	virtual void Hit() override;
 	bool CheckHit(int x, int y, int width, int height);
 	bool CheckHit2(int x, int y, int width, int height,int p);
 
@@ -23,6 +24,7 @@ public:
 	void Paralise();
 
 private:
+	ColliderComponent* mCollider;
 	Vector2* mPos;
 	Vector2* mSize;
 	const char* mFilename;

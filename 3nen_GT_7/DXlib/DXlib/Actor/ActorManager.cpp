@@ -40,15 +40,19 @@ void ActorManager::Update()
 
 void ActorManager::Hit()
 {
-	if (!GetPlayer())return;
-	GetPlayer()->Hit(mActors);
-	for (auto&& a : mActors)
+	//if (!GetPlayer())return;
+	//GetPlayer()->Hit(mActors);
+	//for (auto&& a : mActors)
+	//{
+	//	//a->Hit(mActors);
+	//	if ((a->Tag() == "SmallEnemy") || (a->Tag() == "FlyEnemy"))
+	//	{
+	//		a->Hit(mActors);
+	//	}
+	//}
+	for (auto && a : mActors)
 	{
-		//a->Hit(mActors);
-		if ((a->Tag() == "SmallEnemy") || (a->Tag() == "FlyEnemy"))
-		{
-			a->Hit(mActors);
-		}
+		a->Hit();
 	}
 }
 

@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
+#include "../Collider/ColliderComponent.h"
 
 class SmallEnemy :
 	public Actor
@@ -12,10 +13,11 @@ public:
 	virtual void End()override;
 	virtual void Update()override;
 	virtual void Draw()override;
-	virtual void Hit(std::list<std::shared_ptr<Actor>>actors)override;
+	virtual void Hit() override;
 	bool CheckHit(int x, int y, int width, int height);
 
 private:
+	ColliderComponent* mCollider;
 	Vector2* mPos;
 	Vector2* mSize;
 	const char* mFilename;

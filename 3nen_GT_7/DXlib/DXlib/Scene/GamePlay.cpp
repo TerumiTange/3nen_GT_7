@@ -2,6 +2,8 @@
 #include "../Actor/Actor.h"
 #include "../Actor/Player.h"
 #include "../Actor/ActorManager.h"
+#include "../Collider/Collider.h"
+#include "../Collider/Physics.h"
 #include "../Map/Map.h"
 #include "../Actor/Enemy.h"
 #include "../Utility/Vector2.h"
@@ -21,10 +23,11 @@ GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	mStageName(sname),
 	pose(false),
 	mInputTimers(new CountDownTimer()),
-	mRenderer(new Renderer("Number"))
+	mRenderer(new Renderer("Number")),
+	mPhysics(new Physics())
 {
 	Actor::SetActorManager(mActorManager);
-	
+	Collider::setPhysics(mPhysics);
 }
 
 GamePlay::~GamePlay()
@@ -40,6 +43,9 @@ GamePlay::~GamePlay()
 	sound->Init();
 	delete(sound);
 	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
+
+	//なぜかColliderのPhysicsがいきているから
+	Collider::setPhysics(nullptr);
 }
 
 /*void do_wark1()
@@ -158,7 +164,9 @@ void GamePlay::Update()
 	{
 		SceneManager::mElapsedTime->Update();//時間を更新
 		mActorManager->Update();
-		mActorManager->Hit();
+		mPhysics->sweepAndPrune();//当たり判定
+		mActorManager->Hit();//当たり判定処理
+
 		if (mActorManager->GetPlayer())
 		{
 			SceneManager::mCamera->GetPPos(mActorManager->GetPlayer()->GetPosition());

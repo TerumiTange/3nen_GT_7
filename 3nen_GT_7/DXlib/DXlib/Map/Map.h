@@ -10,9 +10,6 @@ enum class Category
 	EMPTY,//空白
 	WALL, //壁
 	FLOOR,//床
-	METAL,//金属
-	GOAL,//ゴール
-	DEATH,//デスブロック
 	PLAYER,//プレイヤー
 };
 

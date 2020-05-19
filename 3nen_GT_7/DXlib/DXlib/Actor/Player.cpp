@@ -6,17 +6,18 @@
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
 
-Player::Player(const Vector2& position, const char* tag):
+Player::Player(const Vector2& position, const char* tag) :
 	Actor(tag),
+	mCollider(new ColliderComponent(this)),
 	mMaxHp(4),										  //最大体力
 	mHp(4),											  //現在の体力
 	mInvincibleTime(4),								  //無敵時間
 	mGoal(false),									  //ゴールしたかどうか
-	mPos(new Vector2(0,0)),							  //現在の位置
+	mPos(new Vector2(0, 0)),							  //現在の位置
 	mVelocity(new Vector2(0, 0)),					  //移動量
 	maxSpeed(7),									  //最大スピード
 	mAcceleration(0.5),								  //加速度
-	mSize(new Vector2(64, 64)),						  //自分の大きさ
+	mSize(new Vector2(32, 32)), 						  //自分の大きさ
     mFilename(tag),									  //画像名
 	mRenderer(new Renderer(tag)),					  //描画関数
 	mStaticElectricity(new Renderer("ThunderEffect")),//静電気の画像
@@ -54,7 +55,6 @@ Player::Player(const Vector2& position, const char* tag):
 	sound->Load("./Assets/Sound/pdeth.wav");//死亡
 	sound->Load("./Assets/Sound/movingfast.wav");//高速移動
 	sound->Load("./Assets/Sound/crash.wav");//壁との衝突
-
 }
 
 Player::~Player() = default;
@@ -283,8 +283,8 @@ void Player::Recovery()//体力回復
 
 void Player::Draw()//描画
 {
-	//mRenderer->Draw(*mPos);
-	mRenderer->DrawE(*mPos, 64);
+	mRenderer->Draw(*mPos);
+	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
 		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
@@ -319,6 +319,17 @@ Vector2& Player::GetPosition()
 	return *mPos;
 }
 
+void Player::Hit()
+{
+	for (auto && hit : mCollider->onCollisionEnter())
+	{
+		if (hit->getOwner()->Tag() == "Wall")
+		{
+			mMovingFastCount = 4;
+		}
+	}
+}
+/*
 void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
@@ -452,6 +463,59 @@ void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 	}
 }
 
+void Player::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
+{
+	if (tag == "Wall")
+	{
+		mMovingFastCount = 4;//回復
+
+		if (old_y + mSize->y <= pos->y)//自分の下に当たったとき
+		{
+			mPos->y = pos->y - mSize->y;
+			mFall = false;
+		}
+		else if (old_y > pos->y + size->y)//自分の上に当たったとき
+		{
+			sound->PlaySEF("./Assets/Sound/crash.wav");
+			mPos->y = pos->y + size->y;
+			if (mVelocity->y < 0)
+			{
+				mVelocity->y = 0;
+			}
+		}
+		else if (old_x >= pos->x + size->x)//自分の左に当たったとき
+		{
+			sound->PlaySEF("./Assets/Sound/crash.wav");
+			mPos->x = pos->x + size->x + 1;
+			if (mVelocity->x < 0)
+			{
+				mVelocity->x = 0;
+			}
+		}
+
+		else if (old_x + mSize->x <= pos->x)//自分の右に当たったとき
+		{
+			sound->PlaySEF("./Assets/Sound/crash.wav");
+			mPos->x = pos->x - mSize->x - 1;
+			if (mVelocity->x < 0)
+			{
+				mVelocity = 0;
+			}
+		}
+	}
+
+	if (tag == "FlyEnemy")
+	{
+		if (mNowMovingFast)
+		{
+			//a->SetElectricShock(true);
+			//mMovingFastCount++;
+			mMovingFastCount = 4;
+		}
+		Damage();
+	}
+}
+*/
 
 bool Player::CheckHit(int x, int y, int width, int height)
 {

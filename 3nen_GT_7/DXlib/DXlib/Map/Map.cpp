@@ -1,9 +1,6 @@
 #include "Map.h"
 #include "../Actor/Wall.h"
 #include "../Actor/Floor.h"
-#include "../Actor/Metal.h"
-#include "../Actor/Goal.h"
-#include "../Actor/DeathBlock.h"
 #include "../Actor/Player.h"
 
 Map::Map():
@@ -41,9 +38,6 @@ void Map::Init(const char* file)
 		case 0:data.type = Category::EMPTY; break;//空白
 		case 1:data.type = Category::WALL; break; //壁
 		case 2:data.type = Category::FLOOR; break;//床
-		case 3:data.type = Category::METAL; break;//金属
-		case 4:data.type = Category::GOAL; break; //ゴール
-		case 5:data.type = Category::DEATH; break;//死亡
 		case 8:data.type = Category::PLAYER; break;//プレイヤー
 		case 99:data.type = Category::EMPTY; break;//例外処理用
 		default:
@@ -82,18 +76,6 @@ void Map::Create(const GimmickData & data)
 	else if(data.type == Category::FLOOR)
 	{
 		auto f = new Floor(data.position);
-	}
-	else if (data.type == Category::METAL)
-	{
-		auto m = new Metal(data.position);
-	}
-	else if (data.type == Category::GOAL)
-	{
-		auto g = new Goal(data.position);
-	}
-	else if(data.type==Category::DEATH)
-	{
-		auto d = new DeathBlock(data.position);
 	}
 	else if (data.type == Category::PLAYER)
 	{

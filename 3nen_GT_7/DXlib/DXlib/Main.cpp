@@ -35,7 +35,7 @@ public:
 	{
 		//DrawFormatString(0, 0, GetColor(255, 0, 0), "%.1f", mFps);
 		clsDx();
-		//printfDx("%.1f", mFps);
+		printfDx("%.1f", mFps);
 	}
 	void Wait()
 	{
@@ -93,7 +93,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	
 	//îwåiêFÇïœçX
-	SetBackgroundColor(0,0,0);
+	SetBackgroundColor(0, 0, 0);
 
 	
 

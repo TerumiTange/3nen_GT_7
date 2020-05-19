@@ -2,6 +2,7 @@
 
 Floor::Floor(const Vector2& position, const char* tag) :
 	Actor(tag),
+	mCollider(new ColliderComponent(this)),
 	mPos(new Vector2(0,0)),
 	mSize(new Vector2(32,32)),
 	mFilename(tag),
@@ -35,6 +36,15 @@ void Floor::Draw()
 	//DeleteGraph(a);
 }
 
+void Floor::Hit()
+{
+}
+/*
 void Floor::Hit(std::list<std::shared_ptr<Actor>>)
 {
 }
+
+void Floor::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
+{
+}
+*/

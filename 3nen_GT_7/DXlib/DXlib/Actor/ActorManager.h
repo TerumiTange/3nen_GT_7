@@ -1,4 +1,6 @@
 #pragma once
+#include "Actor.h"
+#include "../Utility/Vector2.h"
 #include <memory>
 #include <list>
 
