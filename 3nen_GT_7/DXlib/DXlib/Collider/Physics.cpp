@@ -38,6 +38,14 @@ void Physics::sweepAndPrune()//総当たり判定
 		return;
 	}
 
+	//位置Xが小さい順にソート
+	std::sort(mColliders.begin(), mColliders.end(), [](Collider* a, Collider*b)
+	{
+		auto A = dynamic_cast<ColliderComponent*>(a);
+		auto B = dynamic_cast<ColliderComponent*>(b);
+		return A->getQuadrangle()->position.x < B->getQuadrangle()->position.x;
+	});
+
 	for (size_t i = 0; i < mColliders.size(); ++i)
 	{
 		auto a = dynamic_cast<ColliderComponent*>(mColliders[i]);
@@ -46,6 +54,8 @@ void Physics::sweepAndPrune()//総当たり判定
 			continue;
 		}
 		auto ac = a->getQuadrangle();
+		//mQuadrangle[i]のX値+サイズXを取得
+		float max = ac->position.x + ac->size.x;
 		for (size_t j = i + 1; j < mColliders.size(); ++j)
 		{
 			auto b = dynamic_cast<ColliderComponent*>(mColliders[j]);
@@ -54,7 +64,13 @@ void Physics::sweepAndPrune()//総当たり判定
 				continue;
 			}
 			auto bc = b->getQuadrangle();
-			if (CheckHit(*ac, *bc))//あたっていればの処理
+			//もしmQuadrangle[j]のX値が、mQuadrangle[i]のX値+サイズXより大きければ
+			//mQuadrangle[i]と交差するボックスは存在しない
+			if (bc->position.x > max)
+			{
+				break;
+			}
+			else if (CheckHit(*ac, *bc))//あたっていればの処理
 			{
 				a->AddHitCollider(b);
 				b->AddHitCollider(a);
