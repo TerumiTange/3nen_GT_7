@@ -93,7 +93,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	
 	//”wŒiF‚ğ•ÏX
-	SetBackgroundColor(0,0,0);
+	SetBackgroundColor(0, 0, 0);
 
 	
 

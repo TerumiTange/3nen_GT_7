@@ -1,9 +1,11 @@
 #include "Actor.h"
 #include "ActorManager.h"
 #include "../Utility/Vector2.h"
+#include "../Collider/ComponentManager.h"
 #include "../System/CountDownTimer.h"
 
 Actor::Actor(const char * tag):
+	mComponentManager(std::make_shared<ComponentManager>()),
 	mPos(std::make_shared<Vector2>()),
 	mSize(std::make_shared<Vector2>()),
 	mDestroyTimer(nullptr),
@@ -21,9 +23,12 @@ Actor::~Actor() = default;
 
 void Actor::update()
 {
+	mComponentManager->start();
 	if (mState == ActorState::ACTIVE)
 	{
+		mComponentManager->update();
 		Update();
+		mComponentManager->onUpdate();
 		DestroyTimer();
 	}
 }
@@ -48,6 +53,11 @@ void Actor::Destroy(std::shared_ptr<Actor> actor, float sec)
 {
 	if (actor->mDestroyTimer)return;
 	actor->mDestroyTimer = std::make_unique<CountDownTimer>(sec);
+}
+
+std::shared_ptr<ComponentManager> Actor::componentManager() const
+{
+	return mComponentManager;
 }
 
 void Actor::SetPos(Vector2& position)

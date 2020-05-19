@@ -2,6 +2,7 @@
 
 SmallEnemy::SmallEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
+	mCollider(new ColliderComponent(this)),
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
@@ -53,6 +54,10 @@ void SmallEnemy::Draw()
 	//DeleteGraph(a);
 }
 
+void SmallEnemy::Hit()
+{
+}
+/*
 void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
@@ -93,7 +98,7 @@ void SmallEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 void SmallEnemy::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
 {
 }
-
+*/
 bool SmallEnemy::CheckHit(int x, int y, int width, int height)
 {
 	//int L1 = mPos->x;

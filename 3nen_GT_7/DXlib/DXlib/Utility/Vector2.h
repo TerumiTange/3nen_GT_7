@@ -14,6 +14,8 @@ struct Vector2
 	Vector2& normalize();
 	float dot(const Vector2& v)const;
 
+	Vector2& Vec();
+
 	//単項演算子オーバーロード
 	Vector2 operator + () const;
 	Vector2 operator - () const;

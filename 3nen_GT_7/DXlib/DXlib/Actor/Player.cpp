@@ -6,17 +6,18 @@
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
 
-Player::Player(const Vector2& position, const char* tag):
+Player::Player(const Vector2& position, const char* tag) :
 	Actor(tag),
+	mCollider(new ColliderComponent(this)),
 	mMaxHp(4),										  //Å‘å‘Ì—Í
 	mHp(4),											  //Œ»Ý‚Ì‘Ì—Í
 	mInvincibleTime(4),								  //–³“GŽžŠÔ
 	mGoal(false),									  //ƒS[ƒ‹‚µ‚½‚©‚Ç‚¤‚©
-	mPos(new Vector2(0,0)),							  //Œ»Ý‚ÌˆÊ’u
+	mPos(new Vector2(0, 0)),							  //Œ»Ý‚ÌˆÊ’u
 	mVelocity(new Vector2(0, 0)),					  //ˆÚ“®—Ê
 	maxSpeed(7),									  //Å‘åƒXƒs[ƒh
 	mAcceleration(0.5),								  //‰Á‘¬“x
-	mSize(new Vector2(64, 64)),						  //Ž©•ª‚Ì‘å‚«‚³
+	mSize(new Vector2(32, 32)), 						  //Ž©•ª‚Ì‘å‚«‚³
     mFilename(tag),									  //‰æ‘œ–¼
 	mRenderer(new Renderer(tag)),					  //•`‰æŠÖ”
 	mStaticElectricity(new Renderer("ThunderEffect")),//Ã“d‹C‚Ì‰æ‘œ
@@ -54,7 +55,6 @@ Player::Player(const Vector2& position, const char* tag):
 	sound->Load("./Assets/Sound/pdeth.wav");//Ž€–S
 	sound->Load("./Assets/Sound/movingfast.wav");//‚‘¬ˆÚ“®
 	sound->Load("./Assets/Sound/crash.wav");//•Ç‚Æ‚ÌÕ“Ë
-
 }
 
 Player::~Player() = default;
@@ -283,8 +283,8 @@ void Player::Recovery()//‘Ì—Í‰ñ•œ
 
 void Player::Draw()//•`‰æ
 {
-	//mRenderer->Draw(*mPos);
-	mRenderer->DrawE(*mPos, 64);
+	mRenderer->Draw(*mPos);
+	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
 		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
@@ -319,6 +319,17 @@ Vector2& Player::GetPosition()
 	return *mPos;
 }
 
+void Player::Hit()
+{
+	for (auto && hit : mCollider->onCollisionEnter())
+	{
+		if (hit->getOwner()->Tag() == "Wall")
+		{
+			mMovingFastCount = 4;
+		}
+	}
+}
+/*
 void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
@@ -504,7 +515,7 @@ void Player::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr
 		Damage();
 	}
 }
-
+*/
 
 bool Player::CheckHit(int x, int y, int width, int height)
 {

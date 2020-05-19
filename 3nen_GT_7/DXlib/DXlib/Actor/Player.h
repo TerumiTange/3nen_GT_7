@@ -5,6 +5,7 @@
 #include "../Device/Renderer.h"
 #include "../System/CountDownTimer.h"
 #include "../Device/Sound.h"
+#include "../Collider/ColliderComponent.h"
 
 class Player:
 	public Actor
@@ -23,14 +24,14 @@ public :
 	void Recovery();//‰ñ•œ
 	void SetPosition(const Vector2& position);//‚»‚ÌˆÊ’uÀ•W‚ÉˆÚ“®‚³‚¹‚é
 	Vector2& GetPosition();//Œ»İ‚ÌˆÊ’uÀ•W‚ğ“n‚·
-	virtual void Hit(std::list<std::shared_ptr<Actor>> actors)override;//“–‚½‚è”»’è
-	virtual void Hit(const char* tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)override;
+	virtual void Hit() override;
 	bool CheckHit(int x, int y, int width, int height);//‚ ‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	bool CheckHitF(int x, int y, int width, int height);//‚‘¬ˆÚ“®’†‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	bool RGoal();//ƒS[ƒ‹‚µ‚½‚©‚Ç‚¤‚©
 	bool GetMovingFast();//uŠÔˆÚ“®’†‚©‚Ç‚¤‚©
 
 private:
+	ColliderComponent* mCollider;
 	int mHp;//‘Ì—Í
 	int mMaxHp;//Å‘å‘Ì—Í
 	float mInvincibleTime;//–³“GŠÔ

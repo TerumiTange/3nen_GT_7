@@ -3,6 +3,7 @@
 
 FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
+	mCollider(new ColliderComponent(this)),
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
@@ -83,6 +84,10 @@ void FlyEnemy::Draw()
 	
 }
 
+void FlyEnemy::Hit()
+{
+}
+/*
 void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
 {
 	for (auto& a : actors)
@@ -224,7 +229,7 @@ void FlyEnemy::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_p
 		}
 	}
 }
-
+*/
 bool FlyEnemy::CheckHit(int x, int y, int width, int height)
 {
 	//int L1 = mPos->x;

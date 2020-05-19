@@ -1,4 +1,5 @@
 #pragma once
+#include "../Utility/Vector2.h"
 #include <list>
 #include <memory>
 
@@ -9,6 +10,7 @@ enum class ActorState
 };
 
 class ActorManager;
+class ComponentManager;
 class Vector2;
 class CountDownTimer;
 
@@ -26,8 +28,7 @@ public:
 
 	virtual void Draw() = 0;
 
-	virtual void Hit(std::list<std::shared_ptr<Actor>>) = 0;
-	virtual void Hit(const char* tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size) = 0;
+	virtual void Hit() = 0;
 
 	void update();//全て更新用
 
@@ -38,6 +39,7 @@ public:
 	static void Destroy(std::shared_ptr<Actor> actor, float sec);
 
 	//ゲッターセッター
+	std::shared_ptr<ComponentManager> componentManager() const;
 	void SetPos(Vector2& position);
 	void SetSize(Vector2& size);
 	std::shared_ptr<Vector2> Position()const;
@@ -57,6 +59,7 @@ private:
 	void DestroyTimer();
 
 private:
+	std::shared_ptr<ComponentManager> mComponentManager;
 	std::shared_ptr<Vector2> mPos;
 	std::shared_ptr<Vector2> mSize;
 	std::unique_ptr<CountDownTimer> mDestroyTimer;

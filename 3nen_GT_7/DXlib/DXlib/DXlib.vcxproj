@@ -137,15 +137,18 @@
   <ItemGroup>
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\ActorManager.cpp" />
-    <ClCompile Include="Actor\DeathBlock.cpp" />
     <ClCompile Include="Actor\Enemy.cpp" />
     <ClCompile Include="Actor\Floor.cpp" />
     <ClCompile Include="Actor\FlyEnemy.cpp" />
-    <ClCompile Include="Actor\Goal.cpp" />
-    <ClCompile Include="Actor\Metal.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\SmallEnemy.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
+    <ClCompile Include="Collider\Collider.cpp" />
+    <ClCompile Include="Collider\ColliderComponent.cpp" />
+    <ClCompile Include="Collider\Collision.cpp" />
+    <ClCompile Include="Collider\Component.cpp" />
+    <ClCompile Include="Collider\ComponentManager.cpp" />
+    <ClCompile Include="Collider\Physics.cpp" />
     <ClCompile Include="Device\Camera2d.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
     <ClCompile Include="Device\Fader.cpp" />
@@ -172,15 +175,18 @@
   <ItemGroup>
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\ActorManager.h" />
-    <ClInclude Include="Actor\DeathBlock.h" />
     <ClInclude Include="Actor\Enemy.h" />
     <ClInclude Include="Actor\Floor.h" />
     <ClInclude Include="Actor\FlyEnemy.h" />
-    <ClInclude Include="Actor\Goal.h" />
-    <ClInclude Include="Actor\Metal.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Actor\SmallEnemy.h" />
     <ClInclude Include="Actor\Wall.h" />
+    <ClInclude Include="Collider\Collider.h" />
+    <ClInclude Include="Collider\ColliderComponent.h" />
+    <ClInclude Include="Collider\Collision.h" />
+    <ClInclude Include="Collider\Component.h" />
+    <ClInclude Include="Collider\ComponentManager.h" />
+    <ClInclude Include="Collider\Physics.h" />
     <ClInclude Include="Device\Camera2d.h" />
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />

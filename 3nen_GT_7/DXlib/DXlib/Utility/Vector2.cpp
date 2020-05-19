@@ -32,6 +32,11 @@ float Vector2::dot(const Vector2 & v) const
 	return (this->x*v.x) + (this->y*v.y);
 }
 
+Vector2 & Vector2::Vec()
+{
+	return *this;
+}
+
 Vector2 Vector2::operator+() const
 {
 	return Vector2(x, y);
