@@ -21,6 +21,8 @@ public:
 	bool getEnable() const;
 	void AddHitCollider(Collider* hit);
 	std::list<Collider*> onCollisionEnter();
+	std::list<Collider*> onCollisionStay();
+	std::list<Collider*> onCollisionExit();
 
 	static void setPhysics(Physics* physics);
 

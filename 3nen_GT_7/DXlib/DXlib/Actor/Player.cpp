@@ -329,44 +329,45 @@ void Player::Hit()
 		auto cPosY = hit->getOwner()->Position()->y;
 		auto cSizeX = hit->getOwner()->Size()->x;
 		auto cSizeY = hit->getOwner()->Size()->y;
-		//if (hit->getOwner()->Tag() == "Wall")
-		//{
-		//	mMovingFastCount = 4;
-		//	if (mPos->y + mSize->y >= cPosY || old_y + mSize->y <= cPosY)//Ž©•ª‚Ì‰º‚É“–‚½‚Á‚½‚Æ‚«
-		//	{
-		//		mPos->y = cPosY - cSizeY;
-		//		mFall = false;
-		//	}
-		//	else if (old_y < cPosY + cSizeY)//Ž©•ª‚Ìã‚É“–‚½‚Á‚½‚Æ‚«
-		//	{
-		//		sound->PlaySEF("./Assets/Sound/crash.wav");
-		//		mPos->y = cPosY + cSizeY;
-		//		if (mVelocity->y < 0)
-		//		{
-		//			mVelocity->y = 0;
-		//		}
-		//	}
-		//	else if (old_x >= cPosX + cSizeX)//Ž©•ª‚Ì¶‚É“–‚½‚Á‚½‚Æ‚«
-		//	{
-		//		sound->PlaySEF("./Assets/Sound/crash.wav");
-		//		mPos->x = cPosX + cSizeX + 1;
-		//		if (mVelocity->x < 0)
-		//		{
-		//			mVelocity->x = 0;
-		//		}
-		//
-		//	}
-		//	else if (old_x + mSize->x <= cPosX)//Ž©•ª‚Ì‰E‚É“–‚½‚Á‚½‚Æ‚«
-		//	{
-		//		sound->PlaySEF("./Assets/Sound/crash.wav");
-		//		mPos->x = cPosX - mSize->x - 1;
-		//		if (mVelocity->x > 0)
-		//		{
-		//			mVelocity->x = 0;
-		//		}
-		//	}
-		//
-		//}
+		if (hit->getOwner()->Tag() == "Wall")
+		{
+			mFall = false;
+			mMovingFastCount = 4;
+			if (mPos->y + mSize->y >= cPosY || old_y + mSize->y <= cPosY)//Ž©•ª‚Ì‰º‚É“–‚½‚Á‚½‚Æ‚«
+			{
+				mPos->y = cPosY - cSizeY;
+				mFall = false;
+			}
+			else if (old_y < cPosY + cSizeY)//Ž©•ª‚Ìã‚É“–‚½‚Á‚½‚Æ‚«
+			{
+				sound->PlaySEF("./Assets/Sound/crash.wav");
+				mPos->y = cPosY + cSizeY;
+				if (mVelocity->y < 0)
+				{
+					mVelocity->y = 0;
+				}
+			}
+			else if (old_x >= cPosX + cSizeX)//Ž©•ª‚Ì¶‚É“–‚½‚Á‚½‚Æ‚«
+			{
+				sound->PlaySEF("./Assets/Sound/crash.wav");
+				mPos->x = cPosX + cSizeX + 1;
+				if (mVelocity->x < 0)
+				{
+					mVelocity->x = 0;
+				}
+		
+			}
+			else if (old_x + mSize->x <= cPosX)//Ž©•ª‚Ì‰E‚É“–‚½‚Á‚½‚Æ‚«
+			{
+				sound->PlaySEF("./Assets/Sound/crash.wav");
+				mPos->x = cPosX - mSize->x - 1;
+				if (mVelocity->x > 0)
+				{
+					mVelocity->x = 0;
+				}
+			}
+		
+		}
 
 		if (hit->getOwner()->Tag() == "Goa")
 		{
@@ -393,9 +394,9 @@ void Player::Hit()
 			}
 		}
 	}
-
 	//if (mCollider->onCollisionEnter().empty())//‚È‚º‚©‹ó‚Ì‚Æ‚«‚ª‚ ‚é‚©‚ç
 	//{
+	
 		for (auto && a : GetActorManager()->GetActors())
 		{
 			if (a->Tag() == "Wall")
@@ -449,8 +450,8 @@ void Player::Hit()
 				
 			}
 			
-		//}
-	}
+		}
+	//}
 }
 
 bool Player::RGoal()
