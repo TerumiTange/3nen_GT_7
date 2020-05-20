@@ -323,7 +323,55 @@ Vector2& Player::GetPosition()
 
 void Player::Hit()
 {
-	for (auto && hit : mCollider->onCollisionEnter())
+	for (auto && hit : mCollider->onCollisionStay())//˜A‘±‚Å“–‚½‚Á‚Ä‚¢‚é‚Æ‚«
+	{
+		if (hit->getOwner()->Tag() == "Wall")
+		{
+			mFall = false;
+			auto cPosX = hit->getOwner()->Position()->x;
+			auto cPosY = hit->getOwner()->Position()->y;
+			auto cSizeX = hit->getOwner()->Size()->x;
+			auto cSizeY = hit->getOwner()->Size()->y;
+
+			if (mPos->y + mSize->y >= cPosY)//Ž©•ª‚Ì‰º‚É‚ ‚½‚Á‚½
+			{
+				mPos->y = cPosY - mSize->y;
+				mFall = false;
+				if (mPos->x >= cPosX + cSizeX)//‰º‚É“–‚½‚Á‚Ä‚¢‚éó‘Ô‚Å¶‚É“–‚½‚Á‚Ä‚¢‚é‚Æ‚«
+				{
+					//mPos->x = cPosX + cSizeX + 1;
+					if (mVelocity->x < 0)
+					{
+						mVelocity->x = 0;
+					}
+				}
+				if (mPos->x + mSize->x >= cPosX)//‰º‚É“–‚½‚Á‚Ä‚¢‚éó‘Ô‚Å‰E‚É“–‚½‚Á‚Ä‚¢‚é‚Æ‚«
+				{
+					//mPos->x = cPosX - mSize->x - 1;
+					if (mVelocity->x > 0)
+					{
+						mVelocity->x = 0;
+					}
+				}
+			}
+
+			if (mPos->x >= cPosX + cSizeX)//Ž©•ª‚Ì¶‚É“–‚½‚Á‚½
+			{
+				mPos->x = cPosX + cSizeX + 1;
+				if (mVelocity->x < 0)
+				{
+					mVelocity->x = 0;
+				}
+
+				if (mPos->y + mSize->y >= cPosY)
+				{
+					mFall = false;
+				}
+			}
+		}
+	}
+
+	for (auto && hit : mCollider->onCollisionEnter())//‚ ‚½‚Á‚½uŠÔ
 	{
 		auto cPosX = hit->getOwner()->Position()->x;
 		auto cPosY = hit->getOwner()->Position()->y;
@@ -331,7 +379,6 @@ void Player::Hit()
 		auto cSizeY = hit->getOwner()->Size()->y;
 		if (hit->getOwner()->Tag() == "Wall")
 		{
-			mFall = false;
 			mMovingFastCount = 4;
 			if (mPos->y + mSize->y >= cPosY || old_y + mSize->y <= cPosY)//Ž©•ª‚Ì‰º‚É“–‚½‚Á‚½‚Æ‚«
 			{
