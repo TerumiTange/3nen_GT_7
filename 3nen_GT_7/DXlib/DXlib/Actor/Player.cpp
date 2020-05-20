@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../Device/WindowSize.h"
 #include "../Map/Map.h"
+#include "ActorManager.h"
 #include <algorithm>
 #define NOMINMAX
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
@@ -123,7 +124,7 @@ void Player::Update()
 	Actor::SetPos(*mPos);//現在の位置座標をアクターにセットする
 	old_x = mPos->x;//移動前に現在の座標Xを更新
 	old_y = mPos->y;//移動前に現在の座標Yを更新
-	Fall();//重力計算
+	
 	mNowMovingFastTimer->Update();//高速移動した瞬間の処理を更新
 	
 
@@ -138,7 +139,7 @@ void Player::Update()
 	}
 
 	Move();//移動処理
-
+	Fall();//重力計算
 	Movement();//移動計算
 }
 void Player::Fall()//重力
@@ -151,6 +152,7 @@ void Player::Fall()//重力
 	if (!mFall)return;//地面に着地していなければリターン
 	mPos->y += mGravity;
 }
+
 void Player::Move()
 {
 	if (mMovingFast)return;//瞬間移動中ならリターン
@@ -203,7 +205,7 @@ void Player::Movement()//移動処理
 	}
 	if (mPos->y > Map::height * 32 - 32)
 	{
-		mPos->y = Map::height * 32 - 32;
+		mPos->y = Map::height * 32 - 64;
 	}
 	
 }
@@ -323,234 +325,132 @@ void Player::Hit()
 {
 	for (auto && hit : mCollider->onCollisionEnter())
 	{
-		if (hit->getOwner()->Tag() == "Wall")
+		auto cPosX = hit->getOwner()->Position()->x;
+		auto cPosY = hit->getOwner()->Position()->y;
+		auto cSizeX = hit->getOwner()->Size()->x;
+		auto cSizeY = hit->getOwner()->Size()->y;
+		//if (hit->getOwner()->Tag() == "Wall")
+		//{
+		//	mMovingFastCount = 4;
+		//	if (mPos->y + mSize->y >= cPosY || old_y + mSize->y <= cPosY)//自分の下に当たったとき
+		//	{
+		//		mPos->y = cPosY - cSizeY;
+		//		mFall = false;
+		//	}
+		//	else if (old_y < cPosY + cSizeY)//自分の上に当たったとき
+		//	{
+		//		sound->PlaySEF("./Assets/Sound/crash.wav");
+		//		mPos->y = cPosY + cSizeY;
+		//		if (mVelocity->y < 0)
+		//		{
+		//			mVelocity->y = 0;
+		//		}
+		//	}
+		//	else if (old_x >= cPosX + cSizeX)//自分の左に当たったとき
+		//	{
+		//		sound->PlaySEF("./Assets/Sound/crash.wav");
+		//		mPos->x = cPosX + cSizeX + 1;
+		//		if (mVelocity->x < 0)
+		//		{
+		//			mVelocity->x = 0;
+		//		}
+		//
+		//	}
+		//	else if (old_x + mSize->x <= cPosX)//自分の右に当たったとき
+		//	{
+		//		sound->PlaySEF("./Assets/Sound/crash.wav");
+		//		mPos->x = cPosX - mSize->x - 1;
+		//		if (mVelocity->x > 0)
+		//		{
+		//			mVelocity->x = 0;
+		//		}
+		//	}
+		//
+		//}
+
+		if (hit->getOwner()->Tag() == "Goa")
 		{
-			mMovingFastCount = 4;
+			mGoal = true;
 		}
-	}
-}
-/*
-void Player::Hit(std::list<std::shared_ptr<Actor>> actors)
-{
-	for (auto& a : actors)
-	{
-		if (a->Tag() == "DeathBlock")
+
+		if (hit->getOwner()->Tag() == "FlyEnemy")
 		{
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			if (mMovingFast)//高速移動状態ならば
 			{
-				Actor::Destroy(this);
+				if (hit->getOwner()->GetElectricShock())Destroy(hit->getOwner());
+				hit->getOwner()->SetElectricShock(true);
+				mMovingFastCount++;
+			}
+			if (mNowMovingFast)//高速移動状態初期処理状態ならば
+			{
+				hit->getOwner()->SetElectricShock(true);
+				mMovingFastCount = 4;
+			}
+
+			if (!hit->getOwner()->GetElectricShock())
+			{
+				Damage();
 			}
 		}
-		if (a->Tag() == "Wall")
+	}
+
+	//if (mCollider->onCollisionEnter().empty())//なぜか空のときがあるから
+	//{
+		for (auto && a : GetActorManager()->GetActors())
 		{
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
+			if (a->Tag() == "Wall")
 			{
-				//if (mMovingFast)
-				//{
-				//	mMovingFastCount = 4;
-				//}
-				mMovingFastCount = 4;
-
-				if (old_y + mSize->y <= a->Position()->y)//自分の下に当たったとき
+				mFall = false;
+				auto cPosX = a->Position()->x;
+				auto cPosY = a->Position()->y;
+				auto cSizeX = a->Size()->x;
+				auto cSizeY = a->Size()->y;
+				if (CheckHit(mPos->x, mPos->y, mSize->x, mSize->y, cPosX, cPosY, cSizeX, cSizeY))
 				{
-					mPos->y = a->Position()->y - mSize->y;
-					mFall = false;
-				}
-				else if (old_y > a->Position()->y + a->Size()->y)//自分の上に当たったとき
-				{
-					sound->PlaySEF("./Assets/Sound/crash.wav");
-					mPos->y = a->Position()->y + a->Size()->y;
-					if (mVelocity->y < 0)
+					if (old_y + mSize->y <= cPosY)
 					{
-						mVelocity->y = 0;
+						mPos->y = cPosY - mSize->y;
+						
+						mMovingFastCount = 4;
+						if (mVelocity->y > 0)
+						{
+							mVelocity->y = 0;
+						}
 					}
-				}
-				else if (old_x >= a->Position()->x + a->Size()->x)//自分の左に当たったとき
-				{
-					sound->PlaySEF("./Assets/Sound/crash.wav");
-					mPos->x = a->Position()->x + a->Size()->x + 1;
-					if (mVelocity->x < 0)
+					else if (old_y < cPosY + cSizeY)//自分の上に当たったとき
 					{
-						mVelocity->x = 0;
+						sound->PlaySEF("./Assets/Sound/crash.wav");
+						mPos->y = cPosY + cSizeY;
+						if (mVelocity->y < 0)
+						{
+							mVelocity->y = 0;
+						}
 					}
-				}
-
-				else if (old_x + mSize->x <= a->Position()->x)//自分の右に当たったとき
-				{
-					sound->PlaySEF("./Assets/Sound/crash.wav");
-					mPos->x = a->Position()->x - mSize->x - 1;
-					if (mVelocity->x < 0)
+					else if (mPos->x >= cPosX + cSizeX)//自分の左に当たったとき
 					{
-						mVelocity = 0;
+						sound->PlaySEF("./Assets/Sound/crash.wav");
+						mPos->x = cPosX + cSizeX + 1;
+						if (mVelocity->x < 0)
+						{
+							mVelocity->x = 0;
+						}
 					}
-				}
+					else if (mPos->x + mSize->x <= cPosX)//自分の右に当たったとき
+					{
+						sound->PlaySEF("./Assets/Sound/crash.wav");
+						mPos->x = cPosX - mSize->x - 1;
+						if (mVelocity->x > 0)
+						{
+							mVelocity->x = 0;
+						}
+					}
 
+				}
 				
-
-				//mPos->x = old_x;
 			}
-		}
-
-		if (a->Tag() == "Floor")
-		{
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			{
-				mFall = false;//重力が発生していない
-				mPos->y = a->Position()->y - mSize->y;
-				mMovingFastCount = 4;
-			}
-		}
-		if (a->Tag() == "Goal")
-		{
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			{
-				mGoal = true;
-			}
-		}
-		if (a->Tag() == "SmallEnemy")
-		{
-			//if (mMovingFast)//高速移動中であれば
-			//{
-			//	if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			//	{
-			//		if (a->GetElectricShock())Destroy(a);
-			//		a->SetElectricShock(true);
-			//		mMovingFastCount++;
-			//	}
-			//}
-			//else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			//{
-			//	Damage();
-			//}
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			{
-				if (a->GetElectricShock())Destroy(a);
-				if (mNowMovingFast)
-				{
-					a->SetElectricShock(true);
-					mMovingFastCount++;
-				}
-				Damage();
-			}
-		}
-
-		if (a->Tag() == "FlyEnemy")
-		{
-			//if (mMovingFast)//高速移動中であれば
-			//{
-			//	if (CheckHitF(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			//	{
-			//		if (a->GetElectricShock())Destroy(a);
-			//		a->SetElectricShock(true);
-			//		mMovingFastCount++;
-			//	}
-			//}
-			//else if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			//{
-			//	Damage();
-			//}
-			if (CheckHit(a->Position()->x, a->Position()->y, a->Size()->x, a->Size()->y))
-			{
-				if (mNowMovingFast)
-				{
-					a->SetElectricShock(true);
-					//mMovingFastCount++;
-					mMovingFastCount = 4;
-				}
-				Damage();
-			}
-		}
+			
+		//}
 	}
-}
-
-void Player::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_ptr<Vector2> size)
-{
-	if (tag == "Wall")
-	{
-		mMovingFastCount = 4;//回復
-
-		if (old_y + mSize->y <= pos->y)//自分の下に当たったとき
-		{
-			mPos->y = pos->y - mSize->y;
-			mFall = false;
-		}
-		else if (old_y > pos->y + size->y)//自分の上に当たったとき
-		{
-			sound->PlaySEF("./Assets/Sound/crash.wav");
-			mPos->y = pos->y + size->y;
-			if (mVelocity->y < 0)
-			{
-				mVelocity->y = 0;
-			}
-		}
-		else if (old_x >= pos->x + size->x)//自分の左に当たったとき
-		{
-			sound->PlaySEF("./Assets/Sound/crash.wav");
-			mPos->x = pos->x + size->x + 1;
-			if (mVelocity->x < 0)
-			{
-				mVelocity->x = 0;
-			}
-		}
-
-		else if (old_x + mSize->x <= pos->x)//自分の右に当たったとき
-		{
-			sound->PlaySEF("./Assets/Sound/crash.wav");
-			mPos->x = pos->x - mSize->x - 1;
-			if (mVelocity->x < 0)
-			{
-				mVelocity = 0;
-			}
-		}
-	}
-
-	if (tag == "FlyEnemy")
-	{
-		if (mNowMovingFast)
-		{
-			//a->SetElectricShock(true);
-			//mMovingFastCount++;
-			mMovingFastCount = 4;
-		}
-		Damage();
-	}
-}
-*/
-
-bool Player::CheckHit(int x, int y, int width, int height)
-{
-	//int L1 = mPos->x;
-	//int R1 = mPos->x + mSize->x;
-	//int L2 = x;
-	//int R2 = x + width;
-	//if (R1 < L2)return false;
-	//if (R2 < L1)return false;
-	if (mPos->x + mSize->x < x)return false;
-	if (x + width < mPos->x)return false;
-
-	//int U1 = mPos->y;
-	//int D1 = mPos->y + mSize->y;
-	//int U2 = y;
-	//int D2 = y + height;
-	//if (D1 < U2)return false;
-	//if (D2 < U1)return false;
-	if (mPos->y + mSize->y < y)return false;
-	if (y + height < mPos->y)return false;
-	return true;
-}
-
-bool Player::CheckHitF(int x, int y, int width, int height)
-{
-	//if (mPos->x + mSize->x < x)return false;
-	//if (x + width < mPos->x - mMovingFastDifference.x) return false;
-	//if (mPos->y + mSize->y < y)return false;
-	//if (y + height < mPos->y - mMovingFastDifference.y)return false;
-
-	if (mPos->x + mSize->x < x)return false;
-	if (mPos->x - mMovingFastDifferenceX > x + width)return false;
-	if (mPos->y > y + height)return false;
-	if (y > mPos->y + mSize->y + mMovingFastDifferenceY)return false;
-	return true;
 }
 
 bool Player::RGoal()

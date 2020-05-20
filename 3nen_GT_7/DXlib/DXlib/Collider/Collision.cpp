@@ -33,3 +33,12 @@ bool CheckHit(const Quadrangle & a, const Quadrangle & b)
 
 	return true;
 }
+
+bool CheckHit(int x, int y, int width, int height, int x2, int y2, int width2, int height2)
+{
+	if (x + width < x2)return false;
+	if (x2 + width2 < x)return false;
+	if (y + height < y2)return false;
+	if (y2 + height2 < y)return false;
+	return true;
+}
