@@ -26,6 +26,7 @@ StageSelect::~StageSelect()
 	delete(stage4Pos);
 	delete(stage5Pos);
 	delete(stage6Pos);
+	delete(sound);
 }
 
 void StageSelect::Init()
