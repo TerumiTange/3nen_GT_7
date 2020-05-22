@@ -63,6 +63,7 @@ void do_wark2()
 
 void GamePlay::Init()
 {
+	*SceneManager::gameClear = false;
 	//try
 	//{
 	//	std::thread t1(do_wark1);
@@ -181,11 +182,14 @@ void GamePlay::Update()
 		if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
 		{
 			//リセット
-			Reset();
+			//Reset();
+
+			NextScene();
 		}
 
 		if (mActorManager->GetPlayer()->RGoal() || mActorManager->GetEnemyCount() == 0)//ゴールしたまたは敵をすべて倒した
 		{
+			*SceneManager::gameClear = true;
 			NextScene();
 		}
 

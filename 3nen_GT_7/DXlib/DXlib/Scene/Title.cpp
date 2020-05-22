@@ -16,6 +16,7 @@ Title::Title(ISceneChanger* changer)
 
 Title::~Title()
 {
+	//sound->StopBGM("");
 	delete(input);
 	delete(timer);
 	delete(sound);
@@ -27,10 +28,12 @@ void Title::Init()
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");//決定
 	sound->Load("./Assets/Sound/migration.wav");//カーソル
+	//sound->Load("");//BGM
 }
 
 void Title::Update()
 {
+	//sound->PlayBGM("");//BGM
 	printfDx("ゲームパッド数%d", GetJoypadNum());
 	GetJoypadInputState(DX_INPUT_PAD1);
 	input->JoyUpdate();
