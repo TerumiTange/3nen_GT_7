@@ -9,12 +9,12 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
-	mRenderer(new Renderer(tag)),
+	mRenderer(new Renderer("Enemy")),
 	mFall(false),
 	mRight(true),
 	mStalker(false),
 	staSize(192),
-	sRenderer(new Renderer("StalEnemy")),/*,*/
+	sRenderer(new Renderer("Enemy2")),/*,*/
 	paralRenderer(new Renderer("ThunderEffect")),//‰¼‚Ì‰æ‘œ
 	speed((1.0f)),
 	paraTime(4.0f),//–ƒáƒŠÔ
@@ -89,7 +89,20 @@ void FlyEnemy::Draw()
 
 void FlyEnemy::Hit()
 {
+	for (auto && hit : mCollider->onCollisionEnter())
+	{
+		if (hit->getOwner()->Tag() == "Wall")
+		{
+
+		}
+	}
+
+	/*for (auto && hit : mCollider->onCollisionStay())
+	{
+
+	}*/
 }
+
 void FlyEnemy::ToPlayer()
 {
 	//ƒvƒŒƒCƒ„[‚ªˆê’è”ÍˆÍ‚É‚Í‚¢‚Á‚½‚çsqrt
