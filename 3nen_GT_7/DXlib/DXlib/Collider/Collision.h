@@ -14,3 +14,4 @@ struct Quadrangle
 
 //‚ ‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 bool CheckHit(const Quadrangle& a, const Quadrangle& b);
+bool CheckHit(int x, int y, int width, int height, int x2, int y2, int width2, int height2);

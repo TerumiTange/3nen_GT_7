@@ -7,7 +7,8 @@ Enemy::Enemy():
 	mCSV(std::make_unique<CSVReader>()),
 	mEnemyList(0),
 	mEnemyData(0),
-	mEnemyCount(0)
+	mEnemyCount(0),
+	mEnemyListV(0)
 {
 }
 
@@ -40,6 +41,35 @@ void Enemy::Init(const char * filename)
 		mEnemyData.pop_front();
 	}
 	//delete(mCSV);
+}
+
+void Enemy::InitM(const char * filename)
+{
+	mEnemyList.clear();
+	mEnemyData.clear();
+	mEnemyListV.clear();
+	mEnemyListV = mCSV->load(filename);
+	auto a = mEnemyListV.size();
+	for (int i = mEnemyListV.size() - 1; i >= 0; --i)
+	{
+		EnemyData data;
+		data.position = Vector2(i % mCSV->getWidth() * 32, i / mCSV->getWidth() * 32);
+		switch (mEnemyListV[i])
+		{
+		case 0: break;
+		case 1: data.type = EnemyType::FLYENEMY; break;
+		default:
+			break;
+		}
+		mEnemyData.emplace_back(data);
+	}
+	auto j = mEnemyData.size();
+	for (int i = 0; i < j; ++i)
+	{
+		Create(mEnemyData.front());
+		mEnemyData.pop_front();
+	}
+	//delete(mEnemyData);
 }
 
 void Enemy::Create(const EnemyData& data)

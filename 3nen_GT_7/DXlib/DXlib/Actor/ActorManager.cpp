@@ -91,6 +91,11 @@ void ActorManager::Clear()
 	mActors.clear();
 }
 
+std::list<std::shared_ptr<Actor>> ActorManager::GetActors()
+{
+	return mActors;
+}
+
 void ActorManager::SetEnemyCount(size_t e)
 {
 	mEnemyCount = e;

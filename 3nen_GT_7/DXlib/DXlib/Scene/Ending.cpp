@@ -8,10 +8,9 @@ Ending::Ending(ISceneChanger * changer) :
 	sound(new Sound()),
 	timer(new CountDownTimer())
 {
-	t = 250;
 	s = 300;
 	r = 350;
-	choice = e_title;
+	choice = e_select;
 }
 
 Ending::~Ending()
@@ -27,10 +26,12 @@ void Ending::Init()
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
 	sound->Load("./Assets/Sound/migration.wav");
+	//sound->Load("");BGM
 }
 
 void Ending::Update()
 {
+	
 	input->JoyUpdate();
 	timer->Update();
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
@@ -76,20 +77,25 @@ void Ending::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
 	SetFontSize(32);
-	DrawString(380, 50, "ゲームクリア", Cr);
-	mNumber->DrawNumber(Vector2(400, 100), SceneManager::mElapsedTime->Now());//かかった時間表示
-	DrawString(380, 150, "ここにスコアが入る予定", Cr);
-	DrawString(380, 200, "ここに合計スコアが入る予定", Cr);
-	DrawString(380, t, "タイトルへ", Cr);
+	if (SceneManager::gameClear)
+	{
+		DrawString(380, 50, "ゲームクリア", Cr);
+		mNumber->DrawNumber(Vector2(400, 100), SceneManager::mElapsedTime->Now());//かかった時間表示
+		DrawString(380, 150, "ここにスコアが入る予定", Cr);
+		DrawString(380, 200, "ここに合計スコアが入る予定", Cr);
+	}
+	else
+	{
+		DrawString(380, 50, "ゲームオーバー", Cr);
+	}
+	
+	
 	DrawString(380, s, "ゲームセレクトへ", Cr);
 	DrawString(380, r, "もう一度同じステージで遊ぶ", Cr);
 	DrawString(0, 0, "B PUSH", Cr);
 	int y;
 	switch (choice)
 	{
-	case e_title:
-		y = t;
-		break;
 	case e_select:
 		y = s;
 		break;
@@ -104,9 +110,6 @@ void Ending::NextScene()
 {
 	switch (choice)
 	{
-	case e_title:
-		mSceneChanger->ChangeScene(SceneTitle);
-		break;
 	case e_select:
 		mSceneChanger->ChangeScene(SceneSelect);
 		break;

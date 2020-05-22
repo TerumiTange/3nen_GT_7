@@ -71,3 +71,4 @@ void SceneManager::ChangeScene(SceneType nextScene)
 const char* SceneManager::stageName = "";
 CountUpTimer* SceneManager::mElapsedTime = new CountUpTimer();
 Camera2d* SceneManager::mCamera = new Camera2d();
+bool SceneManager::gameClear = false;

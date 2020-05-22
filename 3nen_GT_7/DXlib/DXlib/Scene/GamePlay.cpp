@@ -43,7 +43,7 @@ GamePlay::~GamePlay()
 	sound->Init();
 	delete(sound);
 	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
-
+	delete(mPhysics);
 	//なぜかColliderのPhysicsがいきているから
 	Collider::setPhysics(nullptr);
 }
@@ -63,6 +63,7 @@ void do_wark2()
 
 void GamePlay::Init()
 {
+	SceneManager::gameClear = false;
 	//try
 	//{
 	//	std::thread t1(do_wark1);
@@ -136,10 +137,10 @@ void GamePlay::Update()
 	if (pose)//ポーズ中
 	{
 		
-		DrawString(300, 100, "ポーズ中  ゲームパッド or キーボード", Cr);
-		DrawString(300, 150, "ゲームに戻る　START    or     P", Cr);
-		DrawString(300, 200, "リセット　　　 X       or     R", Cr);
-		DrawString(300, 250, "終了　　　　　BACK     or     B", Cr);
+		DrawString(300, 100, "ポーズ中  ゲームパッド", Cr);
+		DrawString(300, 150, "ゲームに戻る　START ", Cr);
+		DrawString(300, 200, "リセット　　　 X    ", Cr);
+		DrawString(300, 250, "終了　　　　　BACK  ", Cr);
 		if (mInputTimers->IsTime())
 		{
 			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
@@ -177,19 +178,18 @@ void GamePlay::Update()
 			}
 		}
 		sound->PlayBGM("./Assets/Sound/a.mp3");
-		if (input->GetKeyDown(B))
-		{
-			NextScene();
-		}
 
 		if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
 		{
 			//リセット
-			Reset();
+			//Reset();
+
+			NextScene();
 		}
 
 		if (mActorManager->GetPlayer()->RGoal() || mActorManager->GetEnemyCount() == 0)//ゴールしたまたは敵をすべて倒した
 		{
+			SceneManager::gameClear = true;
 			NextScene();
 		}
 

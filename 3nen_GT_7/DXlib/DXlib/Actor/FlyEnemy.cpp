@@ -1,5 +1,7 @@
 #include "FlyEnemy.h"
 #include "ActorManager.h"
+#include "Player.h"
+#include "../Collider/ComponentManager.h"
 
 FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
@@ -7,12 +9,12 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	mPos(new Vector2(0, 0)),
 	mSize(new Vector2(32, 32)),
 	mFilename(tag),
-	mRenderer(new Renderer(tag)),
+	mRenderer(new Renderer("Enemy")),
 	mFall(false),
 	mRight(true),
 	mStalker(false),
 	staSize(192),
-	sRenderer(new Renderer("StalEnemy")),/*,*/
+	sRenderer(new Renderer("Enemy2")),/*,*/
 	paralRenderer(new Renderer("ThunderEffect")),//‰¼‚Ì‰æ‘œ
 	speed((1.0f)),
 	paraTime(4.0f),//–ƒáƒŠÔ
@@ -28,6 +30,7 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	sound->Init();
 	sound->Load("./Assets/Sound/deth.wav");
 	sound->Load("./Assets/Sound/paral.wav");
+	
 }
 
 FlyEnemy::~FlyEnemy() = default;
@@ -86,6 +89,31 @@ void FlyEnemy::Draw()
 
 void FlyEnemy::Hit()
 {
+	for (auto && hit : mCollider->onCollisionEnter())
+	{
+		if (hit->getOwner()->Tag() == "Wall")
+		{
+
+		}
+	}
+
+	/*for (auto && hit : mCollider->onCollisionStay())
+	{
+
+	}*/
+}
+
+void FlyEnemy::ToPlayer()
+{
+	//ƒvƒŒƒCƒ„[‚ªˆê’è”ÍˆÍ‚É‚Í‚¢‚Á‚½‚çsqrt
+	if (std::sqrtf(std::powf(pPos.x - mPos->x, 2) + std::powf(pPos.y - mPos->y, 2)) < 200)
+	{
+		mStalker = true;
+	}
+	else
+	{
+		mStalker = false;
+	}
 }
 /*
 void FlyEnemy::Hit(std::list<std::shared_ptr<Actor>> actors)
@@ -230,6 +258,7 @@ void FlyEnemy::Hit(const char * tag, std::shared_ptr<Vector2> pos, std::shared_p
 	}
 }
 */
+/*
 bool FlyEnemy::CheckHit(int x, int y, int width, int height)
 {
 	//int L1 = mPos->x;
@@ -260,9 +289,12 @@ bool FlyEnemy::CheckHit2(int x, int y, int width, int height, int p)
 	if (mPos->y + width + p < y) return false;
 	return true;
 }
-
+*/
 void FlyEnemy::Move()
 {
+	pPos = GetActorManager()->GetPlayer()->GetPosition();
+	ToPlayer();
+	//’Ç‚¢‚©‚¯‚éó‘Ô‚Å–ƒáƒó‘Ô‚Å‚È‚¯‚ê‚Î
 	if (mStalker && !paral)
 	{
 		//‚±‚±‚É“®‚­ˆ—‚ğ

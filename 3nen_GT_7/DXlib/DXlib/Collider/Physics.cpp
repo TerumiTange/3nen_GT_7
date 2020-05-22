@@ -64,6 +64,7 @@ void Physics::sweepAndPrune()//総当たり判定
 				continue;
 			}
 			auto bc = b->getQuadrangle();
+			//std::sqrtf(std::powf(pPos.x - mPos->x, 2) + std::powf(pPos.y - mPos->y, 2)) < 200
 			//もしmQuadrangle[j]のX値が、mQuadrangle[i]のX値+サイズXより大きければ
 			//mQuadrangle[i]と交差するボックスは存在しない
 			if (bc->position.x > max)
