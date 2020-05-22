@@ -31,6 +31,8 @@ void Title::Init()
 
 void Title::Update()
 {
+	printfDx("ゲームパッド数%d", GetJoypadNum());
+	GetJoypadInputState(DX_INPUT_PAD1);
 	input->JoyUpdate();
 	timer->Update();
 

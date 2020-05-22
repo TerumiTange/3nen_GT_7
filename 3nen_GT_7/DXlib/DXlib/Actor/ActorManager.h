@@ -19,6 +19,7 @@ public:
 	void Draw();
 	void Add(Actor* add);
 	void Clear();
+	std::list<std::shared_ptr<Actor>>GetActors();
 
 	void SetEnemyCount(size_t e);
 	size_t GetEnemyCount();

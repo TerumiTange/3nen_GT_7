@@ -177,10 +177,6 @@ void GamePlay::Update()
 			}
 		}
 		sound->PlayBGM("./Assets/Sound/a.mp3");
-		if (input->GetKeyDown(B))
-		{
-			NextScene();
-		}
 
 		if (!mActorManager->GetPlayer())//ƒvƒŒƒCƒ„[‚ª€‚ñ‚Å‚¢‚½‚ç
 		{

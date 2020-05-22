@@ -25,8 +25,6 @@ public :
 	void SetPosition(const Vector2& position);//その位置座標に移動させる
 	Vector2& GetPosition();//現在の位置座標を渡す
 	virtual void Hit() override;
-	bool CheckHit(int x, int y, int width, int height);//あたっているかどうか
-	bool CheckHitF(int x, int y, int width, int height);//高速移動中に当たっているかどうか
 	bool RGoal();//ゴールしたかどうか
 	bool GetMovingFast();//瞬間移動中かどうか
 

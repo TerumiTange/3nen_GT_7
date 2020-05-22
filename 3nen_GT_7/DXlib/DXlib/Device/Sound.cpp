@@ -38,6 +38,7 @@ void Sound::PlaySE(const char * filename)
 	//{
 	//	PlaySoundMem(mSound[filename], DX_PLAYTYPE_BACK, FALSE);
 	//}
+	ChangeVolumeSoundMem(255 * 30 / 100, mSound[filename]);
 	PlaySoundMem(mSound[filename], DX_PLAYTYPE_BACK, TRUE);
 }
 
@@ -45,6 +46,7 @@ void Sound::PlaySEF(const char * filename)
 {
 	if (!CheckSoundMem(mSound[filename]))
 	{
+		ChangeVolumeSoundMem(255 * 30 / 100, mSound[filename]);
 		PlaySoundMem(mSound[filename], DX_PLAYTYPE_BACK, FALSE);
 	}
 }

@@ -24,6 +24,7 @@ public:
 	Enemy();
 	~Enemy();
 	void Init(const char* filename);
+	void InitM(const char* filename);
 	void Create(const EnemyData& data);
 	void Parse(unsigned row);
 	EnemyType SelectType(const std::string& name);
@@ -33,6 +34,7 @@ private:
 	//CSVReader* mCSV;
 	std::unique_ptr<CSVReader> mCSV;
 	std::vector<std::string> mEnemyList;
+	std::vector<int> mEnemyListV;
 	std::list<EnemyData> mEnemyData;
 	size_t mEnemyCount;
 };

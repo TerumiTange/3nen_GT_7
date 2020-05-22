@@ -62,6 +62,32 @@ std::list<Collider*> Collider::onCollisionEnter()
 	return temp;
 }
 
+std::list<Collider*> Collider::onCollisionStay()
+{
+	std::list<Collider*> temp;
+	for (const auto& c : mCurrentCollider) {
+		auto itr = std::find(mPreviousCollider.begin(), mPreviousCollider.end(), c);
+		if (itr != mPreviousCollider.end()) {
+			temp.emplace_back(c);
+		}
+	}
+
+	return temp;
+}
+
+std::list<Collider*> Collider::onCollisionExit()
+{
+	std::list<Collider*> temp;
+	for (const auto& c : mPreviousCollider) {
+		auto itr = std::find(mCurrentCollider.begin(), mCurrentCollider.end(), c);
+		if (itr == mCurrentCollider.end()) {
+			temp.emplace_back(c);
+		}
+	}
+
+	return temp;
+}
+
 void Collider::setPhysics(Physics * physics)
 {
 	mPhysics = physics;
