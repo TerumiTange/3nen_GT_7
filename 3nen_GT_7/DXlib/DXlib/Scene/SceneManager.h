@@ -26,7 +26,7 @@ public:
 	static const char* stageName;
 	static CountUpTimer* mElapsedTime;//ステージ上の経過時間
 	static Camera2d* mCamera;
-	static bool* gameClear;//ゲームをクリアしたかどうか
+	static bool gameClear;//ゲームをクリアしたかどうか
 
 private:
 	BaseScene* mScene;

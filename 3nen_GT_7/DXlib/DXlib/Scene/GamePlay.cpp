@@ -63,7 +63,7 @@ void do_wark2()
 
 void GamePlay::Init()
 {
-	*SceneManager::gameClear = false;
+	SceneManager::gameClear = false;
 	//try
 	//{
 	//	std::thread t1(do_wark1);
@@ -137,10 +137,10 @@ void GamePlay::Update()
 	if (pose)//ポーズ中
 	{
 		
-		DrawString(300, 100, "ポーズ中  ゲームパッド or キーボード", Cr);
-		DrawString(300, 150, "ゲームに戻る　START    or     P", Cr);
-		DrawString(300, 200, "リセット　　　 X       or     R", Cr);
-		DrawString(300, 250, "終了　　　　　BACK     or     B", Cr);
+		DrawString(300, 100, "ポーズ中  ゲームパッド", Cr);
+		DrawString(300, 150, "ゲームに戻る　START ", Cr);
+		DrawString(300, 200, "リセット　　　 X    ", Cr);
+		DrawString(300, 250, "終了　　　　　BACK  ", Cr);
 		if (mInputTimers->IsTime())
 		{
 			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
@@ -189,7 +189,7 @@ void GamePlay::Update()
 
 		if (mActorManager->GetPlayer()->RGoal() || mActorManager->GetEnemyCount() == 0)//ゴールしたまたは敵をすべて倒した
 		{
-			*SceneManager::gameClear = true;
+			SceneManager::gameClear = true;
 			NextScene();
 		}
 
