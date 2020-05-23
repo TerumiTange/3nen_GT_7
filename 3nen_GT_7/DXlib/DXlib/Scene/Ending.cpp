@@ -1,12 +1,15 @@
 #include "Ending.h"
 #include "SceneManager.h"
+#include <iostream>
+#include <fstream>
 
 Ending::Ending(ISceneChanger * changer) :
 	BaseScene(changer),
 	input(new Input()),
 	mNumber(new Renderer("Number")),
 	sound(new Sound()),
-	timer(new CountDownTimer())
+	timer(new CountDownTimer()),
+	NewScore(false)
 {
 	s = 300;
 	r = 350;
@@ -22,11 +25,42 @@ Ending::~Ending()
 
 void Ending::Init()
 {
+	numScore = 0;
+	timeScore = 0;
 	input->Init();
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
 	sound->Load("./Assets/Sound/migration.wav");
 	//sound->Load("");BGM
+	if (SceneManager::gameClear)//ゲームをクリアしていたら
+	{
+		//ここにタイムによる加点処理
+		//timeScore;
+		//
+		numScore = timeScore + SceneManager::score;
+		std::string stage;
+		stage = SceneManager::stageName;
+		if (stage == "stage1")//書き込む
+		{
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+		}
+		else if (stage == "stage2")
+		{
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+		}
+		else if (stage == "stage3")
+		{
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+		}
+		else if (stage == "stage4")
+		{
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+		}
+		else if (stage == "stage5")
+		{
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+		}
+	}
 }
 
 void Ending::Update()
@@ -80,9 +114,14 @@ void Ending::Draw()
 	if (SceneManager::gameClear)
 	{
 		DrawString(380, 50, "ゲームクリア", Cr);
-		mNumber->DrawNumber(Vector2(400, 100), SceneManager::mElapsedTime->Now());//かかった時間表示
-		DrawString(380, 150, "ここにスコアが入る予定", Cr);
-		DrawString(380, 200, "ここに合計スコアが入る予定", Cr);
+		DrawFormatString(380, 100, Cr, "スコア：%d", SceneManager::score);//ゲームによるスコア表示
+		mNumber->DrawNumber(Vector2(400, 150), SceneManager::mElapsedTime->Now());//かかった時間表示
+		DrawFormatString(450, 150, Cr, "%d", timeScore);//タイムによるスコア表示
+		DrawFormatString(380, 200, Cr, "トータルスコア：%d", numScore);//合計スコア表示
+		if (NewScore)
+		{
+			DrawString(380, 250, "ニュースコア！！", Cr);
+		}
 	}
 	else
 	{

@@ -23,6 +23,9 @@ private:
 	int r;//リスタート
 	int choice;//現在選択中
 	CountDownTimer* timer;//遅延用
+	bool NewScore;
+	int timeScore;//タイムによるスコア
+	int numScore;//合計スコア
 };
 
 enum EndMenu

@@ -1,15 +1,17 @@
 #include "StageSelect.h"
+#include <iostream>
+#include <fstream>
 
 StageSelect::StageSelect(ISceneChanger* changer):
 	BaseScene(changer),
 	mInput(new Input()),
 	mTimers(new CountDownTimer()),
-	stage1Pos(new Vector2(100,100)),
-	stage2Pos(new Vector2(200,100)),
-	stage3Pos(new Vector2(300,100)),
-	stage4Pos(new Vector2(100,150)),
-	stage5Pos(new Vector2(200,150)),
-	stage6Pos(new Vector2(300,150)),
+	stage1Pos(new Vector2(700,100)),
+	stage2Pos(new Vector2(800,100)),
+	stage3Pos(new Vector2(900,100)),
+	stage4Pos(new Vector2(700,150)),
+	stage5Pos(new Vector2(800,150)),
+	stage6Pos(new Vector2(900,150)),
 	sound(new Sound())
 {
 	choice = stage1;//最初はステージ1
@@ -29,8 +31,34 @@ StageSelect::~StageSelect()
 	delete(sound);
 }
 
+void StageSelect::CSVReader()
+{
+	//std::ifstream fileOpen("./Assets/Data/Score1.txt");//読み込み
+	//std::string s;
+	//std::getline(fileOpen, s);
+	//fileOpen.close();
+	//Score1 = atoi(s.c_str());//string → int 
+
+	Score1 = SceneManager::mScore->Load("./Assets/Data/Score1.txt");
+	Score2 = SceneManager::mScore->Load("./Assets/Data/Score2.txt");
+	Score3 = SceneManager::mScore->Load("./Assets/Data/Score3.txt");
+	Score4 = SceneManager::mScore->Load("./Assets/Data/Score4.txt");
+	Score5 = SceneManager::mScore->Load("./Assets/Data/Score5.txt");
+
+	/*
+	std::string ss;
+	ss = std::to_string(num);//int → string
+
+
+	std::ofstream fileWrite("./Assets/Data/Score1.txt");//書き込み
+	fileWrite << ss;
+	fileWrite.close();
+	*/
+}
+
 void StageSelect::Init()
 {
+	CSVReader();
 	mInput->Init();
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
@@ -127,23 +155,30 @@ void StageSelect::Draw()
 	DrawString(stage5Pos->x, stage5Pos->y, "ステージ5", Cr);
 	DrawString(stage6Pos->x, stage6Pos->y, "タイトルへ", Cr);
 
+	
+
 	Vector2 xy;
 	switch (choice)
 	{
 	case stage1:
 		xy = *stage1Pos;
+		DrawFormatString(50, 150, Cr, "%d", Score1);
 		break;
 	case stage2:
 		xy = *stage2Pos;
+		DrawFormatString(50, 150, Cr, "%d", Score2);
 		break;
 	case stage3:
 		xy = *stage3Pos;
+		DrawFormatString(50, 150, Cr, "%d", Score3);
 		break;
 	case stage4:
 		xy = *stage4Pos;
+		DrawFormatString(50, 150, Cr, "%d", Score4);
 		break;
 	case stage5:
 		xy = *stage5Pos;
+		DrawFormatString(50, 150, Cr, "%d", Score5);
 		break;
 	case stage6:
 		xy = *stage6Pos;

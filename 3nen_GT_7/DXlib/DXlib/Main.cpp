@@ -75,7 +75,7 @@ void message_box()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//メモリーリーク検出
-	_CrtSetBreakAlloc(69);//メモリーリークが出たら()に数字を入れる
+	//_CrtSetBreakAlloc(76399);//メモリーリークが出たら()に数字を入れる
 
 	bool g = true;
 	int a = GetJoypadNum();

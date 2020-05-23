@@ -15,6 +15,7 @@ class StageSelect :public BaseScene
 public:
 	StageSelect(ISceneChanger* changer);
 	~StageSelect();
+	void CSVReader();
 	void Init()override;
 	void Update()override;
 	void Draw()override;
@@ -31,6 +32,12 @@ private:
 	Vector2* stage6Pos;
 	int choice;//Œ»İ‘I‘ğ’†
 	Sound* sound;
+
+	int Score1;
+	int Score2;
+	int Score3;
+	int Score4;
+	int Score5;
 };
 
 enum eStage

@@ -163,6 +163,7 @@
     <ClCompile Include="Scene\ISceneChanger.cpp" />
     <ClCompile Include="Scene\Load.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\Score.cpp" />
     <ClCompile Include="Scene\StageSelect.cpp" />
     <ClCompile Include="Scene\Title.cpp" />
     <ClCompile Include="System\CountDownTimer.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Scene\ISceneChanger.h" />
     <ClInclude Include="Scene\Load.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\Score.h" />
     <ClInclude Include="Scene\StageSelect.h" />
     <ClInclude Include="Scene\Title.h" />
     <ClInclude Include="System\CountDownTimer.h" />

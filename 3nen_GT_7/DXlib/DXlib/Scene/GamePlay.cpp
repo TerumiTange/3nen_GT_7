@@ -64,6 +64,7 @@ void do_wark2()
 void GamePlay::Init()
 {
 	SceneManager::gameClear = false;
+	SceneManager::score = 0;
 	//try
 	//{
 	//	std::thread t1(do_wark1);
