@@ -188,7 +188,7 @@ void GamePlay::Update()
 			NextScene();
 		}
 
-		if (mActorManager->GetPlayer()->RGoal() || mActorManager->GetEnemyCount() == 0)//ƒS[ƒ‹‚µ‚½‚Ü‚½‚Í“G‚ð‚·‚×‚Ä“|‚µ‚½
+		if (mActorManager->GetEnemyCount() == 0)//“G‚ð‚·‚×‚Ä“|‚µ‚½
 		{
 			SceneManager::gameClear = true;
 			NextScene();
