@@ -50,6 +50,7 @@ void Enemy::InitM(const char * filename)
 	mEnemyListV.clear();
 	mEnemyListV = mCSV->load(filename);
 	auto a = mEnemyListV.size();
+	auto w = mCSV->getWidth();
 	for (int i = mEnemyListV.size() - 1; i >= 0; --i)
 	{
 		EnemyData data;
@@ -57,13 +58,14 @@ void Enemy::InitM(const char * filename)
 		switch (mEnemyListV[i])
 		{
 		case 0: break;
-		case 1: data.type = EnemyType::FLYENEMY; break;
+		case 1: data.type = EnemyType::FLYENEMY; mEnemyData.emplace_back(data); break;
 		default:
 			break;
 		}
-		mEnemyData.emplace_back(data);
+		
 	}
 	auto j = mEnemyData.size();
+	mEnemyCount = mEnemyData.size();
 	for (int i = 0; i < j; ++i)
 	{
 		Create(mEnemyData.front());

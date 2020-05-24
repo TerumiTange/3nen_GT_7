@@ -25,7 +25,6 @@ public :
 	void SetPosition(const Vector2& position);//その位置座標に移動させる
 	Vector2& GetPosition();//現在の位置座標を渡す
 	virtual void Hit() override;
-	bool RGoal();//ゴールしたかどうか
 	bool GetMovingFast();//瞬間移動中かどうか
 
 private:
@@ -33,7 +32,6 @@ private:
 	int mHp;//体力
 	int mMaxHp;//最大体力
 	float mInvincibleTime;//無敵時間
-	bool mGoal;//ゴールしたかどうか
 	Vector2* mPos;//ポジション
 	Vector2* mVelocity;//ベクトル
 	float maxSpeed;//最大速度
@@ -53,31 +51,17 @@ private:
 	bool mMovingFast;//高速移動してるかどうか
 	int mMovingFastCount;//高速移動のカウント
 	int mMovingFastMaxCount;//最大高速移動の回数
-	float mMovingFastTime;//高速移動回復時間
-	CountDownTimer* mMovingFastTimer;//高速移動回復用タイマー
+
 	int mMovingFastAmount;//高速移動の移動量
-	//Vector2* mMovingFastDifference;//高速移動後の位置の差分
-	float mMovingFastDifferenceX;//高速移動後の位置差分X
-	float mMovingFastDifferenceY;//高速移動後の位置差分Y
 	CountDownTimer* mNowMovingFastTimer;//高速移動状態のタイマー
 	float mNowMovingFastTime;//高速移動状態の時間
 	bool mNowMovingFast;//高速移動した瞬間
-
-	CountDownTimer* mFallTimer;//重力軽減の時間タイマー
-	float mFallTime;//重力軽減の時間
 
 	Sound* sound;
 
 	Renderer* mContent;//回数の中身
 	Renderer* mFrame;//回数の周り
 
-	//瞬間移動は一定距離移動
-
-	//bool mJump;//ジャンプしているかどうか
-	//bool mFloating;//浮遊しているかどうか
-	//int mElectricity;//自身の電気ゲージの量
-	//bool mChargedState;//帯電状態かどうか
-	//bool mPoppedState;//はじけ状態かどうか
 	
 
 	int old_x;//動く前のX座標

@@ -12,6 +12,8 @@
 #include "../System/CountUpTimer.h"
 #include "../Device/Camera2d.h"
 
+#include "Score.h"
+
 class SceneManager:
 	public ISceneChanger
 {
@@ -27,7 +29,9 @@ public:
 	static CountUpTimer* mElapsedTime;//ステージ上の経過時間
 	static Camera2d* mCamera;
 	static bool gameClear;//ゲームをクリアしたかどうか
-
+	static Score* mScore;
+	static int score;//スコア
+	
 private:
 	BaseScene* mScene;
 	SceneType mNextScene;

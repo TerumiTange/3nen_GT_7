@@ -16,6 +16,7 @@ SceneManager::~SceneManager()
 	delete(mElapsedTime);
 	delete(Actor::mElectricTimer);//ÅŒã‚Éƒƒ‚ƒŠ‚ğ‰ğ•ú‚·‚é‚½‚ß
 	delete(mCamera);
+	delete(mScore);
 }
 
 void SceneManager::Init()
@@ -72,3 +73,5 @@ const char* SceneManager::stageName = "";
 CountUpTimer* SceneManager::mElapsedTime = new CountUpTimer();
 Camera2d* SceneManager::mCamera = new Camera2d();
 bool SceneManager::gameClear = false;
+Score* SceneManager::mScore = new Score();
+int SceneManager::score = 0;

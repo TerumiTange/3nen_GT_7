@@ -13,7 +13,6 @@ Player::Player(const Vector2& position, const char* tag) :
 	mMaxHp(4),										  //最大体力
 	mHp(4),											  //現在の体力
 	mInvincibleTime(4),								  //無敵時間
-	mGoal(false),									  //ゴールしたかどうか
 	mPos(new Vector2(0, 0)),							  //現在の位置
 	mVelocity(new Vector2(0, 0)),					  //移動量
 	maxSpeed(7),									  //最大スピード
@@ -26,21 +25,15 @@ Player::Player(const Vector2& position, const char* tag) :
 	mInput(new Input()),							  //キー入力関数
 	mCountTimer(new CountDownTimer()),				  //無敵時間更新カウントダウンタイマー
 	mFall(true),									  //落ちているかどうか
-	mGravity(16),									  //重力のスピード
-	mMovingFastGravity(8),							  //高速移動中の重力
+	mGravity(8),									  //重力のスピード
+	mMovingFastGravity(1),							  //高速移動中の重力
 	mMovingFast(false),								  //高速移動しているかどうか
 	mMovingFastCount(4),							  //高速移動できる回数
-	mMovingFastMaxCount(4),							  //最大高速移動の回数
-	mMovingFastTime(0.5f),//0.5f					  //高速移動が回復するまでの時間
-	mMovingFastTimer(new CountDownTimer()),			  //高速移動回復用カウントダウンタイマー
-	mMovingFastAmount(35),							  //高速移動の移動量
-	mMovingFastDifferenceX(0),						  //高速移動後の位置の差分X
-	mMovingFastDifferenceY(0),						  //高速移動後の位置の差分Y
+	mMovingFastMaxCount(4),							  //最大高速移動の回数ー
+	mMovingFastAmount(30),							  //高速移動の移動量
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
 	mNowMovingFastTime(0.2f),						  //高速移動状態の時間
 	mNowMovingFast(false),							  //高速移動した瞬間
-	mFallTimer(new CountDownTimer()),				  //重力軽減の時間タイマー(IsTime()がfalseなら軽減中)
-	mFallTime(0.2f),								  //重力軽減の時間
 	mNumber(new Renderer("Number")),
 	sound(new Sound()),
 	mContent(new Renderer("content")),
@@ -71,10 +64,8 @@ void Player::End()//メモリの開放
 	delete(mInput);
 	delete(mCountTimer);
 
-	delete(mMovingFastTimer);
 	delete(mNowMovingFastTimer);
 	delete(mNumber);
-	delete(mFallTimer);
 	delete(sound);
 	delete(mContent);
 	delete(mFrame);
@@ -97,34 +88,23 @@ void Player::Update()
 
 	if (mHp <= 0)return;//体力がなくなったら操作しないようにする
 
-	
+	if (mInput->GetKeyDown(K))
+	{
+		Damage();
+	}
 
 	mInput->JoyUpdate();//ジョイパッド更新
 	mCountTimer->Update();//無敵時間更新
 
-	if (!mMovingFast)//高速移動中でなければ
-	{
-		mMovingFastTimer->Update();//高速移動回復時間更新
-	}
-
-	if ((mMovingFastCount <= 0) && (mMovingFastTimer->IsTime()))//高速移動回数が無く、高速移動回復時間が過ぎたら
-	{
-		mFall = true;
-		//if (mMovingFast)return;
-		//mMovingFastCount = 1;//高速移動回数を1にする
-	}
-	
 	if (mNowMovingFastTimer->IsTime())//高速移動した瞬間の処理が終了したら
 	{
 		mMovingFast = false;
-		mFall = true;
-		mFallTimer->Update();
+		//mFall = true;
 	}
 
 	Actor::SetPos(*mPos);//現在の位置座標をアクターにセットする
 	old_x = mPos->x;//移動前に現在の座標Xを更新
 	old_y = mPos->y;//移動前に現在の座標Yを更新
-	
 	mNowMovingFastTimer->Update();//高速移動した瞬間の処理を更新
 	
 
@@ -144,13 +124,15 @@ void Player::Update()
 }
 void Player::Fall()//重力
 {
-	if (mMovingFast || !mFallTimer->IsTime())//高速移動中または重力軽減中なら
+	if (mMovingFast)//高速移動中なら
 	{
-		mPos->y += mMovingFastGravity;
+		//mPos->y += mMovingFastGravity;//軽減重力
+		mVelocity->y += mMovingFastGravity;
 		return;
 	}
 	if (!mFall)return;//地面に着地していなければリターン
-	mPos->y += mGravity;
+	//mPos->y += mGravity;
+	mVelocity->y += mGravity;
 }
 
 void Player::Move()
@@ -183,27 +165,22 @@ void Player::Movement()//移動処理
 		mVelocity->x = 0;
 		mVelocity->y = 0;
 
-		//mMovingFastDifference->x -= mPos->x;
-		//mMovingFastDifference->y -= mPos->y;
-		mMovingFastDifferenceX -= mPos->x;//高速移動前との差分を計算
-		mMovingFastDifferenceY -= mPos->y;//高速移動前との差分を計算
 		mNowMovingFast = false;
-		mNowMovingFastTimer->SetTime(mFallTime);//重力発生まで軽減
 	}
 	//画面外に出た場合位置修正
 	if (mPos->x < 32)
 	{
 		mPos->x = 32;
 	}
-	if (mPos->x > Map::width * 32 - 32)
+	if (mPos->x > Map::width * 32 - 64)
 	{
-		mPos->x = Map::width * 32 - 32;
+		mPos->x = Map::width * 32 - 64;
 	}
-	if (mPos->y < 32)
+	if (mPos->y < 33)
 	{
-		mPos->y = 32;
+		mPos->y = 33;
 	}
-	if (mPos->y > Map::height * 32 - 32)
+	if (mPos->y > Map::height * 32 - 64)
 	{
 		mPos->y = Map::height * 32 - 64;
 	}
@@ -212,17 +189,14 @@ void Player::Movement()//移動処理
 
 void Player::MovingFast()//瞬間移動
 {
-	if (mMovingFastCount <= 0)return;//0以下ならリターン
-	if (mMovingFast)return;//瞬間移動中ならリターン
+	if (mMovingFastCount <= 0)return;//回数が0以下ならリターン
+	//if (mMovingFast)return;//瞬間移動中ならリターン
 	if (!mNowMovingFastTimer->IsTime())return;//一定時間たつまで無効
 	sound->PlaySE("./Assets/Sound/movingfast.wav");
 	mMovingFast = true;
 	mFall = false;
 	mNowMovingFast = true;
 	mMovingFastCount--;
-	//mMovingFastDifference = mPos;
-	mMovingFastDifferenceX = mPos->x;//高速移動前の座標X
-	mMovingFastDifferenceY = mPos->y;//高速移動前の座標Y
 
 	mVelocity->x = mInput->Horizontal()*mMovingFastAmount;//コントローラでの移動
 	mVelocity->y = mInput->Vertical()*mMovingFastAmount;  //コントローラでの移動
@@ -252,7 +226,7 @@ void Player::MovingFast()//瞬間移動
 		mVelocity->x = mMovingFastAmount;
 	}
 
-	mMovingFastTimer->SetTime(mMovingFastTime);//回数を回復させるまでの時間
+
 	mNowMovingFastTimer->SetTime(mNowMovingFastTime);//処理に必要な時間
 }
 
@@ -323,50 +297,54 @@ Vector2& Player::GetPosition()
 
 void Player::Hit()
 {
+	if (mCollider->onCollisionStay().empty() && mCollider->onCollisionEnter().empty())//何とも当たっていなければ
+	{
+		mFall = true;
+		return;
+	}
+
 	for (auto && hit : mCollider->onCollisionStay())//連続で当たっているとき
 	{
 		if (hit->getOwner()->Tag() == "Wall")
 		{
-			mFall = false;
+			mMovingFastCount = 4;
 			auto cPosX = hit->getOwner()->Position()->x;
 			auto cPosY = hit->getOwner()->Position()->y;
 			auto cSizeX = hit->getOwner()->Size()->x;
 			auto cSizeY = hit->getOwner()->Size()->y;
 
-			if (mPos->y + mSize->y >= cPosY)//自分の下にあたった
+			//if (mPos->y + mSize->y > cPosY)//自分の下にあたっている
+			//{
+			//	mPos->y = cPosY - mSize->y;
+			//	mVelocity->y = 0;
+			//	mFall = false;
+			//}
+			//if (mPos->y <= cPosY + cSizeY && old_y > cPosY + cSizeY)//自分の上に当たったとき
+			//{
+			//	mPos->y = cPosY + mSize->y + 1;
+			//	mVelocity->y = 0;
+			//}
+			if (old_y < cPosY)//自分が上
 			{
-				mPos->y = cPosY - mSize->y;
-				mFall = false;
-				if (mPos->x >= cPosX + cSizeX)//下に当たっている状態で左に当たっているとき
+				if (mVelocity->y > 0)
 				{
-					//mPos->x = cPosX + cSizeX + 1;
-					if (mVelocity->x < 0)
-					{
-						mVelocity->x = 0;
-					}
-				}
-				if (mPos->x + mSize->x >= cPosX)//下に当たっている状態で右に当たっているとき
-				{
-					//mPos->x = cPosX - mSize->x - 1;
-					if (mVelocity->x > 0)
-					{
-						mVelocity->x = 0;
-					}
-				}
-			}
-
-			if (mPos->x >= cPosX + cSizeX)//自分の左に当たった
-			{
-				mPos->x = cPosX + cSizeX + 1;
-				if (mVelocity->x < 0)
-				{
-					mVelocity->x = 0;
-				}
-
-				if (mPos->y + mSize->y >= cPosY)
-				{
+					mPos->y = cPosY - mSize->y;
 					mFall = false;
 				}
+			}
+			else if (old_y > cPosY)//自分がした
+			{
+				mPos->y = cPosY + cSizeY + 1;
+			}
+			else if (old_x < cPosX)//自分が左
+			{
+				mPos->x = cPosX - mSize->x;
+				mVelocity->x = 0;
+			}
+			else if (old_x > cPosX)//自分が右
+			{
+				mPos->x = cPosX + mSize->x;
+				mVelocity->x = 0;
 			}
 		}
 	}
@@ -380,47 +358,75 @@ void Player::Hit()
 		if (hit->getOwner()->Tag() == "Wall")
 		{
 			mMovingFastCount = 4;
-			if (mPos->y + mSize->y >= cPosY || old_y + mSize->y <= cPosY)//自分の下に当たったとき
+			if (old_y < cPosY)//自分が上
 			{
-				mPos->y = cPosY - cSizeY;
+				mPos->y = cPosY - mSize->y;
 				mFall = false;
 			}
-			else if (old_y < cPosY + cSizeY)//自分の上に当たったとき
+			else if (old_y > cPosY)//自分が下
 			{
-				sound->PlaySEF("./Assets/Sound/crash.wav");
 				mPos->y = cPosY + cSizeY;
-				if (mVelocity->y < 0)
-				{
-					mVelocity->y = 0;
-				}
+				mVelocity->y = 0;
 			}
-			else if (old_x >= cPosX + cSizeX)//自分の左に当たったとき
+			else if (old_x < cPosX)//自分が左
 			{
-				sound->PlaySEF("./Assets/Sound/crash.wav");
-				mPos->x = cPosX + cSizeX + 1;
-				if (mVelocity->x < 0)
-				{
-					mVelocity->x = 0;
-				}
-		
+				mPos->x = cPosX - mSize->x;
+				mVelocity->x = 0;
 			}
-			else if (old_x + mSize->x <= cPosX)//自分の右に当たったとき
+			else if (old_x > cPosX)//自分が右
 			{
-				sound->PlaySEF("./Assets/Sound/crash.wav");
-				mPos->x = cPosX - mSize->x - 1;
-				if (mVelocity->x > 0)
-				{
-					mVelocity->x = 0;
-				}
+				mPos->x = cPosX + mSize->x + 1;
+				mVelocity->x = 0;
 			}
+			//mPos->x = old_x;
+			//mPos->y = old_y;
+			//if (mPos->y + mSize->y >= cPosY)//自分の下にあたった
+			//{
+			//	mPos->y = cPosY - mSize->y;
+			//	mFall = false;
+			//
+			//}
+			//if (mPos->y <= cPosY + cSizeY && old_y > cPosY + cSizeY)//自分の上に当たったとき
+			//{
+			//	mPos->y = cPosY + mSize->y + 1;
+			//	mVelocity->y = 0;
+			//}
+			//if (mPos->y + mSize->y >= cPosY)//自分の下に当たったとき
+			//{
+			//	mPos->y = cPosY - cSizeY;
+			//	mFall = false;
+			//}
+			//if (mPos->y <= cPosY + cSizeY)//自分の上に当たったとき
+			//{
+			//	sound->PlaySEF("./Assets/Sound/crash.wav");
+			//	mPos->y = cPosY + cSizeY;
+			//	if (mVelocity->y < 0)
+			//	{
+			//		mVelocity->y = 0;
+			//	}
+			//}
+			//else if (old_x >= cPosX + cSizeX)//自分の左に当たったとき
+			//{
+			//	sound->PlaySEF("./Assets/Sound/crash.wav");
+			//	mPos->x = cPosX + cSizeX + 1;
+			//	if (mVelocity->x < 0)
+			//	{
+			//		mVelocity->x = 0;
+			//	}
+			//
+			//}
+			//else if (old_x + mSize->x <= cPosX)//自分の右に当たったとき
+			//{
+			//	sound->PlaySEF("./Assets/Sound/crash.wav");
+			//	mPos->x = cPosX - mSize->x - 1;
+			//	if (mVelocity->x > 0)
+			//	{
+			//		mVelocity->x = 0;
+			//	}
+			//}
 		
 		}
-
-		if (hit->getOwner()->Tag() == "Goa")
-		{
-			mGoal = true;
-		}
-
+		/*
 		if (hit->getOwner()->Tag() == "FlyEnemy")
 		{
 			if (mMovingFast)//高速移動状態ならば
@@ -440,70 +446,8 @@ void Player::Hit()
 				Damage();
 			}
 		}
+		*/
 	}
-	//if (mCollider->onCollisionEnter().empty())//なぜか空のときがあるから
-	//{
-	
-		for (auto && a : GetActorManager()->GetActors())
-		{
-			if (a->Tag() == "Wall")
-			{
-				mFall = false;
-				auto cPosX = a->Position()->x;
-				auto cPosY = a->Position()->y;
-				auto cSizeX = a->Size()->x;
-				auto cSizeY = a->Size()->y;
-				if (CheckHit(mPos->x, mPos->y, mSize->x, mSize->y, cPosX, cPosY, cSizeX, cSizeY))
-				{
-					if (old_y + mSize->y <= cPosY)
-					{
-						mPos->y = cPosY - mSize->y;
-						
-						mMovingFastCount = 4;
-						if (mVelocity->y > 0)
-						{
-							mVelocity->y = 0;
-						}
-					}
-					else if (old_y < cPosY + cSizeY)//自分の上に当たったとき
-					{
-						sound->PlaySEF("./Assets/Sound/crash.wav");
-						mPos->y = cPosY + cSizeY;
-						if (mVelocity->y < 0)
-						{
-							mVelocity->y = 0;
-						}
-					}
-					else if (mPos->x >= cPosX + cSizeX)//自分の左に当たったとき
-					{
-						sound->PlaySEF("./Assets/Sound/crash.wav");
-						mPos->x = cPosX + cSizeX + 1;
-						if (mVelocity->x < 0)
-						{
-							mVelocity->x = 0;
-						}
-					}
-					else if (mPos->x + mSize->x <= cPosX)//自分の右に当たったとき
-					{
-						sound->PlaySEF("./Assets/Sound/crash.wav");
-						mPos->x = cPosX - mSize->x - 1;
-						if (mVelocity->x > 0)
-						{
-							mVelocity->x = 0;
-						}
-					}
-
-				}
-				
-			}
-			
-		}
-	//}
-}
-
-bool Player::RGoal()
-{
-	return mGoal;
 }
 
 bool Player::GetMovingFast()

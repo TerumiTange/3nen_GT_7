@@ -69,6 +69,7 @@ void ActorManager::Draw()
 			actor->Draw();
 		}
 	}
+	if (!GetPlayer())return;
 	//プレイヤーを一番前にするため最後に表示する
 	GetPlayer()->Draw();
 }
