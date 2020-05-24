@@ -88,3 +88,11 @@ void Renderer::DrawNumber(const Vector2& pos, float num)//Numberのみ使用できる
 	}
 	SetDrawBright(255, 255, 255);
 }
+
+//描画位置、画像の開始位置、何枚目の描画か、描画範囲、反転するかどうか（TRUEなら反転）
+void Renderer::DrawSerialNumber(const Vector2& pos, const Vector2& gPos, int t, const Vector2& size, bool turnFlag)
+{
+	
+	DrawRectGraph(pos.x - Camera2d::CameraPos.x, pos.y - Camera2d::CameraPos.y, gPos.x + size.x * t, gPos.y, size.x, size.y, mGra, TRUE, turnFlag);
+
+}

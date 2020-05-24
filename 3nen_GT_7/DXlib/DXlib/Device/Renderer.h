@@ -20,6 +20,7 @@ public:
 	void DrawE(const Vector2& pos, int e);
 	void DrawIntegerNumber(const Vector2& pos, int num);//®”ê—p
 	void DrawNumber(const Vector2& pos, float num);
+	void DrawSerialNumber(const Vector2& pos, const Vector2& gPos, int t, const Vector2& size, bool turnFlag);//˜A”Ô
 private:
 	std::string mName;
 	int mGra;

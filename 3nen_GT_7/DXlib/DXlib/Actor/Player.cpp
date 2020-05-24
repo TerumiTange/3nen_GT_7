@@ -18,8 +18,9 @@ Player::Player(const Vector2& position, const char* tag) :
 	maxSpeed(7),									  //最大スピード
 	mAcceleration(0.5),								  //加速度
 	mSize(new Vector2(32, 32)), 						  //自分の大きさ
-    mFilename(tag),									  //画像名
+	mFilename(tag),									  //画像名
 	mRenderer(new Renderer(tag)),					  //描画関数
+	mIdolRenderer(new Renderer("PlayerIDL")),
 	mStaticElectricity(new Renderer("ThunderEffect")),//静電気の画像
 	mHeart(new Renderer("Metal")),					  //現在HPを表示する
 	mInput(new Input()),							  //キー入力関数
@@ -37,7 +38,9 @@ Player::Player(const Vector2& position, const char* tag) :
 	mNumber(new Renderer("Number")),
 	sound(new Sound()),
 	mContent(new Renderer("content")),
-	mFrame(new Renderer("frame"))
+	mFrame(new Renderer("frame")),
+	mRight(false),
+	mUpTimer(new CountUpTimer())
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -69,10 +72,12 @@ void Player::End()//メモリの開放
 	delete(sound);
 	delete(mContent);
 	delete(mFrame);
+	delete(mUpTimer);
 }
 
 void Player::Update()
 {
+	mUpTimer->Update();
 	mElectricTimer->Update();//敵の麻痺用
 
 	if (mMovingFastCount > mMovingFastMaxCount)//最大回数をオーバーしたら
@@ -150,6 +155,8 @@ void Player::Move()
 
 void Player::Movement()//移動処理
 {
+	mRight = (mVelocity->x > 0) ? true : false;
+
 	mPos->y += mVelocity->y;//移動処理Y
 	mPos->x += mVelocity->x;//移動処理X
 
@@ -259,7 +266,26 @@ void Player::Recovery()//体力回復
 
 void Player::Draw()//描画
 {
-	mRenderer->Draw(*mPos);
+	//mRenderer->Draw(*mPos);
+	if (std::abs(mVelocity->x) <= 1)
+	{
+		int t = fmod(mUpTimer->Now() * 3, 3);//ここの掛けている数字でスピードが変わる
+
+		//アイドルの画像
+		mIdolRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), t, *mSize, FALSE);
+	}
+	else if(mRight)
+	{
+		//右向きの画像
+		int r = fmod(mUpTimer->Now() * 3, 4);
+		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), r, *mSize, FALSE);
+	}
+	else
+	{
+		//左向きの画像
+		int l = fmod(mUpTimer->Now() * 3, 4);
+		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), l, *mSize, TRUE);
+	}
 	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
@@ -307,7 +333,6 @@ void Player::Hit()
 	{
 		if (hit->getOwner()->Tag() == "Wall")
 		{
-			mMovingFastCount = 4;
 			auto cPosX = hit->getOwner()->Position()->x;
 			auto cPosY = hit->getOwner()->Position()->y;
 			auto cSizeX = hit->getOwner()->Size()->x;
@@ -326,6 +351,7 @@ void Player::Hit()
 			//}
 			if (old_y < cPosY)//自分が上
 			{
+				mMovingFastCount = 4;
 				if (mVelocity->y > 0)
 				{
 					mPos->y = cPosY - mSize->y;
@@ -357,9 +383,9 @@ void Player::Hit()
 		auto cSizeY = hit->getOwner()->Size()->y;
 		if (hit->getOwner()->Tag() == "Wall")
 		{
-			mMovingFastCount = 4;
 			if (old_y < cPosY)//自分が上
 			{
+				mMovingFastCount = 4;
 				mPos->y = cPosY - mSize->y;
 				mFall = false;
 			}
@@ -378,55 +404,9 @@ void Player::Hit()
 				mPos->x = cPosX + mSize->x + 1;
 				mVelocity->x = 0;
 			}
-			//mPos->x = old_x;
-			//mPos->y = old_y;
-			//if (mPos->y + mSize->y >= cPosY)//自分の下にあたった
-			//{
-			//	mPos->y = cPosY - mSize->y;
-			//	mFall = false;
-			//
-			//}
-			//if (mPos->y <= cPosY + cSizeY && old_y > cPosY + cSizeY)//自分の上に当たったとき
-			//{
-			//	mPos->y = cPosY + mSize->y + 1;
-			//	mVelocity->y = 0;
-			//}
-			//if (mPos->y + mSize->y >= cPosY)//自分の下に当たったとき
-			//{
-			//	mPos->y = cPosY - cSizeY;
-			//	mFall = false;
-			//}
-			//if (mPos->y <= cPosY + cSizeY)//自分の上に当たったとき
-			//{
-			//	sound->PlaySEF("./Assets/Sound/crash.wav");
-			//	mPos->y = cPosY + cSizeY;
-			//	if (mVelocity->y < 0)
-			//	{
-			//		mVelocity->y = 0;
-			//	}
-			//}
-			//else if (old_x >= cPosX + cSizeX)//自分の左に当たったとき
-			//{
-			//	sound->PlaySEF("./Assets/Sound/crash.wav");
-			//	mPos->x = cPosX + cSizeX + 1;
-			//	if (mVelocity->x < 0)
-			//	{
-			//		mVelocity->x = 0;
-			//	}
-			//
-			//}
-			//else if (old_x + mSize->x <= cPosX)//自分の右に当たったとき
-			//{
-			//	sound->PlaySEF("./Assets/Sound/crash.wav");
-			//	mPos->x = cPosX - mSize->x - 1;
-			//	if (mVelocity->x > 0)
-			//	{
-			//		mVelocity->x = 0;
-			//	}
-			//}
 		
 		}
-		/*
+		
 		if (hit->getOwner()->Tag() == "FlyEnemy")
 		{
 			if (mMovingFast)//高速移動状態ならば
@@ -446,7 +426,7 @@ void Player::Hit()
 				Damage();
 			}
 		}
-		*/
+		
 	}
 }
 

@@ -4,6 +4,7 @@
 #include "../Utility/Vector2.h"
 #include "../Device/Renderer.h"
 #include "../System/CountDownTimer.h"
+#include "../System/CountUpTimer.h"
 #include "../Device/Sound.h"
 #include "../Collider/ColliderComponent.h"
 
@@ -39,6 +40,7 @@ private:
 	Vector2* mSize;//大きさ
 	const char* mFilename;//画像名
 	Renderer* mRenderer;//描画関数
+	Renderer* mIdolRenderer;//アイドル状態描画
 	Renderer* mStaticElectricity;//静電気画像
 	Renderer* mHeart;//ハートの画像（HP）
 	Renderer* mNumber;//高速移動回数用
@@ -57,12 +59,13 @@ private:
 	float mNowMovingFastTime;//高速移動状態の時間
 	bool mNowMovingFast;//高速移動した瞬間
 
+	bool mRight;//右を向いているかどうか
+
 	Sound* sound;
 
 	Renderer* mContent;//回数の中身
 	Renderer* mFrame;//回数の周り
-
-	
+	CountUpTimer* mUpTimer;
 
 	int old_x;//動く前のX座標
 	int old_y;//動く前のY座標

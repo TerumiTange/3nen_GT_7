@@ -60,7 +60,7 @@ void message_box()
 	int flag;
 	flag = MessageBox(
 		NULL,
-		TEXT("コントローラーを接続してください"),
+		TEXT("コントローラーが接続されていません。ゲームを終了します"),
 		TEXT("コントローラー設定"),
 		//MB_YESNO | MB_ICONQUESTION);
 		NULL);

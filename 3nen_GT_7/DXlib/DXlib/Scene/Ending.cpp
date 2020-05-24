@@ -115,8 +115,8 @@ void Ending::Draw()
 	{
 		DrawString(380, 50, "ゲームクリア", Cr);
 		DrawFormatString(380, 100, Cr, "スコア：%d", SceneManager::score);//ゲームによるスコア表示
-		mNumber->DrawNumber(Vector2(400, 150), SceneManager::mElapsedTime->Now());//かかった時間表示
-		DrawFormatString(450, 150, Cr, "%d", timeScore);//タイムによるスコア表示
+		mNumber->DrawNumber(Vector2(300, 150), SceneManager::mElapsedTime->Now());//かかった時間表示
+		DrawFormatString(500, 150, Cr, " : %d", timeScore);//タイムによるスコア表示
 		DrawFormatString(380, 200, Cr, "トータルスコア：%d", numScore);//合計スコア表示
 		if (NewScore)
 		{
