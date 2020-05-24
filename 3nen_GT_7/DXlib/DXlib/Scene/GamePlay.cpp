@@ -86,19 +86,19 @@ void GamePlay::Init()
 	Enemy* enemy = new Enemy();
 	if (mStageName == "stage1")
 	{
-		enemy->Init("./Assets/Data/EnemyList1.csv");
+		enemy->InitM("./Assets/Data/EnemyList1.csv");
 	}
 	else if (mStageName == "stage2")
 	{
-		enemy->Init("./Assets/Data/EnemyList2.csv");
+		enemy->InitM("./Assets/Data/EnemyList2.csv");
 	}
 	else if (mStageName == "stage3")
 	{
-		enemy->Init("./Assets/Data/EnemyList3.csv");
+		enemy->InitM("./Assets/Data/EnemyList3.csv");
 	}
 	else if (mStageName == "stage4")
 	{
-		enemy->Init("./Assets/Data/EnemyList4.csv");
+		enemy->InitM("./Assets/Data/EnemyList4.csv");
 	}
 	else if (mStageName == "stage5")
 	{

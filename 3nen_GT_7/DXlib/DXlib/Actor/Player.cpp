@@ -25,12 +25,12 @@ Player::Player(const Vector2& position, const char* tag) :
 	mInput(new Input()),							  //キー入力関数
 	mCountTimer(new CountDownTimer()),				  //無敵時間更新カウントダウンタイマー
 	mFall(true),									  //落ちているかどうか
-	mGravity(8),									  //重力のスピード
+	mGravity(5),									  //重力のスピード
 	mMovingFastGravity(1),							  //高速移動中の重力
 	mMovingFast(false),								  //高速移動しているかどうか
 	mMovingFastCount(4),							  //高速移動できる回数
 	mMovingFastMaxCount(4),							  //最大高速移動の回数ー
-	mMovingFastAmount(30),							  //高速移動の移動量
+	mMovingFastAmount(25),							  //高速移動の移動量
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
 	mNowMovingFastTime(0.2f),						  //高速移動状態の時間
 	mNowMovingFast(false),							  //高速移動した瞬間
