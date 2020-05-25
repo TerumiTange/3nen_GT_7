@@ -10,6 +10,8 @@ enum class EnemyType
 {
 	SMALLENEMY,
 	FLYENEMY,
+	PATROLENEMY,
+	RUSHENEMY
 };
 
 struct EnemyData

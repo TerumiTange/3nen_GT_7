@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿  Player.cpp
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\actor.h(14): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
   c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
@@ -24,3 +25,9 @@ c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\actor.h(14
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
   DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
 >>>>>>> origin/kubota
+=======
+﻿  Actor.cpp
+c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\actor\actor.h(14): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\k018a1439\3nengame\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+  DXlib.vcxproj -> C:\K018A1439\3nenGame\3nen_GT_7\DXlib\Debug\DXlib.exe
+>>>>>>> mizunoya
