@@ -6,17 +6,17 @@
 FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
 	mCollider(new ColliderComponent(this)),
-	mPos(new Vector2(0, 0)),
-	mSize(new Vector2(32, 32)),
-	mFilename(tag),
-	mRenderer(new Renderer("Enemy")),
-	mFall(false),
+	mPos(new Vector2(0, 0)),//ポジション
+	mSize(new Vector2(32, 32)),//サイズ
+	mFilename(tag),//
+	mRenderer(new Renderer("Enemy")),//アイドル状態の画像
+	mFall(false),//重力
 	mRight(true),
-	mStalker(false),
-	staSize(192),
-	sRenderer(new Renderer("Enemy2")),/*,*/
-	paralRenderer(new Renderer("ThunderEffect")),//仮の画像
-	speed((1.0f)),
+	mStalker(false),//追跡状態か？
+	staSize(200),//追跡範囲
+	sRenderer(new Renderer("Enemy2")),//追跡状態の画像
+	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
+	speed(5.0f),//速度
 	paraTime(4.0f),//麻痺時間
 	paralimitTime(new CountDownTimer()),//麻痺時間のタイマー
 	paral(false),//麻痺状態かどうか
@@ -30,7 +30,6 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	sound->Init();
 	sound->Load("./Assets/Sound/deth.wav");
 	sound->Load("./Assets/Sound/paral.wav");
-	
 }
 
 FlyEnemy::~FlyEnemy() = default;
@@ -41,7 +40,7 @@ void FlyEnemy::End()
 	delete(mPos);
 	delete(mSize);
 	delete(mRenderer);
-	
+
 	delete(sRenderer);
 	delete(paralRenderer);
 	delete(paralimitTime);
@@ -84,7 +83,7 @@ void FlyEnemy::Draw()
 	{
 		sRenderer->Draw(*mPos);
 	}
-	
+
 }
 
 void FlyEnemy::Hit()
@@ -93,20 +92,39 @@ void FlyEnemy::Hit()
 	{
 		if (hit->getOwner()->Tag() == "Wall")
 		{
+			auto cPosX = hit->getOwner()->Position()->x;
+			auto cPosY = hit->getOwner()->Position()->y;
+			auto cSizeX = hit->getOwner()->Size()->x;
+			auto cSizeY = hit->getOwner()->Size()->y;
 
+			if (mPos->y + mSize->y >= cPosY)//自分の下にあたった
+			{
+				mPos->y = cPosY - mSize->y;
+			}
 		}
 	}
 
-	/*for (auto && hit : mCollider->onCollisionStay())
+	for (auto && hit : mCollider->onCollisionStay())
 	{
+		if (hit->getOwner()->Tag() == "Wall")
+		{
+			auto cPosX = hit->getOwner()->Position()->x;
+			auto cPosY = hit->getOwner()->Position()->y;
+			auto cSizeX = hit->getOwner()->Size()->x;
+			auto cSizeY = hit->getOwner()->Size()->y;
 
-	}*/
+			if (mPos->y + mSize->y >= cPosY)//自分の下にあたった
+			{
+				mPos->y = cPosY - mSize->y;
+			}
+		}
+	}
 }
 
 void FlyEnemy::ToPlayer()
 {
 	//プレイヤーが一定範囲にはいったらsqrt
-	if (std::sqrtf(std::powf(pPos.x - mPos->x, 2) + std::powf(pPos.y - mPos->y, 2)) < 200)
+	if (std::sqrtf(std::powf(pPos.x - mPos->x, 2) + std::powf(pPos.y - mPos->y, 2)) < staSize)
 	{
 		mStalker = true;
 	}
@@ -307,7 +325,6 @@ void FlyEnemy::Move()
 
 		mPos->x += direction.x*speed;
 		mPos->y += direction.y*speed;
-
 	}
 }
 

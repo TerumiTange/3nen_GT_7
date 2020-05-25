@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "SmallEnemy.h"
 #include "FlyEnemy.h"
+#include "PatrolEnemy.h"
+#include "RushEnemy.h"
 #include "../Map/Map.h"
 
 Enemy::Enemy():
@@ -83,6 +85,16 @@ void Enemy::Create(const EnemyData& data)
 	{
 		auto e = new FlyEnemy(data.position);
 	}
+
+	if (data.type == EnemyType::PATROLENEMY)
+	{
+		auto e = new PatrolEnemy(data.position);
+	}
+
+	if (data.type == EnemyType::RUSHENEMY)
+	{
+		auto e = new RushEnemy(data.position);
+	}
 }
 
 void Enemy::Parse(unsigned row)
@@ -106,6 +118,16 @@ EnemyType Enemy::SelectType(const std::string & name)
 	if (name == "FlyEnemy")
 	{
 		return EnemyType::FLYENEMY;
+	}
+
+	if (name == "PatrolEnemy")
+	{
+		return EnemyType::PATROLENEMY;
+	}
+
+	if (name == "RushEnemy")
+	{
+		return EnemyType::RUSHENEMY;
 	}
 
 	return EnemyType::SMALLENEMY;
