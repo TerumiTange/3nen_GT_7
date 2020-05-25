@@ -6,8 +6,6 @@ Title::Title(ISceneChanger* changer)
 	input(new Input()),
 	startY(100),
 	creditY(150),
-	configFllY(200),
-	configModeY(250),
 	timer(new CountDownTimer()),
 	sound(new Sound())
 {
@@ -84,8 +82,6 @@ void Title::Draw()
 	DrawString(150, 50, "Title B PUSH　どっち選んでもゲームプレイに行くけどね", Cr);
 	DrawString(150, startY, "スタート", Cr);
 	DrawString(150, creditY, "クレジット", Cr);
-	DrawString(150, configFllY, "フルスクリーンにする", Cr);
-	DrawString(150, configModeY, "ウィンドウモードにする", Cr);
 	int y;
 	switch (choice)
 	{
@@ -95,11 +91,6 @@ void Title::Draw()
 	case credit:
 		y = creditY;
 		break;
-	case full:
-		y = configFllY;
-		break;
-	case mode:
-		y = configModeY;
 		break;
 	}
 	DrawString(100, y, "■", GetColor(0, 255, 0));
@@ -116,18 +107,6 @@ void Title::NextScene()
 	case credit:
 		//mSceneChanger->ChangeScene(SceneCredit);
 		mSceneChanger->ChangeScene(SceneSelect);
-		break;
-	case full:
-		ChangeWindowMode(FALSE);
-		SetWaitVSyncFlag(TRUE);
-		DxLib_Init();
-		SetDrawScreen(DX_SCREEN_BACK);
-		break;
-	case mode:
-		ChangeWindowMode(TRUE);
-		SetWaitVSyncFlag(FALSE);
-		DxLib_Init();
-		SetDrawScreen(DX_SCREEN_BACK);
 		break;
 	default:
 	  mSceneChanger->ChangeScene(SceneSelect);//例外が発生したら

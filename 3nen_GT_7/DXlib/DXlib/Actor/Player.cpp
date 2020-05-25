@@ -22,7 +22,7 @@ Player::Player(const Vector2& position, const char* tag) :
 	mRenderer(new Renderer(tag)),					  //描画関数
 	mIdolRenderer(new Renderer("PlayerIDL")),
 	mStaticElectricity(new Renderer("ThunderEffect")),//静電気の画像
-	mHeart(new Renderer("Metal")),					  //現在HPを表示する
+	mHeart(new Renderer("HP")),					  //現在HPを表示する
 	mInput(new Input()),							  //キー入力関数
 	mCountTimer(new CountDownTimer()),				  //無敵時間更新カウントダウンタイマー
 	mFall(true),									  //落ちているかどうか
@@ -31,7 +31,7 @@ Player::Player(const Vector2& position, const char* tag) :
 	mMovingFast(false),								  //高速移動しているかどうか
 	mMovingFastCount(4),							  //高速移動できる回数
 	mMovingFastMaxCount(4),							  //最大高速移動の回数ー
-	mMovingFastAmount(30),							  //高速移動の移動量
+	mMovingFastAmount(20),							  //高速移動の移動量
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
 	mNowMovingFastTime(0.2f),						  //高速移動状態の時間
 	mNowMovingFast(false),							  //高速移動した瞬間
@@ -293,7 +293,7 @@ void Player::Draw()//描画
 	}
 	for (size_t i = 0; i < mHp; ++i)
 	{
-		mHeart->Drawb(10 + i * 36, 36);
+		mHeart->Drawb(10 + i * 32, 32);
 	}
     //DrawString(0, 0, "", mMovingFastCount);
 	//DrawFormatString(10, 0, GetColor(255, 0, 0), "瞬間移動できる回数%d", mMovingFastCount);
@@ -303,11 +303,11 @@ void Player::Draw()//描画
 
 	for (int i = 0; i < mMovingFastMaxCount; ++i)
 	{
-		mFrame->Drawb(i * 32, 0);
+		mFrame->Drawb(10 + i * 32, 0);
 	}
 	for (int i = 0; i < mMovingFastCount; ++i)
 	{
-		mContent->Drawb(i * 32, 0);
+		mContent->Drawb(10 + i * 32, 0);
 	}
 }
 
