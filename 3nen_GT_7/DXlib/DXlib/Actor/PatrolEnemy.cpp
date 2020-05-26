@@ -36,11 +36,11 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const char * tag) :
 	sound->Load("./Assets/Sound/paral.wav");
 
 	//巡回のポジション
-	patrolPos.push_back(Vector2(96.0f, 96.0f));//1位置
-	patrolPos.push_back(Vector2(96.0f, 128.0f));//2位置
-	patrolPos.push_back(Vector2(128.0f, 128.0f));//3位置
-	patrolPos.push_back(Vector2(128.0f, 96.0f));//4位置
-	patrolPos.push_back(Vector2(320.0f, 160.0f));//追跡後に戻る位置
+	patrolPos.push_back(Vector2(pos.x - 64, pos.y - 64));//1位置
+	patrolPos.push_back(Vector2(pos.x - 64, pos.y + 64));//2位置
+	patrolPos.push_back(Vector2(pos.x + 64, pos.y + 64));//3位置
+	patrolPos.push_back(Vector2(pos.x + 64, pos.y - 64));//4位置
+	patrolPos.push_back(Vector2(pos));//追跡後に戻る位置
 }
 
 PatrolEnemy::~PatrolEnemy() = default;

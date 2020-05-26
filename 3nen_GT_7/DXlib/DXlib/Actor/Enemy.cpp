@@ -61,6 +61,8 @@ void Enemy::InitM(const char * filename)
 		{
 		case 0: break;
 		case 1: data.type = EnemyType::FLYENEMY; mEnemyData.emplace_back(data); break;
+		case 2: data.type = EnemyType::PATROLENEMY; mEnemyData.emplace_back(data); break;
+		case 3: data.type = EnemyType::RUSHENEMY; mEnemyData.emplace_back(data); break;
 		default:
 			break;
 		}
