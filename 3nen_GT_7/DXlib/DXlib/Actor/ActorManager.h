@@ -51,9 +51,12 @@ public:
 		return actor;
 	}
 
+	std::list<std::shared_ptr<Actor>>getActorList();
+
 private:
 	void Remove();
 	void MovePendingToMain();
+	
 
 	ActorManager(const ActorManager&) = delete;
 	ActorManager& operator=(const ActorManager&) = delete;
@@ -61,6 +64,7 @@ private:
 private:
 	std::list<std::shared_ptr<Actor>>mActors;
 	std::list<std::shared_ptr<Actor>>mPendingActors;
+	std::list<std::shared_ptr<Actor>>mParalActors;
 	bool mUpdatingActors;
 	bool mWallStart;
 	size_t mEnemyCount;
