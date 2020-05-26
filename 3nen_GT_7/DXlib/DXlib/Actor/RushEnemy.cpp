@@ -25,7 +25,8 @@ RushEnemy::RushEnemy(const Vector2 & pos, const char * tag) :
 	sound(new Sound()),
 	atTime(2.0f),
 	attackTimer(new CountDownTimer(0.0f)),
-	rush(false)
+	rush(false),
+	mUpTimer(new CountDownTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -52,12 +53,14 @@ void RushEnemy::End()
 	sound->Init();
 	delete(sound);
 	delete(attackTimer);
+	delete(mUpTimer);
 }
 
 void RushEnemy::Update()
 {
 	playerHitTimer->Update();
 	paralimitTimer->Update();
+	mUpTimer->Update();
 	Paralise();
 
 	if (direction.x < 0) mRight = false;

@@ -25,7 +25,8 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const char * tag) :
 	sound(new Sound()),
 	patrolPos(0),
 	mPatrol(true),//„‰ñó‘Ô‚©H
-	pspeed(1.0f)
+	pspeed(1.0f),
+	mUpTimer(new CountDownTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -58,6 +59,7 @@ void PatrolEnemy::End()
 	delete(playerHitTimer);
 	sound->Init();
 	delete(sound);
+	delete(mUpTimer);
 
 	patrolPos.clear();
 }
@@ -66,6 +68,7 @@ void PatrolEnemy::Update()
 {
 	playerHitTimer->Update();
 	paralimitTimer->Update();
+	mUpTimer->Update();
 	Paralise();
 
 	if (direction.x < 0) mRight = false;

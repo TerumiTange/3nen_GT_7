@@ -59,4 +59,6 @@ private:
 	CountDownTimer* attackTimer;//
 	bool rush;
 	Vector2 psPos;
+
+	CountDownTimer* mUpTimer;
 };
