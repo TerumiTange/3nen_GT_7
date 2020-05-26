@@ -56,19 +56,19 @@ void Ending::Init()
 		}
 		else if (stage == "stage2")
 		{
-			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score2.txt", numScore);
 		}
 		else if (stage == "stage3")
 		{
-			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score3.txt", numScore);
 		}
 		else if (stage == "stage4")
 		{
-			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score4.txt", numScore);
 		}
 		else if (stage == "stage5")
 		{
-			NewScore = SceneManager::mScore->Write("./Assets/Data/Score1.txt", numScore);
+			NewScore = SceneManager::mScore->Write("./Assets/Data/Score5.txt", numScore);
 		}
 	}
 }

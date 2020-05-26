@@ -13,6 +13,16 @@ Score::~Score()
 
 int Score::Load(std::string filename)
 {
+	
+	try
+	{
+		std::ifstream fileOpen(filename);//ì«Ç›çûÇ›
+	}
+	catch (const std::exception&)
+	{
+		makeTxt(filename);
+		return 0;
+	}
 	std::ifstream fileOpen(filename);//ì«Ç›çûÇ›
 	std::string s;
 	std::getline(fileOpen, s);
@@ -33,4 +43,11 @@ bool Score::Write(std::string filename, int score)
 		return true;
 	}
 	return false;
+}
+
+void Score::makeTxt(std::string filename)
+{
+	std::ofstream fileWrite(filename);
+	std::cin.get();
+	Write(filename, 0);
 }
