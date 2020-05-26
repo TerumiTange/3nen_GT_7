@@ -193,6 +193,7 @@ void GamePlay::Update()
 		if (mActorManager->GetEnemyCount() == 0)//敵をすべて倒した
 		{
 			SceneManager::gameClear = true;
+			SceneManager::score += 500;//クリアボーナス500点追加
 			NextScene();
 		}
 

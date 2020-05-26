@@ -11,8 +11,8 @@ Ending::Ending(ISceneChanger * changer) :
 	timer(new CountDownTimer()),
 	NewScore(false)
 {
-	s = 300;
-	r = 350;
+	s = 350;
+	r = 400;
 	choice = e_select;
 }
 
@@ -39,8 +39,14 @@ void Ending::Init()
 	if (SceneManager::gameClear)//ゲームをクリアしていたら
 	{
 		//ここにタイムによる加点処理
-		timeScore = (SceneManager::mElapsedTime->Now() < 60) ? 1000 : 0;
-		//
+		float time = SceneManager::mElapsedTime->Now();
+		timeScore += (time < 60) ? 500 : 0;
+		timeScore += (time < 70) ? 400 : 0;
+		timeScore += (time < 80) ? 300 : 0;
+		timeScore += (time < 90) ? 200 : 0;
+		timeScore += (time < 100) ? 100 : 0;
+
+
 		numScore = timeScore + SceneManager::score;
 		std::string stage;
 		stage = SceneManager::stageName;
@@ -139,12 +145,13 @@ void Ending::Draw()
 		}
 		DrawString(380, 50, "ゲームクリア", Cr);
 		DrawFormatString(380, 100, Cr, "スコア：%d", SceneManager::score);//ゲームによるスコア表示
-		mNumber->DrawNumber(Vector2(396 - (32 * figure), 150) , SceneManager::mElapsedTime->Now());//かかった時間表示
-		DrawFormatString(500, 150, Cr, " : %d", timeScore);//タイムによるスコア表示
-		DrawFormatString(380, 200, Cr, "トータルスコア：%d", numScore);//合計スコア表示
+		DrawString(380, 150, "タイムスコア", Cr);
+		mNumber->DrawNumber(Vector2(396 - (32 * figure), 200) , SceneManager::mElapsedTime->Now());//かかった時間表示
+		DrawFormatString(500, 200, Cr, " : %d", timeScore);//タイムによるスコア表示
+		DrawFormatString(380, 250, Cr, "トータルスコア：%d", numScore);//合計スコア表示
 		if (NewScore)
 		{
-			DrawString(380, 250, "ニュースコア！！", Cr);
+			DrawString(380, 300, "ハイスコア更新！！", Cr);
 		}
 	}
 	else
@@ -155,7 +162,6 @@ void Ending::Draw()
 	
 	DrawString(380, s, "ゲームセレクトへ", Cr);
 	DrawString(380, r, "もう一度同じステージで遊ぶ", Cr);
-	DrawString(0, 0, "B PUSH", Cr);
 	int y;
 	switch (choice)
 	{

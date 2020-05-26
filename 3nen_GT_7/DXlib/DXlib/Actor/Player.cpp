@@ -250,6 +250,7 @@ void Player::Damage()//ダメージ
 		mHp--;//1ダメージ受ける
 		sound->PlaySE("./Assets/Sound/damage.wav");
 		mCountTimer->SetTime(mInvincibleTime);//無敵時間をセット
+		SceneManager::score -= 100;//スコアから100点引く
 	}
 
 	if (mHp <= 0)//体力がなくなったら

@@ -1,5 +1,6 @@
 #pragma once
 #include "../Utility/Vector2.h"
+#include "../Scene/SceneManager.h"
 #include <list>
 #include <memory>
 
