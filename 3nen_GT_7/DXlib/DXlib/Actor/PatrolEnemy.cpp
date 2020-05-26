@@ -9,12 +9,12 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const char * tag) :
 	mPos(new Vector2(0, 0)),//ポジション
 	mSize(new Vector2(32, 32)),//サイズ
 	mFilename(tag),//
-	mRenderer(new Renderer("Enemy")),//アイドル状態の画像
+	mRenderer(new Renderer("Enemy2IDL")),//アイドル状態の画像
 	mFall(false),//重力
 	mRight(true),
 	mStalker(false),//追跡状態か？
 	staSize(200),//追跡範囲
-	sRenderer(new Renderer("Enemy2")),//追跡状態の画像
+	sRenderer(new Renderer("EnemyMove")),//追跡状態の画像
 	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
 	speed(8.0f),//速度
 	paraTime(4.0f),//マヒ時間
@@ -67,6 +67,10 @@ void PatrolEnemy::Update()
 	playerHitTimer->Update();
 	paralimitTimer->Update();
 	Paralise();
+
+	if (direction.x < 0) mRight = false;
+	else if (direction.x > 0) mRight = true;
+
 	if (!paral)//マヒ状態でないなら
 	{
 		Move();
@@ -79,54 +83,90 @@ void PatrolEnemy::Draw()
 	//マヒ状態での描画
 	if (paral)
 	{
-		mRenderer->Draw(*mPos);
+		int a = fmod(mUpTimer->Now() * 3, 1);
+		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
 		paralRenderer->Draw(mPos->x - 16, mPos->y + 32);
 		return;
 	}
 
-	//アイドル状態の描画
+	//アイドル状態での描画
 	if (!mStalker)
 	{
-		mRenderer->Draw(*mPos);
+		int t = fmod(mUpTimer->Now() * 3, 4);
+		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), t, *mSize, FALSE);
 	}
-
 	//追跡状態での描画
 	if (mStalker)
 	{
-		sRenderer->Draw(*mPos);
+		//追跡左向き
+		if (!mRight)
+		{
+			int r = fmod(mUpTimer->Now() * 3, 4);
+			sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), r, *mSize, FALSE);
+		}
+		//追跡左向き
+		else if (mRight)
+		{
+			int l = fmod(mUpTimer->Now() * 3, 4);
+			sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), l, *mSize, TRUE);
+		}
 	}
 }
 
 void PatrolEnemy::Hit()
 {
-	for (auto && hit : mCollider->onCollisionEnter())
+	for (auto && hit : mCollider->onCollisionStay())
 	{
+		auto cPosX = hit->getOwner()->Position()->x;
+		auto cPosY = hit->getOwner()->Position()->y;
+		auto cSizeX = hit->getOwner()->Size()->x;
+		auto cSizeY = hit->getOwner()->Size()->y;
+
 		if (hit->getOwner()->Tag() == "Wall")
 		{
-			auto cPosX = hit->getOwner()->Position()->x;
-			auto cPosY = hit->getOwner()->Position()->y;
-			auto cSizeX = hit->getOwner()->Size()->x;
-			auto cSizeY = hit->getOwner()->Size()->y;
-
-			if (mPos->y + mSize->y >= cPosY)//自分の下にあたった
+			if (old_y < cPosY)//自分が上
 			{
 				mPos->y = cPosY - mSize->y;
+			}
+			else if (old_y > cPosY)//自分がした
+			{
+				mPos->y = cPosY + cSizeY + 1;
+			}
+			else if (old_x < cPosX)//自分が左
+			{
+				mPos->x = cPosX - mSize->x;
+			}
+			else if (old_x > cPosX)//自分が右
+			{
+				mPos->x = cPosX + mSize->x;
 			}
 		}
 	}
 
-	for (auto && hit : mCollider->onCollisionStay())
+	for (auto && hit : mCollider->onCollisionEnter())
 	{
+		auto cPosX = hit->getOwner()->Position()->x;
+		auto cPosY = hit->getOwner()->Position()->y;
+		auto cSizeX = hit->getOwner()->Size()->x;
+		auto cSizeY = hit->getOwner()->Size()->y;
+
 		if (hit->getOwner()->Tag() == "Wall")
 		{
-			auto cPosX = hit->getOwner()->Position()->x;
-			auto cPosY = hit->getOwner()->Position()->y;
-			auto cSizeX = hit->getOwner()->Size()->x;
-			auto cSizeY = hit->getOwner()->Size()->y;
-
-			if (mPos->y + mSize->y >= cPosY)//自分の下にあたった
+			if (old_y < cPosY)//自分が上
 			{
 				mPos->y = cPosY - mSize->y;
+			}
+			else if (old_y > cPosY)//自分が下
+			{
+				mPos->y = cPosY + cSizeY;
+			}
+			else if (old_x < cPosX)//自分が左
+			{
+				mPos->x = cPosX - mSize->x;
+			}
+			else if (old_x > cPosX)//自分が右
+			{
+				mPos->x = cPosX + mSize->x + 1;
 			}
 		}
 	}

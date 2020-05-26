@@ -57,4 +57,5 @@ private:
 
 	Sound* sound;//‰¹
 
+	CountDownTimer* mUpTimer;
 };
