@@ -4,8 +4,8 @@
 Title::Title(ISceneChanger* changer)
 	:BaseScene(changer),
 	input(new Input()),
-	startY(100),
-	creditY(150),
+	startY(130),
+	creditY(210),
 	timer(new CountDownTimer()),
 	sound(new Sound())
 {
@@ -27,6 +27,7 @@ void Title::Init()
 	sound->Load("./Assets/Sound/kettei.wav");//決定
 	sound->Load("./Assets/Sound/migration.wav");//カーソル
 	sound->Load("./Assets/Sound/Title.mp3");//BGM
+	option = false;
 }
 
 void Title::Update()
@@ -37,13 +38,16 @@ void Title::Update()
 	input->JoyUpdate();
 	timer->Update();
 
-
+	if (!timer->IsTime())return;
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
 	{
 		sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
+		timer->SetTime(0.3f);
+		return;
 	}
-	if (!timer->IsTime())return;
+
+	if (option)return;
 	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down))//下
 	{
 		sound->PlaySE("./Assets/Sound/migration.wav");
@@ -78,22 +82,32 @@ void Title::Update()
 void Title::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
-	SetFontSize(16);
-	DrawString(150, 50, "Title B PUSH　どっち選んでもゲームプレイに行くけどね", Cr);
-	DrawString(150, startY, "スタート", Cr);
-	DrawString(150, creditY, "クレジット", Cr);
-	int y;
-	switch (choice)
+	SetFontSize(32);
+	if (option)
 	{
-	case start:
-		y = startY;
-		break;
-	case credit:
-		y = creditY;
-		break;
-		break;
+		DrawString(150, 150, "Lスティック   :   左右移動", Cr);
+		DrawString(150, 200, "Aボタン       :   入力方向に高速移動", Cr);
+		DrawString(150, 250, "STARTボタン   :   ポーズ", Cr);
+		DrawString(150, 300, "Bボタン       :   決定", Cr);
 	}
-	DrawString(100, y, "■", GetColor(0, 255, 0));
+	else
+	{
+		DrawString(150, 50, "Title B PUSH", Cr);
+		DrawString(150, startY, "スタート", Cr);//130
+		DrawString(150, creditY, "操作説明", Cr);//210
+		int y;
+		switch (choice)
+		{
+		case start:
+			y = startY;
+			break;
+		case credit:
+			y = creditY;
+			break;
+			break;
+		}
+		DrawString(100, y, "■", GetColor(0, 255, 0));
+	}
 }
 
 void Title::NextScene()
@@ -105,8 +119,9 @@ void Title::NextScene()
 		mSceneChanger->ChangeScene(SceneSelect);
 		break;
 	case credit:
+		option = (option) ? false : true;
 		//mSceneChanger->ChangeScene(SceneCredit);
-		mSceneChanger->ChangeScene(SceneSelect);
+		//mSceneChanger->ChangeScene(SceneSelect);
 		break;
 	default:
 	  mSceneChanger->ChangeScene(SceneSelect);//例外が発生したら

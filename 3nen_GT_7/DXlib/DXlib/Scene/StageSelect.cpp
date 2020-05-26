@@ -6,12 +6,12 @@ StageSelect::StageSelect(ISceneChanger* changer):
 	BaseScene(changer),
 	mInput(new Input()),
 	mTimers(new CountDownTimer()),
-	stage1Pos(new Vector2(700,100)),
-	stage2Pos(new Vector2(800,100)),
-	stage3Pos(new Vector2(900,100)),
-	stage4Pos(new Vector2(700,150)),
-	stage5Pos(new Vector2(800,150)),
-	stage6Pos(new Vector2(900,150)),
+	stage1Pos(new Vector2(400,100)),
+	stage2Pos(new Vector2(600,100)),
+	stage3Pos(new Vector2(800,100)),
+	stage4Pos(new Vector2(400,180)),
+	stage5Pos(new Vector2(600,180)),
+	stage6Pos(new Vector2(800,180)),
 	sound(new Sound())
 {
 	choice = stage1;//最初はステージ1
@@ -148,7 +148,7 @@ void StageSelect::Update()
 void StageSelect::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
-	SetFontSize(16);
+	SetFontSize(32);
 	DrawString(50, 50, "ステージ選択", Cr);
 	DrawString(stage1Pos->x, stage1Pos->y, "ステージ1", Cr);
 	DrawString(stage2Pos->x, stage2Pos->y, "ステージ2", Cr);
@@ -186,7 +186,7 @@ void StageSelect::Draw()
 		xy = *stage6Pos;
 		break;
 	}
-	DrawString(xy.x - 20, xy.y, "■", GetColor(0, 255, 0));
+	DrawString(xy.x - 32, xy.y, "■", GetColor(0, 255, 0));
 }
 
 void StageSelect::NextScene()
