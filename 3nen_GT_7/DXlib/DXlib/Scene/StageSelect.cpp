@@ -20,6 +20,7 @@ StageSelect::StageSelect(ISceneChanger* changer):
 
 StageSelect::~StageSelect()
 {
+	sound->StopBGM("./Assets/Sound/Title.mp3");//BGM
 	delete(mInput);
 	delete(mTimers);
 	delete(stage1Pos);
@@ -63,13 +64,14 @@ void StageSelect::Init()
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
 	sound->Load("./Assets/Sound/migration.wav");
+	sound->Load("./Assets/Sound/Title.mp3");//BGM
 }
 
 void StageSelect::Update()
 {
 	mInput->JoyUpdate();
 	mTimers->Update();
-
+	sound->PlayBGM("./Assets/Sound/Title.mp3");
 	if (mInput->PadDown(JoyCode::Joy_B) || mInput->GetKeyDown(B))
 	{
 		sound->PlaySE("./Assets/Sound/kettei.wav");

@@ -18,9 +18,12 @@ Ending::Ending(ISceneChanger * changer) :
 
 Ending::~Ending()
 {
+	sound->StopBGM("./Assets/Sound/Result.mp3");
+	sound->StopBGM("./Assets/Sound/GameOver.mp3");
 	delete(input);
 	delete(mNumber);
 	delete(timer);
+	delete(sound);
 }
 
 void Ending::Init()
@@ -31,7 +34,8 @@ void Ending::Init()
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
 	sound->Load("./Assets/Sound/migration.wav");
-	//sound->Load("");BGM
+	sound->Load("./Assets/Sound/Result.mp3");//クリア
+	sound->Load("./Assets/Sound/GameOver.mp3");//ゲームオーバー
 	if (SceneManager::gameClear)//ゲームをクリアしていたら
 	{
 		//ここにタイムによる加点処理
@@ -65,7 +69,15 @@ void Ending::Init()
 
 void Ending::Update()
 {
-	
+	if (SceneManager::gameClear)
+	{
+		sound->PlayBGM("./Assets/Sound/Result.mp3");
+	}
+	else
+	{
+		sound->PlayBGM("./Assets/Sound/GameOver.mp3");
+	}
+
 	input->JoyUpdate();
 	timer->Update();
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))

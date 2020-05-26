@@ -39,7 +39,7 @@ GamePlay::~GamePlay()
 	delete(mInputTimers);
 	delete(mRenderer);
 
-	sound->StopBGM("./Assets/Sound/a.mp3");
+	sound->StopBGM("./Assets/Sound/GamePlay.mp3");
 	sound->Init();
 	delete(sound);
 	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
@@ -111,9 +111,9 @@ void GamePlay::Init()
 	//enemy->Init("./Assets/Data/EnemyList.csv");
 	mActorManager->SetEnemyCount(enemy->GetEnemyCount());//敵の数をセット
 	delete(enemy);
-
+	
 	sound->Init();
-	sound->Load("./Assets/Sound/a.mp3");//BGM
+	sound->Load("./Assets/Sound/GamePlay.mp3");//BGM
 	sound->Load("./Assets/Sound/kettei.wav");
 	input->Init();
 	input->JoyInit();
@@ -178,7 +178,7 @@ void GamePlay::Update()
 				SceneManager::mCamera->CameraPos.y -= 32;
 			}
 		}
-		sound->PlayBGM("./Assets/Sound/a.mp3");
+		sound->PlayBGM("./Assets/Sound/GamePlay.mp3");
 
 		if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
 		{
