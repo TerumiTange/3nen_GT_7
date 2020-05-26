@@ -475,7 +475,20 @@ void Player::Hit()
 		{
 			if (mMovingFast)//‚‘¬ˆÚ“®ó‘Ô‚È‚ç‚Î
 			{
-				if (hit->getOwner()->GetElectricShock())Destroy(hit->getOwner(), 1);
+				if (hit->getOwner()->GetElectricShock())
+				{
+					float count = 1.f;
+					Destroy(hit->getOwner(), count);
+					for (auto && ac : GetActorManager()->getActorList())
+					{
+						if (ac->GetElectricShock())
+						{
+							count += 0.5f;
+							SceneManager::score += (count * 100);
+							Destroy(ac, count);
+						}
+					}
+				}
 				hit->getOwner()->SetElectricShock(true);
 				mMovingFastCount++;
 			}
