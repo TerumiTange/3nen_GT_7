@@ -68,6 +68,7 @@ void Player::End()//メモリの開放
 	delete(mInput);
 	delete(mCountTimer);
 	delete(mAttackImages);
+	delete(mIdolRenderer);
 
 	delete(mNowMovingFastTimer);
 	delete(mNumber);
@@ -367,7 +368,7 @@ void Player::Hit()
 			{
 				if (mPos->x > sx)//かつ中心より右
 				{
-					if (mPos->x < cPosX + cSizeX)//上にいる状態
+					if (old_x < cPosX + cSizeX)//上にいる状態
 					{
 						//sound->PlaySE("");//着地音
 						mMovingFastCount = 4;
@@ -388,7 +389,7 @@ void Player::Hit()
 				}
 				else//中心より左
 				{
-					if (mPos->x + mSize->x > cPosX)//自身が上
+					if (old_x + mSize->x > cPosX)//自身が上
 					{
 						//sound->PlaySE("");//着地音
 						mMovingFastCount = 4;

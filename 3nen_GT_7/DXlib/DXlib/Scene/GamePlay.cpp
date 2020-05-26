@@ -43,6 +43,7 @@ GamePlay::~GamePlay()
 	sound->Init();
 	delete(sound);
 	SceneManager::mCamera->Init(Vector2(0, 0));//ƒJƒƒ‰‚ð‰ŠúˆÊ’u‚É‚µ‚Ä‚¨‚­
+	mPhysics->clear();
 	delete(mPhysics);
 	//‚È‚º‚©Collider‚ÌPhysics‚ª‚¢‚«‚Ä‚¢‚é‚©‚ç
 	Collider::setPhysics(nullptr);
