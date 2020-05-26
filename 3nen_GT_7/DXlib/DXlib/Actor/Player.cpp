@@ -156,6 +156,7 @@ void Player::Move()
 void Player::Movement()//移動処理
 {
 	mRight = (mVelocity->x > 0) ? true : false;
+	mVelocity->x = (abs(mVelocity->x) < 32) ? mVelocity->x : ((mVelocity->x < 0) ? -31 : 31);
 
 	mPos->y += mVelocity->y;//移動処理Y
 	mPos->x += mVelocity->x;//移動処理X
@@ -350,6 +351,54 @@ void Player::Hit()
 			//	mPos->y = cPosY + mSize->y + 1;
 			//	mVelocity->y = 0;
 			//}
+			auto sx = cPosX + (cSizeX / 2);//真ん中
+			auto sy = cPosY + (cSizeY / 2);//真ん中
+			if (old_y + mSize->y < sy)//ブロックの中心より上
+			{
+				if (mPos->x > sx)//かつ中心より右
+				{
+					if (mPos->x < cPosX + cSizeX)//上にいる状態
+					{
+						//sound->PlaySE("");//着地音
+						mMovingFastCount = 4;
+						if (mVelocity->y >= 0)
+						{
+							mPos->y = cPosY - mSize->y;
+							mFall = false;
+						}
+					}
+					else//右にいる状態
+					{
+						if (mVelocity->x < 0)
+						{
+							mPos->x = cPosX + mSize->x;
+							mVelocity->x = 0;
+						}
+					}
+				}
+				else//中心より左
+				{
+					if (mPos->x + mSize->x > cPosX)//自身が上
+					{
+						//sound->PlaySE("");//着地音
+						mMovingFastCount = 4;
+						if (mVelocity->y >= 0)
+						{
+							mPos->y = cPosY - mSize->y;
+							mFall = false;
+						}
+					}
+					else//自身が左
+					{
+						if (mVelocity->x > 0)
+						{
+							mPos->x = cPosX - mSize->x;
+							mVelocity->x = 0;
+						}
+					}
+				}
+			}
+			/*
 			if (old_y < cPosY)//自分が上
 			{
 				//sound->PlaySE("");//着地音
@@ -374,6 +423,7 @@ void Player::Hit()
 				mPos->x = cPosX + mSize->x;
 				mVelocity->x = 0;
 			}
+			*/
 		}
 	}
 
@@ -398,12 +448,12 @@ void Player::Hit()
 			}
 			else if (old_x < cPosX)//自分が左
 			{
-				mPos->x = cPosX - mSize->x;
+				mPos->x = cPosX - mSize->x-1;
 				mVelocity->x = 0;
 			}
 			else if (old_x > cPosX)//自分が右
 			{
-				mPos->x = cPosX + mSize->x;
+				mPos->x = cPosX + mSize->x+1;
 				mVelocity->x = 0;
 			}
 		
@@ -413,7 +463,7 @@ void Player::Hit()
 		{
 			if (mMovingFast)//高速移動状態ならば
 			{
-				if (hit->getOwner()->GetElectricShock())Destroy(hit->getOwner());
+				if (hit->getOwner()->GetElectricShock())Destroy(hit->getOwner(), 1);
 				hit->getOwner()->SetElectricShock(true);
 				mMovingFastCount++;
 			}

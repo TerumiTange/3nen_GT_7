@@ -61,6 +61,8 @@ private:
 private:
 	std::list<std::shared_ptr<Actor>>mActors;
 	std::list<std::shared_ptr<Actor>>mPendingActors;
+	std::list<std::shared_ptr<Actor>> mWalls;
 	bool mUpdatingActors;
+	bool mWallStart;
 	size_t mEnemyCount;
 };

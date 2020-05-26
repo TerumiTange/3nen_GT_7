@@ -6,7 +6,8 @@
 
 ActorManager::ActorManager():
 	mUpdatingActors(false),
-	mEnemyCount(0)
+	mEnemyCount(0),
+	mWallStart(false)
 {
 }
 
@@ -17,6 +18,10 @@ void ActorManager::End()
 	for (auto&& actor : mActors)
 	{
 		actor->End();
+	}
+	for (auto && wall : mWalls)
+	{
+		wall->End();
 	}
 }
 
@@ -31,11 +36,22 @@ void ActorManager::Update()
 	{
 		actor->update();
 	}
+	for (auto && w : mWalls)
+	{
+		w->update();
+	}
 	mUpdatingActors = false;
 
 	MovePendingToMain();
 
 	Remove();
+	//return;
+	//if (mWallStart)return;
+	//for (auto && w : mWalls)
+	//{
+	//	w->update();
+	//}
+	//mWallStart = true;
 }
 
 void ActorManager::Hit()
@@ -62,6 +78,10 @@ void ActorManager::Draw()
 	//{
 	//	actor->Draw();
 	//}
+	for (auto && w : mWalls)
+	{
+		w->Draw();
+	}
 	for (auto&& actor : mActors)
 	{
 		if (actor->Tag() != "Player")
@@ -76,13 +96,20 @@ void ActorManager::Draw()
 
 void ActorManager::Add(Actor* add)
 {
-	if (mUpdatingActors) 
+	if (add->Tag() == "Wall")
 	{
-		mPendingActors.emplace_back(add);
+		mWalls.emplace_back(add);
 	}
-	else 
+	else
 	{
-		mActors.emplace_back(add);
+		if (mUpdatingActors)
+		{
+			mPendingActors.emplace_back(add);
+		}
+		else
+		{
+			mActors.emplace_back(add);
+		}
 	}
 }
 
@@ -90,6 +117,7 @@ void ActorManager::Clear()
 {
 	mPendingActors.clear();
 	mActors.clear();
+	mWalls.clear();
 }
 
 std::list<std::shared_ptr<Actor>> ActorManager::GetActors()

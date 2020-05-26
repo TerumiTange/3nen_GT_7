@@ -37,7 +37,6 @@ void Physics::sweepAndPrune()//総当たり判定
 	{
 		return;
 	}
-
 	//位置Xが小さい順にソート
 	std::sort(mColliders.begin(), mColliders.end(), [](Collider* a, Collider*b)
 	{
@@ -49,7 +48,6 @@ void Physics::sweepAndPrune()//総当たり判定
 	for (size_t i = 0; i < mColliders.size(); ++i)
 	{
 		auto a = dynamic_cast<ColliderComponent*>(mColliders[i]);
-		if (a->getOwner()->Tag() == "Wall")continue;
 		if (!a->getEnable())
 		{
 			continue;
@@ -64,7 +62,8 @@ void Physics::sweepAndPrune()//総当たり判定
 			{
 				continue;
 			}
-			auto bc = b->getQuadrangle();
+			if (a->getOwner()->Tag() == "Wall"&&b->getOwner()->Tag() == "Wall")continue;
+			auto bc = b->getQuadrangle(); 
 			//std::sqrtf(std::powf(pPos.x - mPos->x, 2) + std::powf(pPos.y - mPos->y, 2)) < 200
 			//もしmQuadrangle[j]のX値が、mQuadrangle[i]のX値+サイズXより大きければ
 			//mQuadrangle[i]と交差するボックスは存在しない

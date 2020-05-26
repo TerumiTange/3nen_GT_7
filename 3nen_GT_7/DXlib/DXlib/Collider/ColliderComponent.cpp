@@ -29,7 +29,7 @@ void ColliderComponent::onUpdateCollider()
 	{
 		return;
 	}
-	mOwner;
+	//mOwner;
 	//auto a = Vector2(mOwner->Position()->x, mOwner->Position()->y);
 	//auto b = Vector2(mOwner->Size()->x, mOwner->Size()->y);
 	mQuadrangle->set(mOwner->Position()->Vec(), mOwner->Size()->Vec());

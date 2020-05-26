@@ -7,7 +7,7 @@ Wall::Wall(const Vector2& position, const char* tag):
 	mPos(new Vector2(0,0)),
 	mSize(new Vector2(32,32)),
 	mFilename(tag),
-	mRenderer(new Renderer(tag))
+	mRenderer(new Renderer("Metal"))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -39,9 +39,6 @@ void Wall::Draw()
 
 void Wall::Hit()
 {
-	for (auto && hit : mCollider->onCollisionEnter())
-	{
-	}
 }
 /*
 void Wall::Hit(std::list<std::shared_ptr<Actor>>)
