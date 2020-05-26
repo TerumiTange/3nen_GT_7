@@ -39,7 +39,7 @@ void Ending::Init()
 	if (SceneManager::gameClear)//ゲームをクリアしていたら
 	{
 		//ここにタイムによる加点処理
-		//timeScore;
+		timeScore = (SceneManager::mElapsedTime->Now() < 60) ? 1000 : 0;
 		//
 		numScore = timeScore + SceneManager::score;
 		std::string stage;
@@ -125,9 +125,21 @@ void Ending::Draw()
 	SetFontSize(32);
 	if (SceneManager::gameClear)
 	{
+		int figure;//タイムの秒数(整数)
+		figure = SceneManager::mElapsedTime->Now();
+		for (auto count = 1;; ++count)
+		{
+			if (figure < 10)
+			{
+				figure = count;//桁数になる
+				//continue;
+				break;
+			}
+			figure /= 10;
+		}
 		DrawString(380, 50, "ゲームクリア", Cr);
 		DrawFormatString(380, 100, Cr, "スコア：%d", SceneManager::score);//ゲームによるスコア表示
-		mNumber->DrawNumber(Vector2(300, 150), SceneManager::mElapsedTime->Now());//かかった時間表示
+		mNumber->DrawNumber(Vector2(396 - (32 * figure), 150) , SceneManager::mElapsedTime->Now());//かかった時間表示
 		DrawFormatString(500, 150, Cr, " : %d", timeScore);//タイムによるスコア表示
 		DrawFormatString(380, 200, Cr, "トータルスコア：%d", numScore);//合計スコア表示
 		if (NewScore)
