@@ -141,7 +141,9 @@
     <ClCompile Include="Actor\Enemy.cpp" />
     <ClCompile Include="Actor\Floor.cpp" />
     <ClCompile Include="Actor\FlyEnemy.cpp" />
+    <ClCompile Include="Actor\PatrolEnemy.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
+    <ClCompile Include="Actor\RushEnemy.cpp" />
     <ClCompile Include="Actor\SmallEnemy.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
     <ClCompile Include="Collider\Collider.cpp" />
@@ -181,7 +183,9 @@
     <ClInclude Include="Actor\Enemy.h" />
     <ClInclude Include="Actor\Floor.h" />
     <ClInclude Include="Actor\FlyEnemy.h" />
+    <ClInclude Include="Actor\PatrolEnemy.h" />
     <ClInclude Include="Actor\Player.h" />
+    <ClInclude Include="Actor\RushEnemy.h" />
     <ClInclude Include="Actor\SmallEnemy.h" />
     <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Collider\Collider.h" />

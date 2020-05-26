@@ -208,6 +208,7 @@ void Player::MovingFast()//瞬間移動
 	mVelocity->x = mInput->Horizontal()*mMovingFastAmount;//コントローラでの移動
 	mVelocity->y = mInput->Vertical()*mMovingFastAmount;  //コントローラでの移動
 
+	/*
 	//キーボードでの移動
 	if (mInput->GetKeyDown(LEFTARROW) || mInput->GetKeyDown(A))
 	{
@@ -226,7 +227,7 @@ void Player::MovingFast()//瞬間移動
 	{
 		mVelocity->y = mMovingFastAmount;
 	}
-
+	*/
 
 	if (mVelocity->x == 0 && mVelocity->y == 0)//もし入力がなければ右に移動
 	{
@@ -351,6 +352,7 @@ void Player::Hit()
 			//}
 			if (old_y < cPosY)//自分が上
 			{
+				//sound->PlaySE("");//着地音
 				mMovingFastCount = 4;
 				if (mVelocity->y > 0)
 				{
@@ -401,7 +403,7 @@ void Player::Hit()
 			}
 			else if (old_x > cPosX)//自分が右
 			{
-				mPos->x = cPosX + mSize->x + 1;
+				mPos->x = cPosX + mSize->x;
 				mVelocity->x = 0;
 			}
 		

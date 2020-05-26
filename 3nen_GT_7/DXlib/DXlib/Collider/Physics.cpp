@@ -49,6 +49,7 @@ void Physics::sweepAndPrune()//‘“–‚½‚è”»’è
 	for (size_t i = 0; i < mColliders.size(); ++i)
 	{
 		auto a = dynamic_cast<ColliderComponent*>(mColliders[i]);
+		if (a->getOwner()->Tag() == "Wall")continue;
 		if (!a->getEnable())
 		{
 			continue;
