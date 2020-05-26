@@ -10,9 +10,9 @@ public:
 	~Effector();
 
 	void Init();
-	void Lightning(Vector2 ePos1,Vector2 ePos2);
+	void Lightning(Vector2 &ePos1,Vector2 &ePos2);
 	void SetLightning(bool value);
-	void Sparkle(Vector2 pPos);
+	void Sparkle(Vector2 &pPos);
 	void SetSparkle(bool value);
 
 private:

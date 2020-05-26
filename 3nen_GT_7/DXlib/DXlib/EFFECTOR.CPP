@@ -13,6 +13,7 @@ void Effector::Init()
 	isElectrical = false;
 }
 
+//“G“¯Žm‚ð‚Â‚È‚®
 void Effector::Lightning(Vector2 &ePos1, Vector2 &ePos2)
 {
 	if (isElectrical)

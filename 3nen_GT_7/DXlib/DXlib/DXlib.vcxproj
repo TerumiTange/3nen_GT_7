@@ -155,7 +155,6 @@
     <ClCompile Include="Device\Fader.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
     <ClCompile Include="Device\Sound.cpp" />
-    <ClCompile Include="Effector.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
@@ -193,6 +192,7 @@
     <ClInclude Include="Device\Camera2d.h" />
     <ClInclude Include="Device\CSVReader.h" />
     <ClInclude Include="Device\Dx.h" />
+    <ClInclude Include="Device\Effector.h" />
     <ClInclude Include="Device\Fader.h" />
     <ClInclude Include="Device\Renderer.h" />
     <ClInclude Include="Device\Sound.h" />
