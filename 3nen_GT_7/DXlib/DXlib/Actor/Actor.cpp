@@ -13,6 +13,7 @@ Actor::Actor(const char * tag):
 	mTag(tag),
 	mElectricShock(false)
 {
+	death = false;
     if (mActorManager) 
     {
     	mActorManager->Add(this);
@@ -26,10 +27,15 @@ void Actor::update()
 	mComponentManager->start();
 	if (mState == ActorState::ACTIVE)
 	{
-		mComponentManager->update();
-		Update();
-		mComponentManager->onUpdate();
 		DestroyTimer();
+		mComponentManager->update();
+		if (!death)
+		{
+			Update();
+		}
+		
+		mComponentManager->onUpdate();
+		
 	}
 }
 
@@ -114,6 +120,7 @@ ActorManager* Actor::GetActorManager()
 void Actor::DestroyTimer()
 {
 	if (!mDestroyTimer)return;
+	death = true;
 	mDestroyTimer->Update();
 	if (mDestroyTimer->IsTime())
 	{

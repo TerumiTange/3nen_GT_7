@@ -6,12 +6,12 @@ StageSelect::StageSelect(ISceneChanger* changer):
 	BaseScene(changer),
 	mInput(new Input()),
 	mTimers(new CountDownTimer()),
-	stage1Pos(new Vector2(700,100)),
-	stage2Pos(new Vector2(800,100)),
-	stage3Pos(new Vector2(900,100)),
-	stage4Pos(new Vector2(700,150)),
-	stage5Pos(new Vector2(800,150)),
-	stage6Pos(new Vector2(900,150)),
+	stage1Pos(new Vector2(400,100)),
+	stage2Pos(new Vector2(600,100)),
+	stage3Pos(new Vector2(800,100)),
+	stage4Pos(new Vector2(400,180)),
+	stage5Pos(new Vector2(600,180)),
+	stage6Pos(new Vector2(800,180)),
 	sound(new Sound())
 {
 	choice = stage1;//最初はステージ1
@@ -148,7 +148,7 @@ void StageSelect::Update()
 void StageSelect::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
-	SetFontSize(16);
+	SetFontSize(32);
 	DrawString(50, 50, "ステージ選択", Cr);
 	DrawString(stage1Pos->x, stage1Pos->y, "ステージ1", Cr);
 	DrawString(stage2Pos->x, stage2Pos->y, "ステージ2", Cr);
@@ -156,7 +156,7 @@ void StageSelect::Draw()
 	DrawString(stage4Pos->x, stage4Pos->y, "ステージ4", Cr);
 	DrawString(stage5Pos->x, stage5Pos->y, "ステージ5", Cr);
 	DrawString(stage6Pos->x, stage6Pos->y, "タイトルへ", Cr);
-
+	DrawString(50, 150, "最高スコア", Cr);
 	
 
 	Vector2 xy;
@@ -164,29 +164,29 @@ void StageSelect::Draw()
 	{
 	case stage1:
 		xy = *stage1Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score1);
+		DrawFormatString(50, 200, Cr, "%d", Score1);
 		break;
 	case stage2:
 		xy = *stage2Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score2);
+		DrawFormatString(50, 200, Cr, "%d", Score2);
 		break;
 	case stage3:
 		xy = *stage3Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score3);
+		DrawFormatString(50, 200, Cr, "%d", Score3);
 		break;
 	case stage4:
 		xy = *stage4Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score4);
+		DrawFormatString(50, 200, Cr, "%d", Score4);
 		break;
 	case stage5:
 		xy = *stage5Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score5);
+		DrawFormatString(50, 200, Cr, "%d", Score5);
 		break;
 	case stage6:
 		xy = *stage6Pos;
 		break;
 	}
-	DrawString(xy.x - 20, xy.y, "■", GetColor(0, 255, 0));
+	DrawString(xy.x - 32, xy.y, "■", GetColor(0, 255, 0));
 }
 
 void StageSelect::NextScene()

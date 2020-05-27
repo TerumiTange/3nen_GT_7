@@ -1,5 +1,6 @@
 #pragma once
 #include "../Utility/Vector2.h"
+#include "../Scene/SceneManager.h"
 #include <list>
 #include <memory>
 
@@ -54,6 +55,7 @@ public:
 	ActorManager* GetActorManager();
 
 	static CountDownTimer* mElectricTimer;//–ƒáƒó‘Ô—p	
+	
 
 private:
 	void DestroyTimer();
@@ -66,6 +68,7 @@ private:
 	ActorState mState;
 	const char* mTag;
 	bool mElectricShock;
+	bool death;
 
 	static ActorManager* mActorManager;
 };

@@ -23,6 +23,7 @@ Player::Player(const Vector2& position, const char* tag) :
 	mIdolRenderer(new Renderer("PlayerIDL")),
 	mStaticElectricity(new Renderer("ThunderEffect")),//静電気の画像
 	mHeart(new Renderer("HP")),					  //現在HPを表示する
+	mAttackImages(new Renderer("PlayerAttack")),
 	mInput(new Input()),							  //キー入力関数
 	mCountTimer(new CountDownTimer()),				  //無敵時間更新カウントダウンタイマー
 	mFall(true),									  //落ちているかどうか
@@ -66,6 +67,8 @@ void Player::End()//メモリの開放
 	delete(mHeart);
 	delete(mInput);
 	delete(mCountTimer);
+	delete(mAttackImages);
+	delete(mIdolRenderer);
 
 	delete(mNowMovingFastTimer);
 	delete(mNumber);
@@ -247,6 +250,7 @@ void Player::Damage()//ダメージ
 		mHp--;//1ダメージ受ける
 		sound->PlaySE("./Assets/Sound/damage.wav");
 		mCountTimer->SetTime(mInvincibleTime);//無敵時間をセット
+		SceneManager::score -= 100;//スコアから100点引く
 	}
 
 	if (mHp <= 0)//体力がなくなったら
@@ -269,29 +273,37 @@ void Player::Recovery()//体力回復
 void Player::Draw()//描画
 {
 	//mRenderer->Draw(*mPos);
-	if (std::abs(mVelocity->x) <= 1)
+	if (mMovingFast)
 	{
-		int t = fmod(mUpTimer->Now() * 3, 3);//ここの掛けている数字でスピードが変わる
-
-		//アイドルの画像
-		mIdolRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), t, *mSize, FALSE);
-	}
-	else if(mRight)
-	{
-		//右向きの画像
-		int r = fmod(mUpTimer->Now() * 3, 4);
-		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), r, *mSize, FALSE);
+		mAttackImages->Draw(*mPos);
 	}
 	else
 	{
-		//左向きの画像
-		int l = fmod(mUpTimer->Now() * 3, 4);
-		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), l, *mSize, TRUE);
+		if (std::abs(mVelocity->x) <= 1)
+		{
+			int t = fmod(mUpTimer->Now() * 3, 3);//ここの掛けている数字でスピードが変わる
+
+			//アイドルの画像
+			mIdolRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), t, *mSize, FALSE);
+		}
+		else if (mRight)
+		{
+			//右向きの画像
+			int r = fmod(mUpTimer->Now() * 3, 4);
+			mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), r, *mSize, FALSE);
+		}
+		else
+		{
+			//左向きの画像
+			int l = fmod(mUpTimer->Now() * 3, 4);
+			mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), l, *mSize, TRUE);
+		}
 	}
+	
 	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
-		mStaticElectricity->Draw(mPos->x - 16, mPos->y + 32);
+		mStaticElectricity->Draw(mPos->x - 32, mPos->y);
 	}
 	for (size_t i = 0; i < mHp; ++i)
 	{
@@ -357,7 +369,7 @@ void Player::Hit()
 			{
 				if (mPos->x > sx)//かつ中心より右
 				{
-					if (mPos->x < cPosX + cSizeX)//上にいる状態
+					if (old_x < cPosX + cSizeX)//上にいる状態
 					{
 						//sound->PlaySE("");//着地音
 						mMovingFastCount = 4;
@@ -378,7 +390,7 @@ void Player::Hit()
 				}
 				else//中心より左
 				{
-					if (mPos->x + mSize->x > cPosX)//自身が上
+					if (old_x + mSize->x > cPosX)//自身が上
 					{
 						//sound->PlaySE("");//着地音
 						mMovingFastCount = 4;
@@ -463,7 +475,20 @@ void Player::Hit()
 		{
 			if (mMovingFast)//高速移動状態ならば
 			{
-				if (hit->getOwner()->GetElectricShock())Destroy(hit->getOwner(), 1);
+				if (hit->getOwner()->GetElectricShock())
+				{
+					float count = 1.f;
+					Destroy(hit->getOwner(), count);
+					for (auto && ac : GetActorManager()->getActorList())
+					{
+						if (ac->GetElectricShock())
+						{
+							count += 0.5f;
+							SceneManager::score += (count * 100);
+							Destroy(ac, count);
+						}
+					}
+				}
 				hit->getOwner()->SetElectricShock(true);
 				mMovingFastCount++;
 			}

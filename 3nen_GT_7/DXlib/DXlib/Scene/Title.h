@@ -20,6 +20,7 @@ private:
 	int choice;//Œ»İ‘I‘ğ’†
 	CountDownTimer* timer;//“ü—Í’x‰„‚ğ‚í‚´‚Æ‹N‚±‚·‚æ‚¤
 	Sound* sound;
+	bool option;
 };
 
 enum eMenu

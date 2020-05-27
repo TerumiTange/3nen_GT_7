@@ -43,6 +43,7 @@ GamePlay::~GamePlay()
 	sound->Init();
 	delete(sound);
 	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
+	mPhysics->clear();
 	delete(mPhysics);
 	//なぜかColliderのPhysicsがいきているから
 	Collider::setPhysics(nullptr);
@@ -132,16 +133,17 @@ void GamePlay::Update()
 {
 	input->JoyUpdate();//ポーズ中でもコントローラーをいじれるように
 	mInputTimers->Update();//操作遅延用	
-	int Cr = GetColor(255, 255, 255);
+	
 	//DrawFormatString(500, 0, Cr, "%d:%0.2f", SceneManager::mElapsedTime->Now(), SceneManager::mElapsedTime->Rate() - int(SceneManager::mElapsedTime->Rate()));
 	//DrawFormatString(500, 0, Cr, "%d", int(SceneManager::mElapsedTime->Now()));
 	if (pose)//ポーズ中
 	{
-		
-		DrawString(300, 100, "ポーズ中  ゲームパッド", Cr);
-		DrawString(300, 150, "ゲームに戻る　START ", Cr);
-		DrawString(300, 200, "リセット　　　 X    ", Cr);
-		DrawString(300, 250, "終了　　　　　BACK  ", Cr);
+		int Cr = GetColor(255, 255, 255);
+		SetFontSize(32);
+		DrawString(300, 100, "ポーズ中 ", Cr);
+		DrawString(300, 180, "ゲームに戻る　START ", Cr);
+		DrawString(300, 260, "リセット　　　 X    ", Cr);
+		DrawString(300, 340, "終了　　　　　BACK  ", Cr);
 		if (mInputTimers->IsTime())
 		{
 			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
@@ -191,6 +193,7 @@ void GamePlay::Update()
 		if (mActorManager->GetEnemyCount() == 0)//敵をすべて倒した
 		{
 			SceneManager::gameClear = true;
+			SceneManager::score += 500;//クリアボーナス500点追加
 			NextScene();
 		}
 

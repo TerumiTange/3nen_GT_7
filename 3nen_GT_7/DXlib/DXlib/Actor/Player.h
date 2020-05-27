@@ -44,6 +44,7 @@ private:
 	Renderer* mStaticElectricity;//静電気画像
 	Renderer* mHeart;//ハートの画像（HP）
 	Renderer* mNumber;//高速移動回数用
+	Renderer* mAttackImages;//高速移動中の画像
 	Input* mInput;//キー入力
 	CountDownTimer* mCountTimer;//カウントダウンタイマー
 	bool mFall;//落ちているかどうか

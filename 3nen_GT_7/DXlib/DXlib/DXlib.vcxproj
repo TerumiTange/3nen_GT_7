@@ -154,6 +154,7 @@
     <ClCompile Include="Collider\Physics.cpp" />
     <ClCompile Include="Device\Camera2d.cpp" />
     <ClCompile Include="Device\CSVReader.cpp" />
+    <ClCompile Include="Device\Effector.cpp" />
     <ClCompile Include="Device\Fader.cpp" />
     <ClCompile Include="Device\Renderer.cpp" />
     <ClCompile Include="Device\Sound.cpp" />
