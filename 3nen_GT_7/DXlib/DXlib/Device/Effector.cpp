@@ -1,4 +1,4 @@
-#include "Device\Effector.h"
+#include "Effector.h"
 
 Effector::Effector()
 {
