@@ -1,6 +1,7 @@
 #include "ActorManager.h"
 #include "Actor.h"
 #include "Player.h"
+#include "../Device/Camera2d.h"
 #include <algorithm>
 #include <iterator>
 
@@ -31,6 +32,7 @@ void ActorManager::Update()
 	for (auto&& actor : mActors)
 	{
 		actor->update();
+		if (actor->GetElectricShock())mParalActors.emplace_back(actor);
 	}
 	mUpdatingActors = false;
 
@@ -70,6 +72,24 @@ void ActorManager::Draw()
 			actor->Draw();
 		}
 	}
+	//for (size_t i = 0; i < mParalActors.size(); ++i)
+	//{
+	//	auto a = mParalActors.back()->Position();
+	//	for (size_t j = i + 1; j < mParalActors.size(); ++j)
+	//	{
+	//		auto c = Camera2d::CameraPos;
+	//		auto b = mParalActors.front()->Position();
+	//		DrawLine(a->x-c.x, a->y - c.y, b->x - c.x, b->y - c.y, GetColor(255, 255, 0));
+	//	}
+	//}
+	
+	for (auto && pa : mParalActors)
+	{
+		auto c = Camera2d::CameraPos;
+		auto a = mParalActors.front()->Position();
+		DrawLine(a->x - c.x, a->y - c.y, pa->Position()->x - c.x, pa->Position()->y - c.y, GetColor(255, 255, 0));
+	}
+	mParalActors.clear();
 	if (!GetPlayer())return;
 	//プレイヤーを一番前にするため最後に表示する
 	GetPlayer()->Draw();
@@ -132,6 +152,7 @@ void ActorManager::Remove()
 			if ((*itr)->Tag() != "Player")
 			{
 				mEnemyCount--;//プレイヤーでなければ減らす
+				SceneManager::score += 50;
 			}
 			(*itr)->End();//死んだらメモリ開放
 			itr = mActors.erase(itr);
@@ -151,4 +172,9 @@ void ActorManager::MovePendingToMain()
 	}
 	std::copy(mPendingActors.begin(), mPendingActors.end(), std::back_inserter(mActors));
 	mPendingActors.clear();
+}
+
+std::list<std::shared_ptr<Actor>> ActorManager::getActorList()
+{
+	return mActors;
 }

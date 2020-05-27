@@ -156,7 +156,7 @@ void StageSelect::Draw()
 	DrawString(stage4Pos->x, stage4Pos->y, "ステージ4", Cr);
 	DrawString(stage5Pos->x, stage5Pos->y, "ステージ5", Cr);
 	DrawString(stage6Pos->x, stage6Pos->y, "タイトルへ", Cr);
-
+	DrawString(50, 150, "最高スコア", Cr);
 	
 
 	Vector2 xy;
@@ -164,23 +164,23 @@ void StageSelect::Draw()
 	{
 	case stage1:
 		xy = *stage1Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score1);
+		DrawFormatString(50, 200, Cr, "%d", Score1);
 		break;
 	case stage2:
 		xy = *stage2Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score2);
+		DrawFormatString(50, 200, Cr, "%d", Score2);
 		break;
 	case stage3:
 		xy = *stage3Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score3);
+		DrawFormatString(50, 200, Cr, "%d", Score3);
 		break;
 	case stage4:
 		xy = *stage4Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score4);
+		DrawFormatString(50, 200, Cr, "%d", Score4);
 		break;
 	case stage5:
 		xy = *stage5Pos;
-		DrawFormatString(50, 150, Cr, "%d", Score5);
+		DrawFormatString(50, 200, Cr, "%d", Score5);
 		break;
 	case stage6:
 		xy = *stage6Pos;
