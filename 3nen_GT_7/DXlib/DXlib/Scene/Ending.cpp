@@ -7,23 +7,26 @@ Ending::Ending(ISceneChanger * changer) :
 	BaseScene(changer),
 	input(new Input()),
 	mNumber(new Renderer("Number")),
-	sound(new Sound()),
+	//sound(new Sound()),
 	timer(new CountDownTimer()),
 	NewScore(false)
 {
 	s = 350;
 	r = 400;
 	choice = e_select;
+	clear = SceneManager::gameClear;
 }
 
 Ending::~Ending()
 {
-	sound->StopBGM("./Assets/Sound/Result.mp3");
-	sound->StopBGM("./Assets/Sound/GameOver.mp3");
+	//sound->StopBGM("./Assets/Sound/Result.mp3");
+	//sound->StopBGM("./Assets/Sound/GameOver.mp3");
+	SceneManager::sound->StopBGM("./Assets/Sound/Result.mp3");
+	SceneManager::sound->StopBGM("./Assets/Sound/GameOver.mp3");
 	delete(input);
 	delete(mNumber);
 	delete(timer);
-	delete(sound);
+	//delete(sound);
 }
 
 void Ending::Init()
@@ -31,12 +34,12 @@ void Ending::Init()
 	numScore = 0;
 	timeScore = 0;
 	input->Init();
-	sound->Init();
-	sound->Load("./Assets/Sound/kettei.wav");
-	sound->Load("./Assets/Sound/migration.wav");
-	sound->Load("./Assets/Sound/Result.mp3");//クリア
-	sound->Load("./Assets/Sound/GameOver.mp3");//ゲームオーバー
-	if (SceneManager::gameClear)//ゲームをクリアしていたら
+	//sound->Init();
+	//sound->Load("./Assets/Sound/kettei.wav");
+	//sound->Load("./Assets/Sound/migration.wav");
+	//sound->Load("./Assets/Sound/Result.mp3");//クリア
+	//sound->Load("./Assets/Sound/GameOver.mp3");//ゲームオーバー
+	if (clear)//ゲームをクリアしていたら
 	{
 		//ここにタイムによる加点処理
 		float time = SceneManager::mElapsedTime->Now();
@@ -75,34 +78,39 @@ void Ending::Init()
 
 void Ending::Update()
 {
-	if (SceneManager::gameClear)
+	if (clear)
 	{
-		sound->PlayBGM("./Assets/Sound/Result.mp3");
+		//sound->PlayBGM("./Assets/Sound/Result.mp3");
+		SceneManager::sound->PlayBGM("./Assets/Sound/Result.mp3");
 	}
 	else
 	{
-		sound->PlayBGM("./Assets/Sound/GameOver.mp3");
+		//sound->PlayBGM("./Assets/Sound/GameOver.mp3");
+		SceneManager::sound->PlayBGM("./Assets/Sound/GameOver.mp3");
 	}
 
 	input->JoyUpdate();
 	timer->Update();
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
 	{
-		sound->PlaySE("./Assets/Sound/kettei.wav");
+		//sound->PlaySE("./Assets/Sound/kettei.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
 	}
 	if (!timer->IsTime())return;
 
 	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down))//下
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % endNum;//1つ下げる
 		timer->SetTime(0.3f);
 		return;
 	}
 	if (input->GetKeyDown(W) || input->GetKeyDown(UPARROW) || input->PadDown(JoyCode::Joy_Up))
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (endNum - 1)) % endNum;//1つ上げる
 		timer->SetTime(0.3f);
 		return;
@@ -110,14 +118,16 @@ void Ending::Update()
 
 	if (input->Vertical() > 0)
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % endNum;//1つ下げる
 		timer->SetTime(0.3f);
 		return;
 	}
 	if (input->Vertical() < 0)
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (endNum - 1)) % endNum;//1つ上げる
 		timer->SetTime(0.3f);
 		return;
@@ -129,7 +139,7 @@ void Ending::Draw()
 {
 	int Cr = GetColor(255, 0, 0);
 	SetFontSize(32);
-	if (SceneManager::gameClear)
+	if (clear)
 	{
 		int figure;//タイムの秒数(整数)
 		figure = SceneManager::mElapsedTime->Now();

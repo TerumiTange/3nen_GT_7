@@ -11,8 +11,8 @@ StageSelect::StageSelect(ISceneChanger* changer):
 	stage3Pos(new Vector2(800,100)),
 	stage4Pos(new Vector2(400,180)),
 	stage5Pos(new Vector2(600,180)),
-	stage6Pos(new Vector2(800,180)),
-	sound(new Sound())
+	stage6Pos(new Vector2(800,180))
+	//sound(new Sound())
 {
 	choice = stage1;//最初はステージ1
 	
@@ -20,7 +20,8 @@ StageSelect::StageSelect(ISceneChanger* changer):
 
 StageSelect::~StageSelect()
 {
-	sound->StopBGM("./Assets/Sound/Title.mp3");//BGM
+	//sound->StopBGM("./Assets/Sound/Title.mp3");//BGM
+	SceneManager::sound->StopBGM("./Assets/Sound/Title.mp3");
 	delete(mInput);
 	delete(mTimers);
 	delete(stage1Pos);
@@ -29,7 +30,7 @@ StageSelect::~StageSelect()
 	delete(stage4Pos);
 	delete(stage5Pos);
 	delete(stage6Pos);
-	delete(sound);
+	//delete(sound);
 }
 
 void StageSelect::CSVReader()
@@ -45,7 +46,6 @@ void StageSelect::CSVReader()
 	Score3 = SceneManager::mScore->Load("./Assets/Data/Score3.txt");
 	Score4 = SceneManager::mScore->Load("./Assets/Data/Score4.txt");
 	Score5 = SceneManager::mScore->Load("./Assets/Data/Score5.txt");
-
 	/*
 	std::string ss;
 	ss = std::to_string(num);//int → string
@@ -61,20 +61,22 @@ void StageSelect::Init()
 {
 	CSVReader();
 	mInput->Init();
-	sound->Init();
-	sound->Load("./Assets/Sound/kettei.wav");
-	sound->Load("./Assets/Sound/migration.wav");
-	sound->Load("./Assets/Sound/Title.mp3");//BGM
+	//sound->Init();
+	//sound->Load("./Assets/Sound/kettei.wav");
+	//sound->Load("./Assets/Sound/migration.wav");
+	//sound->Load("./Assets/Sound/Title.mp3");//BGM
 }
 
 void StageSelect::Update()
 {
 	mInput->JoyUpdate();
 	mTimers->Update();
-	sound->PlayBGM("./Assets/Sound/Title.mp3");
+	//sound->PlayBGM("./Assets/Sound/Title.mp3");
+	SceneManager::sound->PlayBGM("./Assets/Sound/Title.mp3");
 	if (mInput->PadDown(JoyCode::Joy_B) || mInput->GetKeyDown(B))
 	{
-		sound->PlaySE("./Assets/Sound/kettei.wav");
+		//sound->PlaySE("./Assets/Sound/kettei.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
 	}
 
@@ -82,7 +84,8 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(D) || mInput->GetKeyDown(RIGHTARROW) || mInput->PadDown(JoyCode::Joy_Right))//右
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -90,7 +93,8 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(A) || mInput->GetKeyDown(LEFTARROW) || mInput->PadDown(JoyCode::Joy_Left))//左
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 1)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -98,7 +102,8 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(W) || mInput->GetKeyDown(UPARROW) || mInput->PadDown(JoyCode::Joy_Up))//上
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 3)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -106,7 +111,8 @@ void StageSelect::Update()
 
 	if (mInput->GetKeyDown(S) || mInput->GetKeyDown(DOWNARROW) || mInput->PadDown(JoyCode::Joy_Down))//下
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 3) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -115,14 +121,16 @@ void StageSelect::Update()
 
 	if (mInput->Horizontal() > 0)//右
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 1) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
 	}
 	if (mInput->Horizontal() < 0)//左
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 1)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -130,7 +138,8 @@ void StageSelect::Update()
 
 	if (mInput->Vertical() > 0)//上
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + (eStageNum - 3)) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;
@@ -138,7 +147,8 @@ void StageSelect::Update()
 
 	if (mInput->Vertical() > 0)//下
 	{
-		sound->PlaySE("./Assets/Sound/migration.wav");
+		//sound->PlaySE("./Assets/Sound/migration.wav");
+		SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
 		choice = (choice + 3) % eStageNum;
 		mTimers->SetTime(0.3f);
 		return;

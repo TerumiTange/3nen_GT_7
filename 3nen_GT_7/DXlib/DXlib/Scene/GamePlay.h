@@ -25,7 +25,7 @@ public:
 
 private:
 	ActorManager* mActorManager;
-	Sound* sound;
+	//Sound* sound;
 	Input* input;
 	const char* mStageName;//ステージの名前
 	bool pose;//ポーズ用

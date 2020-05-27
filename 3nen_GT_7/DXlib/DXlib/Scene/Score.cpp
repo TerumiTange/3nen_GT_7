@@ -34,8 +34,8 @@ bool Score::Write(std::string filename, int score)
 {
 	std::string ss;
 	ss = std::to_string(score);//int Å® string
-
-	if (Load(filename) < score)
+	auto aaa = Load(filename);
+	if (aaa< score)
 	{
 		std::ofstream fileWrite(filename);//èëÇ´çûÇ›
 		fileWrite << ss;

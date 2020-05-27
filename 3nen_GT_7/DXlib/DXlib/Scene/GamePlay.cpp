@@ -18,7 +18,7 @@
 GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	BaseScene(changer),
 	mActorManager(new ActorManager()),
-	sound(new Sound()),
+	//sound(new Sound()),
 	input(new Input()),
 	mStageName(sname),
 	pose(false),
@@ -39,9 +39,10 @@ GamePlay::~GamePlay()
 	delete(mInputTimers);
 	delete(mRenderer);
 
-	sound->StopBGM("./Assets/Sound/GamePlay.mp3");
-	sound->Init();
-	delete(sound);
+	//sound->StopBGM("./Assets/Sound/GamePlay.mp3");
+	SceneManager::sound->StopBGM("./Assets/Sound/GamePlay.mp3");
+	//sound->Init();
+	//delete(sound);
 	SceneManager::mCamera->Init(Vector2(0, 0));//カメラを初期位置にしておく
 	mPhysics->clear();
 	delete(mPhysics);
@@ -64,6 +65,8 @@ void do_wark2()
 
 void GamePlay::Init()
 {
+	mActorManager->Clear();
+	mPhysics->clear();
 	SceneManager::gameClear = false;
 	SceneManager::score = 0;
 	//try
@@ -113,9 +116,9 @@ void GamePlay::Init()
 	mActorManager->SetEnemyCount(enemy->GetEnemyCount());//敵の数をセット
 	delete(enemy);
 	
-	sound->Init();
-	sound->Load("./Assets/Sound/GamePlay.mp3");//BGM
-	sound->Load("./Assets/Sound/kettei.wav");
+	//sound->Init();
+	//sound->Load("./Assets/Sound/GamePlay.mp3");//BGM
+	//sound->Load("./Assets/Sound/kettei.wav");
 	input->Init();
 	input->JoyInit();
 	SceneManager::mCamera->Init(Vector2(0, 0));
@@ -142,18 +145,21 @@ void GamePlay::Update()
 		{
 			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
 			{
-				sound->PlaySE("./Assets/Sound/kettei.wav");
+				//sound->PlaySE("./Assets/Sound/kettei.wav");
+				SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
 				pose = false;
 				mInputTimers->SetTime(0.3f);
 			}
 			if (input->PadDown(JoyCode::Joy_X) || input->GetKeyDown(R))
 			{
-				sound->PlaySE("./Assets/Sound/kettei.wav");
+				//sound->PlaySE("./Assets/Sound/kettei.wav");
+				SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
 				Reset();
 			}
 			if (input->PadDown(JoyCode::Joy_Back) || input->GetKeyDown(B))
 			{
-				sound->PlaySE("./Assets/Sound/kettei.wav");
+				//sound->PlaySE("./Assets/Sound/kettei.wav");
+				SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
 				NextScene();
 			}
 		}
@@ -174,7 +180,8 @@ void GamePlay::Update()
 				SceneManager::mCamera->CameraPos.y -= 32;
 			}
 		}
-		sound->PlayBGM("./Assets/Sound/GamePlay.mp3");
+		//sound->PlayBGM("./Assets/Sound/GamePlay.mp3");
+		SceneManager::sound->PlayBGM("./Assets/Sound/GamePlay.mp3");
 
 		if (!mActorManager->GetPlayer())//プレイヤーが死んでいたら
 		{
@@ -195,7 +202,8 @@ void GamePlay::Update()
 		{
 			if (input->GetKeyDown(P) || input->PadDown(Joy_Start))
 			{
-				sound->PlaySE("./Assets/Sound/kettei.wav");
+				//sound->PlaySE("./Assets/Sound/kettei.wav");
+				SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
 				pose = true;
 				mInputTimers->SetTime(0.3f);
 			}
@@ -229,6 +237,7 @@ void GamePlay::Reset()
 {
 	mActorManager->End();
 	mActorManager->Clear();
-	sound->StopBGM("./Assets/Sound/a.mp3");
+	//sound->StopBGM("./Assets/Sound/a.mp3");
+	SceneManager::sound->StopBGM("./Assets/Sound/a.mp3");
 	Init();
 }

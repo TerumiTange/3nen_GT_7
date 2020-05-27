@@ -19,7 +19,7 @@ private:
 	int creditY;//クレジット
 	int choice;//現在選択中
 	CountDownTimer* timer;//入力遅延をわざと起こすよう
-	Sound* sound;
+	//Sound* sound;
 	bool option;
 };
 
