@@ -103,7 +103,7 @@ void GamePlay::Init()
 	}
 	else if (mStageName == "stage5")
 	{
-		enemy->Init("./Assets/Data/EnemyList5.csv");
+		enemy->InitM("./Assets/Data/EnemyList5.csv");
 	}
 	else//例外処理
 	{
@@ -138,12 +138,6 @@ void GamePlay::Update()
 	//DrawFormatString(500, 0, Cr, "%d", int(SceneManager::mElapsedTime->Now()));
 	if (pose)//ポーズ中
 	{
-		int Cr = GetColor(255, 255, 255);
-		SetFontSize(32);
-		DrawString(300, 100, "ポーズ中 ", Cr);
-		DrawString(300, 180, "ゲームに戻る　START ", Cr);
-		DrawString(300, 260, "リセット　　　 X    ", Cr);
-		DrawString(300, 340, "終了　　　　　BACK  ", Cr);
 		if (mInputTimers->IsTime())
 		{
 			if (input->PadDown(JoyCode::Joy_Start) || input->GetKeyDown(P))
@@ -214,6 +208,16 @@ void GamePlay::Draw()
 {
 	mActorManager->Draw();
 	mRenderer->DrawNumber(Vector2(500, 0), SceneManager::mElapsedTime->Now());
+
+	if (pose)
+	{
+		int Cr = GetColor(255, 123, 123);
+		SetFontSize(32);
+		DrawString(300, 100, "ポーズ中 ", Cr);
+		DrawString(300, 180, "ゲームに戻る　START ", Cr);
+		DrawString(300, 260, "リセット　　　 X    ", Cr);
+		DrawString(300, 340, "終了　　　　　BACK  ", Cr);
+	}
 }
 
 void GamePlay::NextScene()
