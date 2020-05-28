@@ -31,5 +31,6 @@ private:
 	bool pose;//ポーズ用
 	CountDownTimer* mInputTimers;//経過した時間
 	Renderer* mRenderer;//描画用
+	Renderer* mBackGround;//背景画
 	Physics* mPhysics;
 };

@@ -149,7 +149,7 @@ void ActorManager::Remove()
 	while (itr != mActors.end()) 
 	{
 		if ((*itr)->GetState() == ActorState::DEAD) {
-			if ((*itr)->Tag() != "Player")
+			if ((*itr)->Tag() != "Player" && (*itr)->Tag() != "Wall")
 			{
 				mEnemyCount--;//ƒvƒŒƒCƒ„[‚Å‚È‚¯‚ê‚ÎŒ¸‚ç‚·
 				SceneManager::score += 50;

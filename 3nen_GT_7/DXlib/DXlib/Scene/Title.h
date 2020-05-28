@@ -3,6 +3,7 @@
 #include "../System/Input.h"
 #include "../System/CountDownTimer.h"
 #include "../Device/Sound.h"
+#include "../Device/Renderer.h"
 
 class Title :public BaseScene
 {
@@ -21,6 +22,8 @@ private:
 	CountDownTimer* timer;//“ü—Í’x‰„‚ð‚í‚´‚Æ‹N‚±‚·‚æ‚¤
 	//Sound* sound;
 	bool option;
+	Renderer* mGra;//Žü‚è‚Ì‰æ‘œ
+	Renderer* mBackGra;//”wŒi
 };
 
 enum eMenu

@@ -7,7 +7,9 @@ Title::Title(ISceneChanger* changer)
 	input(new Input()),
 	startY(130),
 	creditY(210),
-	timer(new CountDownTimer())
+	timer(new CountDownTimer()),
+	mGra(new Renderer("Wall2")),
+	mBackGra(new Renderer(""))
 	//sound(new Sound())
 {
 	choice = start;//Å‰‚ÍƒQ[ƒ€ƒXƒ^[ƒg‚ð‘I‘ð
@@ -19,6 +21,8 @@ Title::~Title()
 	//sound->StopBGM("./Assets/Sound/Title.mp3");
 	delete(input);
 	delete(timer);
+	delete(mGra);
+	delete(mBackGra);
 	//delete(sound);
 }
 
@@ -89,6 +93,18 @@ void Title::Update()
 
 void Title::Draw()
 {
+	mBackGra->Drawb(0, 0);//”wŒi•`‰æ
+	for (int i = 0; i < 1024; i += 32)
+	{
+		mGra->Drawb(i, 0);
+		mGra->Drawb(i, 544);
+	}
+	for (int i = 32; i < 544 ; i += 32)
+	{
+		mGra->Drawb(0, i);
+		mGra->Drawb(992, i);
+	}
+
 	int Cr = GetColor(255, 0, 0);
 	SetFontSize(32);
 	if (option)
