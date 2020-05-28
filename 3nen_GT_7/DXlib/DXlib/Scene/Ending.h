@@ -18,7 +18,7 @@ public:
 private:
 	Input* input;
 	Renderer* mNumber;
-	Sound* sound;
+	//Sound* sound;
 	int s;//セレクト
 	int r;//リスタート
 	int choice;//現在選択中
@@ -26,6 +26,7 @@ private:
 	bool NewScore;
 	int timeScore;//タイムによるスコア
 	int numScore;//合計スコア
+	bool clear;
 };
 
 enum EndMenu

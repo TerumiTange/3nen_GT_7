@@ -31,7 +31,7 @@ private:
 	Vector2* stage5Pos;
 	Vector2* stage6Pos;
 	int choice;//Œ»İ‘I‘ğ’†
-	Sound* sound;
+	//Sound* sound;
 
 	int Score1;
 	int Score2;

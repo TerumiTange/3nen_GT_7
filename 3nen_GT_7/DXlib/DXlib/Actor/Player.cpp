@@ -159,7 +159,7 @@ void Player::Move()
 void Player::Movement()//移動処理
 {
 	mRight = (mVelocity->x > 0) ? true : false;
-	mVelocity->x = (abs(mVelocity->x) < 32) ? mVelocity->x : ((mVelocity->x < 0) ? -31 : 31);
+	mVelocity->x = (abs(mVelocity->x) < 16) ? mVelocity->x : ((mVelocity->x < 0) ? -15 : 15);
 
 	mPos->y += mVelocity->y;//移動処理Y
 	mPos->x += mVelocity->x;//移動処理X
@@ -273,6 +273,10 @@ void Player::Recovery()//体力回復
 void Player::Draw()//描画
 {
 	//mRenderer->Draw(*mPos);
+	if (!mCountTimer->IsTime())
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 / 2);
+	}
 	if (mMovingFast)
 	{
 		mAttackImages->Draw(*mPos);
@@ -299,7 +303,7 @@ void Player::Draw()//描画
 			mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), l, *mSize, TRUE);
 		}
 	}
-	
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//アルファ値最大
 	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
@@ -365,77 +369,43 @@ void Player::Hit()
 			//}
 			auto sx = cPosX + (cSizeX / 2);//真ん中
 			auto sy = cPosY + (cSizeY / 2);//真ん中
-			if (old_y + mSize->y < sy)//ブロックの中心より上
+
+			Vector2 dir = Vector2(old_x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
+
+
+			if (abs(dir.x) > abs(dir.y))
 			{
-				if (mPos->x > sx)//かつ中心より右
+				if (dir.x > 0)//相手の右に当たったら
 				{
-					if (old_x < cPosX + cSizeX)//上にいる状態
-					{
-						//sound->PlaySE("");//着地音
-						mMovingFastCount = 4;
-						if (mVelocity->y >= 0)
-						{
-							mPos->y = cPosY - mSize->y;
-							mFall = false;
-						}
-					}
-					else//右にいる状態
-					{
-						if (mVelocity->x < 0)
-						{
-							mPos->x = cPosX + mSize->x;
-							mVelocity->x = 0;
-						}
-					}
+					mPos->x = cPosX + mSize->x+1;
 				}
-				else//中心より左
+				else//左に当たったら
 				{
-					if (old_x + mSize->x > cPosX)//自身が上
-					{
-						//sound->PlaySE("");//着地音
-						mMovingFastCount = 4;
-						if (mVelocity->y >= 0)
-						{
-							mPos->y = cPosY - mSize->y;
-							mFall = false;
-						}
-					}
-					else//自身が左
-					{
-						if (mVelocity->x > 0)
-						{
-							mPos->x = cPosX - mSize->x;
-							mVelocity->x = 0;
-						}
-					}
+					mPos->x = cPosX - mSize->x-1;
 				}
 			}
-			/*
-			if (old_y < cPosY)//自分が上
+			else
 			{
-				//sound->PlaySE("");//着地音
-				mMovingFastCount = 4;
-				if (mVelocity->y > 0)
+				if (dir.y < 0)//相手の下に当たったら
 				{
-					mPos->y = cPosY - mSize->y;
+					//sound->PlaySE("");//着地音
+					mMovingFastCount = 4;
 					mFall = false;
+					if (mVelocity->y > 0)
+					{
+						mPos->y = cPosY - mSize->y;
+						mVelocity->y = 0;
+					}
+				}
+				else//上に当たったら
+				{
+					mPos->y = cPosY + cSizeY + 1;
+					if (mVelocity->y < 0)
+					{
+						mVelocity->y = 0;
+					}
 				}
 			}
-			else if (old_y > cPosY)//自分がした
-			{
-				mPos->y = cPosY + cSizeY + 1;
-			}
-			else if (old_x < cPosX)//自分が左
-			{
-				mPos->x = cPosX - mSize->x;
-				mVelocity->x = 0;
-			}
-			else if (old_x > cPosX)//自分が右
-			{
-				mPos->x = cPosX + mSize->x;
-				mVelocity->x = 0;
-			}
-			*/
 		}
 	}
 
@@ -445,8 +415,53 @@ void Player::Hit()
 		auto cPosY = hit->getOwner()->Position()->y;
 		auto cSizeX = hit->getOwner()->Size()->x;
 		auto cSizeY = hit->getOwner()->Size()->y;
+		auto sx = cPosX + (cSizeX / 2);//真ん中
+		auto sy = cPosY + (cSizeY / 2);//真ん中
+		Vector2 dir = Vector2(mPos->x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
+
 		if (hit->getOwner()->Tag() == "Wall")
 		{
+			if (abs(dir.x) > abs(dir.y))
+			{
+				if (dir.x > 0)//相手の右に当たったら
+				{
+					mPos->x = cPosX + mSize->x;
+					if (mVelocity->x < 0)
+					{
+						mVelocity->x = 0;
+					}
+				}
+				else//左に当たったら
+				{
+					mPos->x = cPosX - mSize->x;
+					if (mVelocity->x < 0)
+					{
+						mVelocity->x = 0;
+					}
+				}
+			}
+			else
+			{
+				if (dir.y < 0)//相手の下に当たったら
+				{
+					//sound->PlaySE("");//着地音
+					mMovingFastCount = 4;
+					mFall = false;
+					if (mVelocity->y > 0)
+					{
+						mPos->y = cPosY - mSize->y;
+					}
+				}
+				else//上に当たったら
+				{
+					mPos->y = cPosY + cSizeY + 1;
+					if (mVelocity->y < 0)
+					{
+						mVelocity->y = 0;
+					}
+				}
+			}
+			/*
 			if (old_y < cPosY)//自分が上
 			{
 				mMovingFastCount = 4;
@@ -467,7 +482,7 @@ void Player::Hit()
 			{
 				mPos->x = cPosX + mSize->x+1;
 				mVelocity->x = 0;
-			}
+			}*/
 		
 		}
 		
@@ -490,12 +505,10 @@ void Player::Hit()
 					}
 				}
 				hit->getOwner()->SetElectricShock(true);
-				mMovingFastCount++;
 			}
 			if (mNowMovingFast)//高速移動状態初期処理状態ならば
 			{
 				hit->getOwner()->SetElectricShock(true);
-				mMovingFastCount = 4;
 			}
 
 			if (!hit->getOwner()->GetElectricShock())
