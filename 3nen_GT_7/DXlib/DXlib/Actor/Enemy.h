@@ -17,6 +17,10 @@ enum class EnemyType
 struct EnemyData
 {
 	Vector2 position;
+	Vector2 PatrolPos1;
+	Vector2 PatrolPos2;
+	Vector2 PatrolPos3;
+	Vector2 PatrolPos4;
 	EnemyType type;
 };
 

@@ -23,7 +23,7 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
 	paralimitTimer(new CountDownTimer()), //連続で麻痺状態にならないためのタイマー
 	sound(new Sound()),
-	mUpTimer(new CountDownTimer())
+	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
