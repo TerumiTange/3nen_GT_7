@@ -13,6 +13,7 @@ Ending::Ending(ISceneChanger * changer) :
 {
 	s = 350;
 	r = 400;
+	n = 450;
 	choice = e_select;
 	clear = SceneManager::gameClear;
 }
@@ -51,7 +52,7 @@ void Ending::Init()
 
 
 		numScore = timeScore + SceneManager::score;
-		std::string stage;
+		//std::string stage;
 		stage = SceneManager::stageName;
 		if (stage == "stage1")//書き込む
 		{
@@ -172,6 +173,14 @@ void Ending::Draw()
 	
 	DrawString(380, s, "ゲームセレクトへ", Cr);
 	DrawString(380, r, "もう一度同じステージで遊ぶ", Cr);
+	if (stage == "stage5" || clear == FALSE)
+	{
+
+	}
+	else
+	{
+		DrawString(380, n, "次のステージへ", Cr);
+	}
 	int y;
 	switch (choice)
 	{
@@ -181,7 +190,18 @@ void Ending::Draw()
 	case e_restart:
 		y = r;
 		break;
+	case e_nextstage:
+		if (stage == "stage5"||clear==FALSE)
+		{
+			break;
+		}
+		else
+		{
+			y = n;
+		}
+		break;
 	}
+
 	DrawString(300, y, "■", GetColor(0, 255, 0));
 }
 
@@ -193,6 +213,25 @@ void Ending::NextScene()
 		mSceneChanger->ChangeScene(SceneSelect);
 		break;
 	case e_restart:
+		mSceneChanger->ChangeScene(SceneGamePlay);
+		break;
+	case e_nextstage:
+		if (stage == "stage1")//書き込む
+		{
+			SceneManager::stageName = "stage2";
+		}
+		else if (stage == "stage2")
+		{
+			SceneManager::stageName = "stage3";
+		}
+		else if (stage == "stage3")
+		{
+			SceneManager::stageName = "stage4";
+		}
+		else if (stage == "stage4")
+		{
+			SceneManager::stageName = "stage5";
+		}
 		mSceneChanger->ChangeScene(SceneGamePlay);
 		break;
 	default:
