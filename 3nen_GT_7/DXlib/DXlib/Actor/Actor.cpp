@@ -107,6 +107,11 @@ bool Actor::GetElectricShock()
 	return mElectricShock;
 }
 
+bool Actor::GetDeath()
+{
+	return death;
+}
+
 void Actor::SetActorManager(ActorManager * manager)
 {
 	mActorManager = manager;

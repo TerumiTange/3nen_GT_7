@@ -49,6 +49,7 @@ public:
 	const char* Tag() const;
 	void SetElectricShock(bool f);
 	bool GetElectricShock();
+	bool GetDeath();
 
 	//ActorManager‚Ì“o˜^
 	static void SetActorManager(ActorManager* manager);

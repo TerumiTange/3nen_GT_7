@@ -1,6 +1,7 @@
 #include "GamePlay.h"
 #include "../Actor/Actor.h"
 #include "../Actor/Player.h"
+#include "../Actor/PatrolEnemy.h"
 #include "../Actor/ActorManager.h"
 #include "../Collider/Collider.h"
 #include "../Collider/Physics.h"

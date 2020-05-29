@@ -25,7 +25,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	sound(new Sound()),
 	patrolPos(0),
 	mPatrol(true),//„‰ñó‘Ô‚©H
-	pspeed(1.0f),
+	pspeed(10.0f),
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
@@ -66,6 +66,7 @@ void PatrolEnemy::End()
 
 void PatrolEnemy::Update()
 {
+	if (GetDeath())return;
 	playerHitTimer->Update();
 	paralimitTimer->Update();
 	mUpTimer->Update();
@@ -240,7 +241,7 @@ void PatrolEnemy::Patrol()
 		case 0:
 			PatrolMove();
 
-			if (old_x == a.x && old_y == a.y)
+			if (old_x >= a.x && old_y <= a.y)
 			{
 				patrolcount = 1;
 			}
@@ -249,7 +250,7 @@ void PatrolEnemy::Patrol()
 		case 1:
 			PatrolMove();
 
-			if (old_x == a.x && old_y == a.y)
+			if (old_x >= a.x && old_y >= a.y)
 			{
 				patrolcount = 2;
 			}
@@ -258,7 +259,7 @@ void PatrolEnemy::Patrol()
 		case 2:
 			PatrolMove();
 
-			if (old_x == a.x && old_y == a.y)
+			if (old_x <= a.x && old_y >= a.y)
 			{
 				patrolcount = 3;
 			}
@@ -267,7 +268,7 @@ void PatrolEnemy::Patrol()
 		case 3:
 			PatrolMove();
 
-			if (old_x == a.x && old_y == a.y)
+			if (old_x <= a.x && old_y <= a.y)
 			{
 				patrolcount = 0;
 			}
@@ -281,7 +282,7 @@ void PatrolEnemy::Patrol()
 
 		PatrolMove();
 
-		if (old_x == a.x && old_y == a.y)
+		if (old_x <= a.x && old_y <= a.y)
 		{
 			mPatrol = true;
 			patrolcount = 0;
