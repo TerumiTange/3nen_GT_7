@@ -96,3 +96,16 @@ void Renderer::DrawSerialNumber(const Vector2& pos, const Vector2& gPos, int t, 
 	DrawRectGraph(pos.x - Camera2d::CameraPos.x, pos.y - Camera2d::CameraPos.y, gPos.x + size.x * t, gPos.y, size.x, size.y, mGra, TRUE, turnFlag);
 
 }
+
+int t = 0;
+bool f = FALSE;
+
+void Renderer::DrawAlternating(int x, int y, int time)
+{
+	t++;
+	if (t%time == 0)
+	{
+		f = (f) ? FALSE : TRUE;
+	}
+	DrawRotaGraph(x - Camera2d::CameraPos.x, y - Camera2d::CameraPos.y, 1.f, 0.f, mGra, TRUE, f);
+}

@@ -311,9 +311,10 @@ void Player::Draw()//•`‰æ
 	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
-		mStaticElectricity->Draw(mPos->x - 32, mPos->y);
+		//mStaticElectricity->Draw(mPos->x - 32, mPos->y);
+		mStaticElectricity->DrawAlternating(mPos->x, mPos->y, 3);
 	}
-	for (size_t i = 0; i < mHp; ++i)
+	for (size_t i = 0; i < mHp; ++i)//HP•\Ž¦
 	{
 		mHeart->Drawb(10 + i * 32, 32);
 	}
@@ -323,7 +324,7 @@ void Player::Draw()//•`‰æ
 	//DrawString(0, 0, "uŠÔˆÚ“®‚Å‚«‚é‰ñ”:", GetColor(255, 0, 0));
 	//mNumber->DrawIntegerNumber(Vector2(350, 0), mMovingFastCount);
 
-	for (int i = 0; i < mMovingFastMaxCount; ++i)
+	for (int i = 0; i < mMovingFastMaxCount; ++i)//‚‘¬ˆÚ“®‰ñ”•\Ž¦
 	{
 		mFrame->Drawb(10 + i * 32, 0);
 	}

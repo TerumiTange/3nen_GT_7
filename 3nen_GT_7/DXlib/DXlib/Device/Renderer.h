@@ -27,6 +27,9 @@ public:
 	void DrawNumber(const Vector2& pos, float num);
 	//˜A”Ô
 	void DrawSerialNumber(const Vector2& pos, const Vector2& gPos, int t, const Vector2& size, bool turnFlag);
+	//ŒðŒÝ
+	void DrawAlternating(int x, int y, int time);
+
 private:
 	std::string mName;
 	int mGra;

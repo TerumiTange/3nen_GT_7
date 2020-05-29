@@ -21,18 +21,21 @@ private:
 	//Sound* sound;
 	int s;//セレクト
 	int r;//リスタート
+	int n;//次のステージへ
 	int choice;//現在選択中
 	CountDownTimer* timer;//遅延用
 	bool NewScore;
 	int timeScore;//タイムによるスコア
 	int numScore;//合計スコア
 	bool clear;
+	std::string stage;
 };
 
 enum EndMenu
 {
 	e_select,
 	e_restart,
+	e_nextstage,
 
 	endNum
 };
