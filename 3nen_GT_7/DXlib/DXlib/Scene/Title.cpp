@@ -5,8 +5,8 @@
 Title::Title(ISceneChanger* changer)
 	:BaseScene(changer),
 	input(new Input()),
-	startY(130),
-	creditY(210),
+	startY(380),
+	creditY(460),
 	timer(new CountDownTimer()),
 	mGra(new Renderer("Wall2")),
 	mBackGra(new Renderer("Background")),
@@ -122,7 +122,7 @@ void Title::Draw()
 	}
 	else
 	{
-		DrawString(150, 50, "Title B PUSH", Cr);
+		DrawString(150, 300, "Title B PUSH", Cr);
 		DrawString(150, startY, "スタート", Cr);//130
 		DrawString(150, creditY, "操作説明", Cr);//210
 		int y;
