@@ -14,7 +14,7 @@ RushEnemy::RushEnemy(const Vector2 & pos, const char * tag) :
 	mRight(true),
 	mStalker(false),//追跡状態か？
 	staSize(200),//追跡範囲
-	sRenderer(new Renderer("Enemy2")),//追跡状態の画像
+	sRenderer(new Renderer("Enemy3")),//追跡状態の画像
 	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
 	speed(250.0f),//速度
 	paraTime(4.0f),//マヒ時間
@@ -26,7 +26,7 @@ RushEnemy::RushEnemy(const Vector2 & pos, const char * tag) :
 	atTime(2.0f),
 	attackTimer(new CountDownTimer(0.0f)),
 	rush(false),
-	mUpTimer(new CountDownTimer())
+	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);

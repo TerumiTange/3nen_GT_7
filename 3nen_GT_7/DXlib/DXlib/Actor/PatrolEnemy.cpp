@@ -1,9 +1,9 @@
 #include "PatrolEnemy.h"
 #include "ActorManager.h"
 #include "Player.h"
-#include "../Collider//ComponentManager.h"
+#include "../Collider//ComponentManager.h"yy
 
-PatrolEnemy::PatrolEnemy(const Vector2 & pos, const char * tag) :
+PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vector2 & patpos2, const Vector2 & patpos3, const Vector2 & patpos4, const char * tag) :
 	Actor(tag),
 	mCollider(new ColliderComponent(this)),
 	mPos(new Vector2(0, 0)),//ポジション
@@ -26,7 +26,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const char * tag) :
 	patrolPos(0),
 	mPatrol(true),//巡回状態か？
 	pspeed(1.0f),
-	mUpTimer(new CountDownTimer())
+	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -36,10 +36,10 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const char * tag) :
 	sound->Load("./Assets/Sound/paral.wav");
 
 	//巡回のポジション
-	patrolPos.push_back(Vector2(pos.x - 64, pos.y - 64));//1位置
-	patrolPos.push_back(Vector2(pos.x - 64, pos.y + 64));//2位置
-	patrolPos.push_back(Vector2(pos.x + 64, pos.y + 64));//3位置
-	patrolPos.push_back(Vector2(pos.x + 64, pos.y - 64));//4位置
+	patrolPos.push_back(Vector2(patpos1.x, patpos1.y));//1位置
+	patrolPos.push_back(Vector2(patpos2.x, patpos2.y));//2位置
+	patrolPos.push_back(Vector2(patpos3.x, patpos3.y));//3位置
+	patrolPos.push_back(Vector2(patpos4.x, patpos4.y));//4位置
 	patrolPos.push_back(Vector2(pos));//追跡後に戻る位置
 }
 

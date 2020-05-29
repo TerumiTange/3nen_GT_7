@@ -3,6 +3,7 @@
 #include "../Utility//Vector2.h"
 #include "../Device/Renderer.h"
 #include "../System/CountDownTimer.h"
+#include "../System/CountUpTimer.h"
 #include "../Device/Sound.h"
 #include "../Collider/ColliderComponent.h"
 #include "../Collider/Component.h"
@@ -60,5 +61,5 @@ private:
 	bool rush;
 	Vector2 psPos;
 
-	CountDownTimer* mUpTimer;
+	CountUpTimer* mUpTimer;
 };

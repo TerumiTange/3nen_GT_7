@@ -3,6 +3,7 @@
 #include "../Utility//Vector2.h"
 #include "../Device/Renderer.h"
 #include "../System/CountDownTimer.h"
+#include "../System/CountUpTimer.h"
 #include "../Device/Sound.h"
 #include "../Collider/ColliderComponent.h"
 #include "../Collider/Component.h"
@@ -16,7 +17,7 @@ class Player;
 class PatrolEnemy :public Actor
 {
 public:
-	PatrolEnemy(const Vector2& pos, const char* tag = "PatrolEnemy");
+	PatrolEnemy(const Vector2& pos, const Vector2& patpos1, const Vector2& patpos2, const Vector2& patpos3, const Vector2& patpos4, const char* tag = "PatrolEnemy");
 	~PatrolEnemy();
 	virtual void End()override;
 	virtual void Update()override;
@@ -64,5 +65,5 @@ private:
 	int patrolcount;
 	Vector2 a;
 	float pspeed;
-	CountDownTimer* mUpTimer;
+	CountUpTimer* mUpTimer;
 };

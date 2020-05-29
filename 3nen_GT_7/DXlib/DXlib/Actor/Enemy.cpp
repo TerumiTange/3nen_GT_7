@@ -106,8 +106,21 @@ void Enemy::Parse(unsigned row)
 	EnemyData data;
 	const int num = mCSV->getWidth()*row;
 	data.type = SelectType(mEnemyList.at(num+1));
+	//出現位置かつ追跡後に戻る位置
 	data.position.x = atoi(mEnemyList.at(num + 2).c_str());//3行目
 	data.position.y = Map::height * 32 - atoi(mEnemyList.at(num + 3).c_str());//4行目
+	//巡回位置1
+	data.PatrolPos1.x = atoi(mEnemyList.at(num + 4).c_str());//5行目
+	data.PatrolPos1.y = Map::height * 32 - atoi(mEnemyList.at(num + 5).c_str());//6行目
+	//巡回位置2
+	data.PatrolPos2.x = atoi(mEnemyList.at(num + 6).c_str());//7行目
+	data.PatrolPos2.y = Map::height * 32 - atoi(mEnemyList.at(num + 7).c_str());//8行目
+	//巡回位置3
+	data.PatrolPos3.x = atoi(mEnemyList.at(num + 8).c_str());//9行目
+	data.PatrolPos3.y = Map::height * 32 - atoi(mEnemyList.at(num +9).c_str());//10行目
+	//巡回位置4
+	data.PatrolPos4.x = atoi(mEnemyList.at(num + 10).c_str());//11行目
+	data.PatrolPos4.y = Map::height * 32 - atoi(mEnemyList.at(num + 11).c_str());//12行目
 
 	mEnemyData.emplace_back(data);
 }
