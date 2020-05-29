@@ -54,6 +54,8 @@ void FlyEnemy::End()
 
 void FlyEnemy::Update()
 {
+	if (GetDeath())return;
+
 	playerHitTimer->Update();//
 	paralimitTimer->Update();//
 	mUpTimer->Update();
@@ -70,13 +72,19 @@ void FlyEnemy::Update()
 
 void FlyEnemy::Draw()
 {
-	//mRenderer->Draw(*mPos);
+	if (GetDeath())
+	{
+		//‚±‚±‚É”š”­‚Ì•`‰æ‚ğ
+		return;
+	}
 
 	//ƒ}ƒqó‘Ô‚Å‚Ì•`‰æ
 	if (paral)
 	{
+		SetDrawBright(255, 0, 0);
 		int a = fmod(mUpTimer->Now() * 3, 1);
-		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
+		sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
+		SetDrawBright(255, 255, 255);
 		paralRenderer->Draw(mPos->x - 16, mPos->y + 32);
 		return;
 	}

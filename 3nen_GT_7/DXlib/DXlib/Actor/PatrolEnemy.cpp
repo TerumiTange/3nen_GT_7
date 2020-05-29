@@ -25,7 +25,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	sound(new Sound()),
 	patrolPos(0),
 	mPatrol(true),//巡回状態か？
-	pspeed(10.0f),
+	pspeed(5.0f),
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
@@ -67,6 +67,8 @@ void PatrolEnemy::End()
 void PatrolEnemy::Update()
 {
 	if (GetDeath())return;
+
+	if (GetDeath())return;
 	playerHitTimer->Update();
 	paralimitTimer->Update();
 	mUpTimer->Update();
@@ -84,11 +86,19 @@ void PatrolEnemy::Update()
 
 void PatrolEnemy::Draw()
 {
+	if (GetDeath())
+	{
+		//ここに爆発の描画を
+		return;
+	}
+
 	//マヒ状態での描画
 	if (paral)
 	{
+		SetDrawBright(255, 0, 0);
 		int a = fmod(mUpTimer->Now() * 3, 1);
-		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
+		sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
+		SetDrawBright(255, 255, 255);
 		paralRenderer->Draw(mPos->x - 16, mPos->y + 32);
 		return;
 	}
@@ -121,28 +131,51 @@ void PatrolEnemy::Hit()
 {
 	for (auto && hit : mCollider->onCollisionStay())
 	{
-		auto cPosX = hit->getOwner()->Position()->x;
-		auto cPosY = hit->getOwner()->Position()->y;
-		auto cSizeX = hit->getOwner()->Size()->x;
-		auto cSizeY = hit->getOwner()->Size()->y;
 
-		if (hit->getOwner()->Tag() == "Wall")
+		if (hit->getOwner()->Tag() == "Wall" ||
+			hit->getOwner()->Tag() == "FlyEnemy" ||
+			hit->getOwner()->Tag() == "RushEnemy" ||
+			hit->getOwner()->Tag() == "PatrolEnemy")
 		{
-			if (old_y < cPosY)//自分が上
+			auto cPosX = hit->getOwner()->Position()->x;
+			auto cPosY = hit->getOwner()->Position()->y;
+			auto cSizeX = hit->getOwner()->Size()->x;
+			auto cSizeY = hit->getOwner()->Size()->y;
+
+			auto sx = cPosX + (cSizeX / 2);//真ん中
+			auto sy = cPosY + (cSizeY / 2);//真ん中
+
+			Vector2 dir = Vector2(old_x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
+
+			if (abs(dir.x) > abs(dir.y))
 			{
-				mPos->y = cPosY - mSize->y;
+				if (dir.x > 0)//相手の右に当たったら
+				{
+					mPos->x = cPosX + mSize->x + 1;
+				}
+				else//左に当たったら
+				{
+					mPos->x = cPosX - mSize->x - 1;
+				}
 			}
-			else if (old_y > cPosY)//自分がした
+			else
 			{
-				mPos->y = cPosY + cSizeY + 1;
-			}
-			else if (old_x < cPosX)//自分が左
-			{
-				mPos->x = cPosX - mSize->x;
-			}
-			else if (old_x > cPosX)//自分が右
-			{
-				mPos->x = cPosX + mSize->x;
+				if (dir.y < 0)//相手の下に当たったら
+				{
+					if (direction.y > 0)
+					{
+						mPos->y = cPosY - mSize->y;
+						direction.y = 0;
+					}
+				}
+				else//上に当たったら
+				{
+					mPos->y = cPosY + cSizeY + 1;
+					if (direction.y < 0)
+					{
+						direction.y = 0;
+					}
+				}
 			}
 		}
 	}
@@ -153,24 +186,52 @@ void PatrolEnemy::Hit()
 		auto cPosY = hit->getOwner()->Position()->y;
 		auto cSizeX = hit->getOwner()->Size()->x;
 		auto cSizeY = hit->getOwner()->Size()->y;
+		auto sx = cPosX + (cSizeX / 2);//真ん中
+		auto sy = cPosY + (cSizeY / 2);//真ん中
+		Vector2 dir = Vector2(mPos->x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
 
-		if (hit->getOwner()->Tag() == "Wall")
+		if (hit->getOwner()->Tag() == "Wall" ||
+			hit->getOwner()->Tag() == "FlyEnemy" ||
+			hit->getOwner()->Tag() == "RushEnemy" ||
+			hit->getOwner()->Tag() == "PatrolEnemy")
 		{
-			if (old_y < cPosY)//自分が上
+			if (abs(dir.x) > abs(dir.y))
 			{
-				mPos->y = cPosY - mSize->y;
+				if (dir.x > 0)//相手の右に当たったら
+				{
+					mPos->x = cPosX + mSize->x;
+					if (direction.x < 0)
+					{
+						direction.x = 0;
+					}
+				}
+				else//左に当たったら
+				{
+					mPos->x = cPosX - mSize->x;
+					if (direction.x < 0)
+					{
+						direction.x = 0;
+					}
+				}
 			}
-			else if (old_y > cPosY)//自分が下
+			else
 			{
-				mPos->y = cPosY + cSizeY;
-			}
-			else if (old_x < cPosX)//自分が左
-			{
-				mPos->x = cPosX - mSize->x;
-			}
-			else if (old_x > cPosX)//自分が右
-			{
-				mPos->x = cPosX + mSize->x + 1;
+				if (dir.y < 0)//相手の下に当たったら
+				{
+					mPos->y = cPosY - mSize->y;
+					if (direction.y > 0)
+					{
+						mPos->y = cPosY - mSize->y;
+					}
+				}
+				else//上に当たったら
+				{
+					mPos->y = cPosY + cSizeY + 1;
+					if (direction.y < 0)
+					{
+						direction.y = 0;
+					}
+				}
 			}
 		}
 	}

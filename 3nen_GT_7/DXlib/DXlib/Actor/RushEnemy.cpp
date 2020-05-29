@@ -58,6 +58,8 @@ void RushEnemy::End()
 
 void RushEnemy::Update()
 {
+	if (GetDeath())return;
+
 	playerHitTimer->Update();
 	paralimitTimer->Update();
 	mUpTimer->Update();
@@ -74,11 +76,19 @@ void RushEnemy::Update()
 
 void RushEnemy::Draw()
 {
+	if (GetDeath())
+	{
+		//‚±‚±‚É”š”­‚Ì•`‰æ‚ğ
+		return;
+	}
+
 	//ƒ}ƒqó‘Ô‚Å‚Ì•`‰æ
 	if (paral)
 	{
+		SetDrawBright(255, 0, 0);
 		int a = fmod(mUpTimer->Now() * 3, 2);
 		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
+		SetDrawBright(255, 255, 255);
 		paralRenderer->Draw(mPos->x - 16, mPos->y + 32);
 		return;
 	}
@@ -86,7 +96,7 @@ void RushEnemy::Draw()
 	//ƒAƒCƒhƒ‹ó‘Ô‚Å‚Ì•`‰æ
 	if (!mStalker)
 	{
-		int t = fmod(mUpTimer->Now() * 3, 1);
+		int t = fmod(mUpTimer->Now() * 3, 2);
 		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), t, *mSize, FALSE);
 	}
 	//’ÇÕó‘Ô‚Å‚Ì•`‰æ
