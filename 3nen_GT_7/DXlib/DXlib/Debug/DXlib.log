@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿  Ending.cpp
 d:\gtsample\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
 d:\gtsample\3nen_gt_7\dxlib\dxlib\scene\ending.cpp(146): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
@@ -15,3 +16,17 @@ c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\scene\stageselect.cpp(196): warning C4244: '�
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\scene\stageselect.cpp(200): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   DXlib.vcxproj -> C:\3nen_GT_7\3nen_GT_7\DXlib\Debug\DXlib.exe
 >>>>>>> Aya
+=======
+﻿  FlyEnemy.cpp
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\actor.h(15): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(78): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(80): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(87): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(96): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(102): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(365): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\flyenemy.cpp(366): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
+>>>>>>> origin/kubota
