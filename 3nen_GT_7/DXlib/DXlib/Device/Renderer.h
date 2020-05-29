@@ -23,7 +23,7 @@ public:
 	void DrawE(const Vector2& pos, int e);
 	//整数専用
 	void DrawIntegerNumber(const Vector2& pos, int num);
-	//整数専用
+	//Number専用
 	void DrawNumber(const Vector2& pos, float num);
 	//連番
 	void DrawSerialNumber(const Vector2& pos, const Vector2& gPos, int t, const Vector2& size, bool turnFlag);

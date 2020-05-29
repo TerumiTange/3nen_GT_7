@@ -9,7 +9,9 @@ Title::Title(ISceneChanger* changer)
 	creditY(210),
 	timer(new CountDownTimer()),
 	mGra(new Renderer("Wall2")),
-	mBackGra(new Renderer(""))
+	mBackGra(new Renderer("Background")),
+	mTitleGra(new Renderer("TitleLogo")),
+	mBY(-87)
 	//sound(new Sound())
 {
 	choice = start;//Å‰‚ÍƒQ[ƒ€ƒXƒ^[ƒg‚ð‘I‘ð
@@ -23,6 +25,7 @@ Title::~Title()
 	delete(timer);
 	delete(mGra);
 	delete(mBackGra);
+	delete(mTitleGra);
 	//delete(sound);
 }
 
@@ -39,6 +42,7 @@ void Title::Init()
 void Title::Update()
 {
 	//sound->PlayBGM("./Assets/Sound/Title.mp3");//BGM
+	mBY += (mBY < 100) ? 1 : 0;
 	SceneManager::sound->PlayBGM("./Assets/Sound/Title.mp3");
 	printfDx("ƒQ[ƒ€ƒpƒbƒh”%d", GetJoypadNum());
 	GetJoypadInputState(DX_INPUT_PAD1);
@@ -94,6 +98,8 @@ void Title::Update()
 void Title::Draw()
 {
 	mBackGra->Drawb(0, 0);//”wŒi•`‰æ
+	mTitleGra->Drawb(210, mBY);
+	
 	for (int i = 0; i < 1024; i += 32)
 	{
 		mGra->Drawb(i, 0);
