@@ -36,7 +36,7 @@ void Enemy::Init(const char * filename)
 	//}
 
 	auto j = mEnemyData.size();
-	mEnemyCount = mEnemyData.size();
+	mEnemyCount += mEnemyData.size();
 	for (int i = 0; i < j; ++i)
 	{
 		Create(mEnemyData.front());
@@ -69,7 +69,7 @@ void Enemy::InitM(const char * filename)
 		
 	}
 	auto j = mEnemyData.size();
-	mEnemyCount = mEnemyData.size();
+	mEnemyCount += mEnemyData.size();
 	for (int i = 0; i < j; ++i)
 	{
 		Create(mEnemyData.front());
@@ -92,7 +92,7 @@ void Enemy::Create(const EnemyData& data)
 
 	if (data.type == EnemyType::PATROLENEMY)
 	{
-		auto e = new PatrolEnemy(data.position);
+		auto e = new PatrolEnemy(data.position, data.PatrolPos1, data.PatrolPos2, data.PatrolPos3, data.PatrolPos4);
 	}
 
 	if (data.type == EnemyType::RUSHENEMY)

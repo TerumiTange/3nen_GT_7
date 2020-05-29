@@ -15,8 +15,16 @@ c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(29): warning C4018: '<': sign
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(40): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(59): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(73): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
-c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(109): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(110): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(111): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(113): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(114): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(116): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(117): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(119): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(120): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(122): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\enemy.cpp(123): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
   Floor.cpp
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
 c:\3nen_gt_7\3nen_gt_7\dxlib\dxlib\actor\actor.h(15): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。

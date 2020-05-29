@@ -1,7 +1,7 @@
 #include "PatrolEnemy.h"
 #include "ActorManager.h"
 #include "Player.h"
-#include "../Collider//ComponentManager.h"yy
+#include "../Collider//ComponentManager.h"
 
 PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vector2 & patpos2, const Vector2 & patpos3, const Vector2 & patpos4, const char * tag) :
 	Actor(tag),
