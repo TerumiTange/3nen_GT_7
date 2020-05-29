@@ -7,7 +7,7 @@ Wall::Wall(const Vector2& position, const char* tag):
 	mPos(new Vector2(0,0)),
 	mSize(new Vector2(32,32)),
 	mFilename(tag),
-	mRenderer(new Renderer("Metal"))
+	mRenderer(new Renderer("Wall2"))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;

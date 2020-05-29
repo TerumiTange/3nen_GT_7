@@ -7,6 +7,12 @@ SceneManager::SceneManager():
 	mfader(new Fader())
 {
 	mScene = (BaseScene*) new Title(this);
+	sound->Load("./Assets/Sound/kettei.wav");//決定
+	sound->Load("./Assets/Sound/migration.wav");//カーソル
+	sound->Load("./Assets/Sound/Title.mp3");//BGM
+	sound->Load("./Assets/Sound/GamePlay.mp3");//BGM
+	sound->Load("./Assets/Sound/Result.mp3");//クリア
+	sound->Load("./Assets/Sound/GameOver.mp3");//ゲームオーバー
 }
 
 SceneManager::~SceneManager()
@@ -17,6 +23,7 @@ SceneManager::~SceneManager()
 	delete(Actor::mElectricTimer);//最後にメモリを解放するため
 	delete(mCamera);
 	delete(mScore);
+	delete(sound);
 }
 
 void SceneManager::Init()
@@ -75,3 +82,4 @@ Camera2d* SceneManager::mCamera = new Camera2d();
 bool SceneManager::gameClear = false;
 Score* SceneManager::mScore = new Score();
 int SceneManager::score = 0;
+Sound* SceneManager::sound = new Sound();

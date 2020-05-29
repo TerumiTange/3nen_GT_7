@@ -86,6 +86,6 @@ bool Fader::GetNowFader()
 
 void Fader::Draw()
 {
-	DrawFormatString(50, 100, GetColor(0, 0, 0), "%d", bright);
+	//DrawFormatString(50, 100, GetColor(0, 0, 0), "%d", bright);
 
 }

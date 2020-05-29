@@ -25,11 +25,12 @@ public:
 
 private:
 	ActorManager* mActorManager;
-	Sound* sound;
+	//Sound* sound;
 	Input* input;
 	const char* mStageName;//ステージの名前
 	bool pose;//ポーズ用
 	CountDownTimer* mInputTimers;//経過した時間
 	Renderer* mRenderer;//描画用
+	Renderer* mBackGround;//背景画
 	Physics* mPhysics;
 };

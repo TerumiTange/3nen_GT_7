@@ -24,22 +24,22 @@ void Renderer::Init()
 	mName = "./Assets/Texture/";
 }
 
-void Renderer::Draw(const Vector2 & pos)
+void Renderer::Draw(const Vector2 & pos)//‰æ‘œ‚ð•`‰æ
 {
 	DrawGraph(pos.x - Camera2d::CameraPos.x, pos.y - Camera2d::CameraPos.y, mGra, TRUE);
 }
 
-void Renderer::Draw(int x, int y)
+void Renderer::Draw(int x, int y)//‰æ‘œ‚ð•`‰æ
 {
 	DrawGraph(x - Camera2d::CameraPos.x, y - Camera2d::CameraPos.y, mGra, TRUE);
 }
 
-void Renderer::Drawb(int x, int y)
+void Renderer::Drawb(int x, int y)//‰æ‘œ‚ð•`‰æ(UI‚ÉŽg—p)
 {
 	DrawGraph(x, y, mGra, TRUE);
 }
 
-void Renderer::DrawE(const Vector2 & pos, int e)
+void Renderer::DrawE(const Vector2 & pos, int e)//‰æ‘œ‚ð•`‰æ(ƒTƒCƒYŽw’è)
 {
 	//DrawGraph(pos.x - Camera2d::CameraPos.x, pos.y - Camera2d::CameraPos.y, mGra, TRUE);
 	DrawExtendGraph(pos.x - Camera2d::CameraPos.x, pos.y - Camera2d::CameraPos.y, pos.x - Camera2d::CameraPos.x+e, pos.y - Camera2d::CameraPos.y+e, mGra, TRUE);

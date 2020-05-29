@@ -3,6 +3,7 @@
 #include "../System/Input.h"
 #include "../System/CountDownTimer.h"
 #include "../Device/Sound.h"
+#include "../Device/Renderer.h"
 
 class Title :public BaseScene
 {
@@ -19,8 +20,10 @@ private:
 	int creditY;//クレジット
 	int choice;//現在選択中
 	CountDownTimer* timer;//入力遅延をわざと起こすよう
-	Sound* sound;
+	//Sound* sound;
 	bool option;
+	Renderer* mGra;//周りの画像
+	Renderer* mBackGra;//背景
 };
 
 enum eMenu
