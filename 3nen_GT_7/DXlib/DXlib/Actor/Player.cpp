@@ -311,7 +311,8 @@ void Player::Draw()//•`‰æ
 	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
-		mStaticElectricity->Draw(mPos->x - 32, mPos->y);
+		//mStaticElectricity->Draw(mPos->x - 32, mPos->y);
+		mStaticElectricity->DrawAlternating(mPos->x, mPos->y, 3);
 	}
 	for (size_t i = 0; i < mHp; ++i)//HP•\Ž¦
 	{

@@ -123,8 +123,8 @@ void Title::Draw()
 	else
 	{
 		DrawString(150, 300, "Title B PUSH", Cr);
-		DrawString(150, startY, "スタート", Cr);//130
-		DrawString(150, creditY, "操作説明", Cr);//210
+		DrawString(150, startY, "スタート", Cr);//380
+		DrawString(150, creditY, "操作説明", Cr);//460
 		int y;
 		switch (choice)
 		{

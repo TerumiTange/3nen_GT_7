@@ -13,7 +13,14 @@ StageSelect::StageSelect(ISceneChanger* changer):
 	stage5Pos(new Vector2(688,352)),
 	stage6Pos(new Vector2(848,352)),
 	mBack(new Renderer("StageSelect")),
-	mSelect(new Renderer("Select"))
+	mRenderer(new Renderer("Number")),
+	mSelect(new Renderer("Select")),
+	mStage1(new Renderer("stage1")),
+	mStage2(new Renderer("stage2")),
+	mStage3(new Renderer("stage3")),
+	mStage4(new Renderer("stage4")),
+	mStage5(new Renderer("stage5")),
+	title(new Renderer("title"))
 	//sound(new Sound())
 {
 	choice = stage1;//最初はステージ1
@@ -34,7 +41,14 @@ StageSelect::~StageSelect()
 	delete(stage6Pos);
 	delete(mBack);
 	delete(mSelect);
+	delete(mRenderer);
+	delete(mStage1);
+	delete(mStage2);
+	delete(mStage3);
+	delete(mStage4);
+	delete(mStage5);
 	//delete(sound);
+	delete(title);
 }
 
 void StageSelect::CSVReader()
@@ -104,24 +118,6 @@ void StageSelect::Update()
 		return;
 	}
 
-	//if (mInput->GetKeyDown(W) || mInput->GetKeyDown(UPARROW) || mInput->PadDown(JoyCode::Joy_Up))//上
-	//{
-	//	//sound->PlaySE("./Assets/Sound/migration.wav");
-	//	SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
-	//	choice = (choice + (eStageNum - 3)) % eStageNum;
-	//	mTimers->SetTime(0.3f);
-	//	return;
-	//}
-	//
-	//if (mInput->GetKeyDown(S) || mInput->GetKeyDown(DOWNARROW) || mInput->PadDown(JoyCode::Joy_Down))//下
-	//{
-	//	//sound->PlaySE("./Assets/Sound/migration.wav");
-	//	SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
-	//	choice = (choice + 3) % eStageNum;
-	//	mTimers->SetTime(0.3f);
-	//	return;
-	//}
-
 
 	if (mInput->Horizontal() > 0)//右
 	{
@@ -140,23 +136,6 @@ void StageSelect::Update()
 		return;
 	}
 
-	//if (mInput->Vertical() > 0)//上
-	//{
-	//	//sound->PlaySE("./Assets/Sound/migration.wav");
-	//	SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
-	//	choice = (choice + (eStageNum - 3)) % eStageNum;
-	//	mTimers->SetTime(0.3f);
-	//	return;
-	//}
-	//
-	//if (mInput->Vertical() > 0)//下
-	//{
-	//	//sound->PlaySE("./Assets/Sound/migration.wav");
-	//	SceneManager::sound->PlaySE("./Assets/Sound/migration.wav");
-	//	choice = (choice + 3) % eStageNum;
-	//	mTimers->SetTime(0.3f);
-	//	return;
-	//}
 }
 
 void StageSelect::Draw()
@@ -178,26 +157,32 @@ void StageSelect::Draw()
 	{
 	case stage1:
 		mSelect->Drawb(stage1Pos->x, stage1Pos->y);
-		DrawFormatString(512, 250, GetColor(255, 255, 255), "%d", Score1);
+		mRenderer->DrawIntegerNumber(Vector2(512, 250), Score1);
+		mStage1->Drawb(352, 100);
 		break;
 	case stage2:
 		mSelect->Drawb(stage2Pos->x, stage2Pos->y);
-		DrawFormatString(512, 250, GetColor(255, 255, 255), "%d", Score2);
+		mRenderer->DrawIntegerNumber(Vector2(512, 250), Score2);
+		mStage2->Drawb(352, 100);
 		break;
 	case stage3:
 		mSelect->Drawb(stage3Pos->x, stage3Pos->y);
-		DrawFormatString(512, 250, GetColor(255, 255, 255), "%d", Score3);
+		mRenderer->DrawIntegerNumber(Vector2(512, 250), Score3);
+		mStage3->Drawb(352, 100);
 		break;
 	case stage4:
 		mSelect->Drawb(stage4Pos->x, stage4Pos->y);
-		DrawFormatString(512, 250, GetColor(255, 255, 255), "%d", Score4);
+		mRenderer->DrawIntegerNumber(Vector2(512, 250), Score4);
+		mStage4->Drawb(352, 100);
 		break;
 	case stage5:
 		mSelect->Drawb(stage5Pos->x, stage5Pos->y);
-		DrawFormatString(512, 250, GetColor(255, 255, 255), "%d", Score5);
+		mRenderer->DrawIntegerNumber(Vector2(512, 250), Score5);
+		mStage5->Drawb(352, 100);
 		break;
 	case stage6:
 		mSelect->Drawb(stage6Pos->x, stage6Pos->y);
+		title->Drawb(352, 100);
 		break;
 	}
 }
