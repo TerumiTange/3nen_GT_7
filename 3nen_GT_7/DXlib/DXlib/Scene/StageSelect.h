@@ -9,6 +9,7 @@
 #include "../Utility/Vector2.h"
 #include "SceneManager.h"
 #include "../Device/Sound.h"
+#include "../Device/Renderer.h"
 
 class StageSelect :public BaseScene
 {
@@ -32,6 +33,8 @@ private:
 	Vector2* stage6Pos;
 	int choice;//Œ»İ‘I‘ğ’†
 	//Sound* sound;
+	Renderer* mBack;
+	Renderer* mSelect;
 
 	int Score1;
 	int Score2;

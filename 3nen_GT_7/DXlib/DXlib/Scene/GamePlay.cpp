@@ -30,6 +30,7 @@ GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 {
 	Actor::SetActorManager(mActorManager);
 	Collider::setPhysics(mPhysics);
+
 }
 
 GamePlay::~GamePlay()
@@ -222,7 +223,7 @@ void GamePlay::Draw()
 	mBackGround->Draw(0, 0);
 	mActorManager->Draw();
 	mRenderer->DrawNumber(Vector2(500, 0), SceneManager::mElapsedTime->Now());
-	mRenderer->DrawIntegerNumber(Vector2(0, 0), SceneManager::score);
+	mRenderer->DrawIntegerNumber(Vector2(800, 0), SceneManager::score);
 
 	if (pose)
 	{
