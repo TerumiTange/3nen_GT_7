@@ -219,6 +219,7 @@ void GamePlay::Draw()
 	mBackGround->Draw(0, 0);
 	mActorManager->Draw();
 	mRenderer->DrawNumber(Vector2(500, 0), SceneManager::mElapsedTime->Now());
+	mRenderer->DrawIntegerNumber(Vector2(0, 0), SceneManager::score);
 
 	if (pose)
 	{

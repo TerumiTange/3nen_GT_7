@@ -24,6 +24,8 @@ private:
 	bool option;
 	Renderer* mGra;//Žü‚è‚Ì‰æ‘œ
 	Renderer* mBackGra;//”wŒi
+	Renderer* mTitleGra;//ƒ^ƒCƒgƒ‹‚Ì‰æ‘œ
+	int mBY;
 };
 
 enum eMenu
