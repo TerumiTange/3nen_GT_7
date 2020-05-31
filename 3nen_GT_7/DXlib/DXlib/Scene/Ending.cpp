@@ -193,6 +193,8 @@ void Ending::Draw()
 	case e_nextstage:
 		if (stage == "stage5"||clear==FALSE)
 		{
+			choice = e_select;
+			y = s;
 			break;
 		}
 		else
