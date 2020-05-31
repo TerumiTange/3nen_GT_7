@@ -112,7 +112,7 @@ void GamePlay::Init()
 	else if (mStageName == "stage5")
 	{
 		enemy->InitM("./Assets/Data/EnemyList5.csv");
-		//enemy->Init("");
+		enemy->Init("./Assets/Data/PatrolList2.csv");
 	}
 	else//—áŠOˆ—
 	{
