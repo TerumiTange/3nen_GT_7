@@ -99,7 +99,7 @@ void PatrolEnemy::Draw()
 		int a = fmod(mUpTimer->Now() * 3, 1);
 		sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
 		SetDrawBright(255, 255, 255);
-		paralRenderer->Draw(mPos->x - 16, mPos->y + 32);
+		paralRenderer->DrawAlternating(mPos->x, mPos->y, 3);
 		return;
 	}
 
