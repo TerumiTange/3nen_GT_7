@@ -24,7 +24,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	paralimitTimer(new CountDownTimer()), //連続で麻痺状態にならないためのタイマー
 	sound(new Sound()),
 	patrolPos(0),
-	mPatrol(true),//巡回状態か？
+	mPatrol(false),//巡回状態か？
 	pspeed(5.0f),
 	mUpTimer(new CountUpTimer())
 {
