@@ -16,8 +16,8 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	staSize(200),//追跡範囲
 	sRenderer(new Renderer("EnemyMove")),//追跡状態の画像
 	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
-	speed(7.0f),//速度
-	paraTime(2.0f),//マヒ時間
+	speed(8.0f),//速度
+	paraTime(4.0f),//マヒ時間
 	paralimitTime(new CountDownTimer()),//マヒ時間のタイマー
 	paral(false),//マヒ状態か？
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
@@ -25,7 +25,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	sound(new Sound()),
 	patrolPos(0),
 	mPatrol(false),//巡回状態か？
-	pspeed(5.0f),
+	pspeed(5.0f),//巡回速度
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
@@ -99,7 +99,7 @@ void PatrolEnemy::Draw()
 		int a = fmod(mUpTimer->Now() * 3, 1);
 		sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
 		SetDrawBright(255, 255, 255);
-		paralRenderer->Draw(mPos->x - 16, mPos->y + 32);
+		paralRenderer->DrawAlternating(mPos->x, mPos->y, 3);
 		return;
 	}
 
@@ -129,112 +129,112 @@ void PatrolEnemy::Draw()
 
 void PatrolEnemy::Hit()
 {
-	for (auto && hit : mCollider->onCollisionStay())
-	{
+	//for (auto && hit : mCollider->onCollisionStay())
+	//{
 
-		if (/*hit->getOwner()->Tag() == "Wall" ||*/
-			hit->getOwner()->Tag() == "FlyEnemy" ||
-			hit->getOwner()->Tag() == "RushEnemy" ||
-			hit->getOwner()->Tag() == "PatrolEnemy")
-		{
-			auto cPosX = hit->getOwner()->Position()->x;
-			auto cPosY = hit->getOwner()->Position()->y;
-			auto cSizeX = hit->getOwner()->Size()->x;
-			auto cSizeY = hit->getOwner()->Size()->y;
+	//	if (hit->getOwner()->Tag() == "Wall" ||
+	//		hit->getOwner()->Tag() == "FlyEnemy" ||
+	//		hit->getOwner()->Tag() == "RushEnemy" ||
+	//		hit->getOwner()->Tag() == "PatrolEnemy")
+	//	{
+	//		auto cPosX = hit->getOwner()->Position()->x;
+	//		auto cPosY = hit->getOwner()->Position()->y;
+	//		auto cSizeX = hit->getOwner()->Size()->x;
+	//		auto cSizeY = hit->getOwner()->Size()->y;
 
-			auto sx = cPosX + (cSizeX / 2);//真ん中
-			auto sy = cPosY + (cSizeY / 2);//真ん中
+	//		auto sx = cPosX + (cSizeX / 2);//真ん中
+	//		auto sy = cPosY + (cSizeY / 2);//真ん中
 
-			Vector2 dir = Vector2(old_x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
+	//		Vector2 dir = Vector2(old_x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
 
-			if (abs(dir.x) > abs(dir.y))
-			{
-				if (dir.x > 0)//相手の右に当たったら
-				{
-					mPos->x = cPosX + mSize->x + 1;
-				}
-				else//左に当たったら
-				{
-					mPos->x = cPosX - mSize->x - 1;
-				}
-			}
-			else
-			{
-				if (dir.y < 0)//相手の下に当たったら
-				{
-					if (direction.y > 0)
-					{
-						mPos->y = cPosY - mSize->y;
-						direction.y = 0;
-					}
-				}
-				else//上に当たったら
-				{
-					mPos->y = cPosY + cSizeY + 1;
-					if (direction.y < 0)
-					{
-						direction.y = 0;
-					}
-				}
-			}
-		}
-	}
+	//		if (abs(dir.x) > abs(dir.y))
+	//		{
+	//			if (dir.x > 0)//相手の右に当たったら
+	//			{
+	//				mPos->x = cPosX + mSize->x + 1;
+	//			}
+	//			else//左に当たったら
+	//			{
+	//				mPos->x = cPosX - mSize->x - 1;
+	//			}
+	//		}
+	//		else
+	//		{
+	//			if (dir.y < 0)//相手の下に当たったら
+	//			{
+	//				if (direction.y > 0)
+	//				{
+	//					mPos->y = cPosY - mSize->y;
+	//					direction.y = 0;
+	//				}
+	//			}
+	//			else//上に当たったら
+	//			{
+	//				mPos->y = cPosY + cSizeY + 1;
+	//				if (direction.y < 0)
+	//				{
+	//					direction.y = 0;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
-	for (auto && hit : mCollider->onCollisionEnter())
-	{
-		auto cPosX = hit->getOwner()->Position()->x;
-		auto cPosY = hit->getOwner()->Position()->y;
-		auto cSizeX = hit->getOwner()->Size()->x;
-		auto cSizeY = hit->getOwner()->Size()->y;
-		auto sx = cPosX + (cSizeX / 2);//真ん中
-		auto sy = cPosY + (cSizeY / 2);//真ん中
-		Vector2 dir = Vector2(mPos->x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
+	//for (auto && hit : mCollider->onCollisionEnter())
+	//{
+	//	auto cPosX = hit->getOwner()->Position()->x;
+	//	auto cPosY = hit->getOwner()->Position()->y;
+	//	auto cSizeX = hit->getOwner()->Size()->x;
+	//	auto cSizeY = hit->getOwner()->Size()->y;
+	//	auto sx = cPosX + (cSizeX / 2);//真ん中
+	//	auto sy = cPosY + (cSizeY / 2);//真ん中
+	//	Vector2 dir = Vector2(mPos->x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
 
-		if (/*hit->getOwner()->Tag() == "Wall" ||*/
-			hit->getOwner()->Tag() == "FlyEnemy" ||
-			hit->getOwner()->Tag() == "RushEnemy" ||
-			hit->getOwner()->Tag() == "PatrolEnemy")
-		{
-			if (abs(dir.x) > abs(dir.y))
-			{
-				if (dir.x > 0)//相手の右に当たったら
-				{
-					mPos->x = cPosX + mSize->x;
-					if (direction.x < 0)
-					{
-						direction.x = 0;
-					}
-				}
-				else//左に当たったら
-				{
-					mPos->x = cPosX - mSize->x;
-					if (direction.x < 0)
-					{
-						direction.x = 0;
-					}
-				}
-			}
-			else
-			{
-				if (dir.y < 0)//相手の下に当たったら
-				{
-					mPos->y = cPosY - mSize->y;
-					if (direction.y > 0)
-					{
-						mPos->y = cPosY - mSize->y;
-					}
-				}
-				else//上に当たったら
-				{
-					mPos->y = cPosY + cSizeY + 1;
-					if (direction.y < 0)
-					{
-						direction.y = 0;
-					}
-				}
-			}
-		}
-	}
+	//	if (hit->getOwner()->Tag() == "Wall" ||
+	//		hit->getOwner()->Tag() == "FlyEnemy" ||
+	//		hit->getOwner()->Tag() == "RushEnemy" ||
+	//		hit->getOwner()->Tag() == "PatrolEnemy")
+	//	{
+	//		if (abs(dir.x) > abs(dir.y))
+	//		{
+	//			if (dir.x > 0)//相手の右に当たったら
+	//			{
+	//				mPos->x = cPosX + mSize->x;
+	//				if (direction.x < 0)
+	//				{
+	//					direction.x = 0;
+	//				}
+	//			}
+	//			else//左に当たったら
+	//			{
+	//				mPos->x = cPosX - mSize->x;
+	//				if (direction.x < 0)
+	//				{
+	//					direction.x = 0;
+	//				}
+	//			}
+	//		}
+	//		else
+	//		{
+	//			if (dir.y < 0)//相手の下に当たったら
+	//			{
+	//				mPos->y = cPosY - mSize->y;
+	//				if (direction.y > 0)
+	//				{
+	//					mPos->y = cPosY - mSize->y;
+	//				}
+	//			}
+	//			else//上に当たったら
+	//			{
+	//				mPos->y = cPosY + cSizeY + 1;
+	//				if (direction.y < 0)
+	//				{
+	//					direction.y = 0;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 void PatrolEnemy::ToPlayer()
