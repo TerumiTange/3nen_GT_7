@@ -16,8 +16,8 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	staSize(200),//追跡範囲
 	sRenderer(new Renderer("EnemyMove")),//追跡状態の画像
 	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
-	speed(8.0f),//速度
-	paraTime(4.0f),//マヒ時間
+	speed(7.0f),//速度
+	paraTime(2.0f),//マヒ時間
 	paralimitTime(new CountDownTimer()),//マヒ時間のタイマー
 	paral(false),//マヒ状態か？
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
@@ -132,7 +132,7 @@ void PatrolEnemy::Hit()
 	for (auto && hit : mCollider->onCollisionStay())
 	{
 
-		if (hit->getOwner()->Tag() == "Wall" ||
+		if (/*hit->getOwner()->Tag() == "Wall" ||*/
 			hit->getOwner()->Tag() == "FlyEnemy" ||
 			hit->getOwner()->Tag() == "RushEnemy" ||
 			hit->getOwner()->Tag() == "PatrolEnemy")
@@ -190,7 +190,7 @@ void PatrolEnemy::Hit()
 		auto sy = cPosY + (cSizeY / 2);//真ん中
 		Vector2 dir = Vector2(mPos->x + (mSize->x / 2), mPos->y + (mSize->y / 2)) - Vector2(sx, sy);
 
-		if (hit->getOwner()->Tag() == "Wall" ||
+		if (/*hit->getOwner()->Tag() == "Wall" ||*/
 			hit->getOwner()->Tag() == "FlyEnemy" ||
 			hit->getOwner()->Tag() == "RushEnemy" ||
 			hit->getOwner()->Tag() == "PatrolEnemy")
