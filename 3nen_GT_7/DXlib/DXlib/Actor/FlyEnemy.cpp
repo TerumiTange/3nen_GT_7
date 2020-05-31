@@ -85,7 +85,8 @@ void FlyEnemy::Draw()
 		int a = fmod(mUpTimer->Now() * 3, 1);
 		sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
 		SetDrawBright(255, 255, 255);
-		paralRenderer->DrawAlternating(mPos->x, mPos->y, 3);
+		int b = fmod(mUpTimer->Now() * 3, 3);
+		paralRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), b, *mSize, FALSE);
 		return;
 	}
 

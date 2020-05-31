@@ -312,7 +312,7 @@ void Player::Draw()//•`‰æ
 	if (mNowMovingFast)
 	{
 		//mStaticElectricity->Draw(mPos->x - 32, mPos->y);
-		mStaticElectricity->DrawAlternating(mPos->x, mPos->y, 3);
+		mStaticElectricity->DrawAlternating(mPos->x+8, mPos->y + 5, 3);
 	}
 	for (size_t i = 0; i < mHp; ++i)//HP•\Ž¦
 	{
