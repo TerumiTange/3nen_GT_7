@@ -13,11 +13,11 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	mFall(false),//重力
 	mRight(true),
 	mStalker(false),//追跡状態か？
-	staSize(200),//追跡範囲
+	staSize(120),//追跡範囲
 	sRenderer(new Renderer("EnemyMove")),//追跡状態の画像
 	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
-	speed(8.0f),//速度
-	paraTime(4.0f),//マヒ時間
+	speed(6.0f),//速度
+	paraTime(3.0f),//マヒ時間
 	paralimitTime(new CountDownTimer()),//マヒ時間のタイマー
 	paral(false),//マヒ状態か？
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
@@ -25,7 +25,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	sound(new Sound()),
 	patrolPos(0),
 	mPatrol(false),//巡回状態か？
-	pspeed(5.0f),//巡回速度
+	pspeed(8.0f),//巡回速度
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;

@@ -260,7 +260,7 @@ void Player::Damage()//ƒ_ƒ[ƒW
 	if (mHp <= 0)//‘Ì—Í‚ª‚È‚­‚È‚Á‚½‚ç
 	{
 		sound->PlaySEF("./Assets/Sound/pdeth.wav");
-		Destroy(this, 3.f);//3•bŒã‚É€–S
+		Destroy(this, 1.f);//3•bŒã‚É€–S
 	}
 }
 
