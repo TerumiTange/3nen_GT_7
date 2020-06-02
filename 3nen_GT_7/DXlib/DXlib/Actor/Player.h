@@ -67,6 +67,7 @@ private:
 	Renderer* mContent;//回数の中身
 	Renderer* mFrame;//回数の周り
 	CountUpTimer* mUpTimer;
+	Renderer* mDamage;
 
 	int old_x;//動く前のX座標
 	int old_y;//動く前のY座標

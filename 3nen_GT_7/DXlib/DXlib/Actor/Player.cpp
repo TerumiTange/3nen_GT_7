@@ -41,7 +41,8 @@ Player::Player(const Vector2& position, const char* tag) :
 	mContent(new Renderer("content")),
 	mFrame(new Renderer("frame")),
 	mRight(false),
-	mUpTimer(new CountUpTimer())
+	mUpTimer(new CountUpTimer()),
+	mDamage(new Renderer("Damage"))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -77,6 +78,7 @@ void Player::End()//メモリの開放
 	delete(mContent);
 	delete(mFrame);
 	delete(mUpTimer);
+	delete(mDamage);
 }
 
 void Player::Update()
@@ -277,10 +279,10 @@ void Player::Recovery()//体力回復
 void Player::Draw()//描画
 {
 	//mRenderer->Draw(*mPos);
-	if (!mCountTimer->IsTime())
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 / 2);
-	}
+	//if (!mCountTimer->IsTime())
+	//{
+	//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 / 2);
+	//}
 	if (mMovingFast)
 	{
 		mAttackImages->Draw(*mPos);
@@ -308,10 +310,13 @@ void Player::Draw()//描画
 		}
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//アルファ値最大
-
-	if (!mCountTimer->IsTime())
+	
+	if (!mCountTimer->IsTime())//ダメージを受けたら
 	{
-		DrawString(mPos->x - 10, mPos->y - 32, "ダメージ", GetColor(255, 0, 0));
+		//DrawString(mPos->x - 10, mPos->y - 32, "ダメージ", GetColor(255, 0, 0));
+		SetDrawBright(200, 100, 100);
+		mDamage->Draw(mPos->x, mPos->y - 32);
+		SetDrawBright(255, 255, 255);
 	}
 
 	//mRenderer->DrawE(*mPos, 64);
