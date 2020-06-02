@@ -57,6 +57,8 @@ private:
 	CountDownTimer* paralimitTimer;//連続で麻痺状態にならないためのタイマー
 
 	Sound* sound;//音
+	Renderer* bomRenderer;
 
 	CountUpTimer* mUpTimer;
+
 };

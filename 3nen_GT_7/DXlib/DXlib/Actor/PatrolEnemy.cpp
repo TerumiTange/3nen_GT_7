@@ -26,6 +26,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	patrolPos(0),
 	mPatrol(false),//„‰ñó‘Ô‚©H
 	pspeed(5.0f),//„‰ñ‘¬“x
+	bomRenderer(new Renderer("BOMEFFECT")),
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
@@ -60,6 +61,7 @@ void PatrolEnemy::End()
 	sound->Init();
 	delete(sound);
 	delete(mUpTimer);
+	delete(bomRenderer);
 
 	patrolPos.clear();
 }
@@ -71,7 +73,6 @@ void PatrolEnemy::Update()
 	if (GetDeath())return;
 	playerHitTimer->Update();
 	paralimitTimer->Update();
-	mUpTimer->Update();
 	Paralise();
 
 	if (direction.x < 0) mRight = false;
@@ -86,9 +87,11 @@ void PatrolEnemy::Update()
 
 void PatrolEnemy::Draw()
 {
+	mUpTimer->Update();
 	if (GetDeath())
 	{
-		//‚±‚±‚É”š”­‚Ì•`‰æ‚ð
+		int d = fmod(mUpTimer->Now() * 10, 9);
+		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
 		return;
 	}
 
@@ -99,7 +102,7 @@ void PatrolEnemy::Draw()
 		int a = fmod(mUpTimer->Now() * 3, 1);
 		sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
 		SetDrawBright(255, 255, 255);
-		int b = fmod(mUpTimer->Now() * 3, 3);
+		int b = fmod(mUpTimer->Now() * 10, 3);
 		paralRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), b, *mSize, FALSE);
 		return;
 	}

@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "../Collider/ComponentManager.h"
 
+#include "../Map/Map.h"
+
 FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
 	mCollider(new ColliderComponent(this)),
@@ -23,6 +25,7 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
 	paralimitTimer(new CountDownTimer()), //連続で麻痺状態にならないためのタイマー
 	sound(new Sound()),
+	bomRenderer(new Renderer("BOMEFFECT")),
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
@@ -50,6 +53,7 @@ void FlyEnemy::End()
 	sound->Init();
 	delete(sound);
 	delete(mUpTimer);
+	delete(bomRenderer);
 }
 
 void FlyEnemy::Update()
@@ -58,7 +62,6 @@ void FlyEnemy::Update()
 
 	playerHitTimer->Update();//
 	paralimitTimer->Update();//
-	mUpTimer->Update();
 	Paralise();//
 
 	if (direction.x < 0) mRight = false;
@@ -72,9 +75,12 @@ void FlyEnemy::Update()
 
 void FlyEnemy::Draw()
 {
+
+	mUpTimer->Update();
 	if (GetDeath())
 	{
-		//ここに爆発の描画を
+		int d = fmod(mUpTimer->Now() * 10, 9);
+		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
 		return;
 	}
 
@@ -85,7 +91,7 @@ void FlyEnemy::Draw()
 		int a = fmod(mUpTimer->Now() * 3, 1);
 		sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
 		SetDrawBright(255, 255, 255);
-		int b = fmod(mUpTimer->Now() * 3, 3);
+		int b = fmod(mUpTimer->Now() * 10, 3);
 		paralRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), b, *mSize, FALSE);
 		return;
 	}
@@ -112,7 +118,6 @@ void FlyEnemy::Draw()
 			sRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), l, *mSize, TRUE);
 		}
 	}
-
 }
 
 void FlyEnemy::Hit()
@@ -431,6 +436,23 @@ void FlyEnemy::Move()
 		mPos->x += direction.x*speed;
 		mPos->y += direction.y*speed;
 
+	}
+
+	if (mPos->x < 32)
+	{
+		mPos->x = 32;
+	}
+	if (mPos->x > Map::width * 32 - 64)
+	{
+		mPos->x = Map::width * 32 - 64;
+	}
+	if (mPos->y < 33)
+	{
+		mPos->y = 33;
+	}
+	if (mPos->y > Map::height * 32 - 64)
+	{
+		mPos->y = Map::height * 32 - 64;
 	}
 }
 

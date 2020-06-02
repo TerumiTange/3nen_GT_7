@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "../Collider//ComponentManager.h"
 
+#include "../Map/Map.h"
+
 RushEnemy::RushEnemy(const Vector2 & pos, const char * tag) :
 	Actor(tag),
 	mCollider(new ColliderComponent(this)),
@@ -13,20 +15,25 @@ RushEnemy::RushEnemy(const Vector2 & pos, const char * tag) :
 	mFall(false),//重力
 	mRight(true),
 	mStalker(false),//追跡状態か？
-	staSize(200),//追跡範囲
+	staSize(150),//追跡範囲
 	sRenderer(new Renderer("Enemy3")),//追跡状態の画像
 	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
-	speed(250.0f),//速度
+	speed(8.0f),//速度
 	paraTime(4.0f),//マヒ時間
 	paralimitTime(new CountDownTimer()),//マヒ時間のタイマー
 	paral(false),//マヒ状態か？
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
 	paralimitTimer(new CountDownTimer()), //連続で麻痺状態にならないためのタイマー
 	sound(new Sound()),
-	atTime(2.0f),
+	atTime(1.0f),
 	attackTimer(new CountDownTimer(0.0f)),
 	rush(false),
-	mUpTimer(new CountUpTimer())
+	mVelocity(new Vector2(0, 0)),
+	bomRenderer(new Renderer("BOMEFFECT")),
+	mUpTimer(new CountUpTimer()),
+	isRush(false),
+	moveTime(1.0f),
+	moveTimer(new CountDownTimer(moveTime))
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -53,7 +60,10 @@ void RushEnemy::End()
 	sound->Init();
 	delete(sound);
 	delete(attackTimer);
+	delete(mVelocity);
 	delete(mUpTimer);
+	delete(moveTimer);
+	delete(bomRenderer);
 }
 
 void RushEnemy::Update()
@@ -62,7 +72,6 @@ void RushEnemy::Update()
 
 	playerHitTimer->Update();
 	paralimitTimer->Update();
-	mUpTimer->Update();
 	Paralise();
 
 	if (direction.x < 0) mRight = false;
@@ -76,9 +85,11 @@ void RushEnemy::Update()
 
 void RushEnemy::Draw()
 {
+	mUpTimer->Update();
 	if (GetDeath())
 	{
-		//ここに爆発の描画を
+		int d = fmod(mUpTimer->Now() * 10, 9);
+		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
 		return;
 	}
 
@@ -89,7 +100,7 @@ void RushEnemy::Draw()
 		int a = fmod(mUpTimer->Now() * 3, 2);
 		mRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), a, *mSize, FALSE);
 		SetDrawBright(255, 255, 255);
-		int b = fmod(mUpTimer->Now() * 3, 3);
+		int b = fmod(mUpTimer->Now() * 10, 3);
 		paralRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), b, *mSize, FALSE);
 		return;
 	}
@@ -237,30 +248,43 @@ void RushEnemy::ToPlayer()
 	}
 }
 
+
 void RushEnemy::Rush()
 {
 	pPos = GetActorManager()->GetPlayer()->GetPosition();
 	ToPlayer();
-	//追跡状態でマヒ状態でなければ
+
+	//追いかける状態で麻痺状態でなければ
 	if (mStalker && !paral)
 	{
-		attackTimer->Update();
+		//ここに動く処理を
+		Actor::SetPos(*mPos);
+		old_x = mPos->x;
+		old_y = mPos->y;
+		direction.x = pPos.x - old_x;
+		direction.y = pPos.y - old_y;
+		direction.normalize();
 
-		if (attackTimer->IsTime())
-		{
-			psPos = pPos;
-			Actor::SetPos(*mPos);
-			old_x = mPos->x;
-			old_y = mPos->y;
-			direction.x = psPos.x - old_x;
-			direction.y = psPos.y - old_y;
-			direction.normalize();
+		mPos->x += direction.x*speed;
+		mPos->y += direction.y*speed;
 
-			mPos->x += direction.x*speed;
-			mPos->y += direction.y*speed;
+	}
 
-			attackTimer->SetTime(atTime);
-		}
+	if (mPos->x < 32)
+	{
+		mPos->x = 32;
+	}
+	if (mPos->x > Map::width * 32 - 64)
+	{
+		mPos->x = Map::width * 32 - 64;
+	}
+	if (mPos->y < 33)
+	{
+		mPos->y = 33;
+	}
+	if (mPos->y > Map::height * 32 - 64)
+	{
+		mPos->y = Map::height * 32 - 64;
 	}
 }
 

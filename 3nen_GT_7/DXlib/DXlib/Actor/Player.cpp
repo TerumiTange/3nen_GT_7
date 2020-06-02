@@ -11,7 +11,7 @@ Player::Player(const Vector2& position, const char* tag) :
 	Actor(tag),
 	mCollider(new ColliderComponent(this)),
 	mMaxHp(4),										  //Å‘å‘Ì—Í
-	mHp(4),											  //Œ»İ‚Ì‘Ì—Í
+	mHp(5),											  //Œ»İ‚Ì‘Ì—Í
 	mInvincibleTime(4),								  //–³“GŠÔ
 	mPos(new Vector2(0, 0)),							  //Œ»İ‚ÌˆÊ’u
 	mVelocity(new Vector2(0, 0)),					  //ˆÚ“®—Ê

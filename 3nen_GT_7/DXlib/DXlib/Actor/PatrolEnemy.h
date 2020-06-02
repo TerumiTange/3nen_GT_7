@@ -65,5 +65,6 @@ private:
 	int patrolcount;
 	Vector2 a;
 	float pspeed;
+	Renderer* bomRenderer;
 	CountUpTimer* mUpTimer;
 };

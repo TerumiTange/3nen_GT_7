@@ -24,6 +24,7 @@ public:
 	virtual void Hit()override;
 
 	void ToPlayer();
+	void Move();
 	void Rush();
 	void Paralise();
 	//bool CheckHit(int x, int y, int width, int height);
@@ -60,6 +61,13 @@ private:
 	CountDownTimer* attackTimer;//
 	bool rush;
 	Vector2 psPos;
+	Vector2* mVelocity;
+	Renderer* bomRenderer;
 
 	CountUpTimer* mUpTimer;
+
+	bool isRush;
+
+	float moveTime;
+	CountDownTimer* moveTimer;
 };
