@@ -230,7 +230,7 @@ void GamePlay::Draw()
 	if (mStageName == "stage1")
 	{
 		mExplain1->Draw(250, 400);
-		mExplain2->Draw(750, 250);
+		mExplain2->Draw(500, 365);
 		mExplain3->Draw(775, 400);
 	}
 
