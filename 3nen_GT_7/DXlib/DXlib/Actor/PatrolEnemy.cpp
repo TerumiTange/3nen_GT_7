@@ -25,12 +25,9 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	sound(new Sound()),
 	patrolPos(0),
 	mPatrol(false),//巡回状態か？
-<<<<<<< HEAD
-	pspeed(5.0f),//巡回速度
+	/*pspeed(5.0f),//巡回速度*/
 	bomRenderer(new Renderer("BOMEFFECT")),
-=======
 	pspeed(8.0f),//巡回速度
->>>>>>> 527e6b36558b685cf01b5fdc97ef0cc4b5839993
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;

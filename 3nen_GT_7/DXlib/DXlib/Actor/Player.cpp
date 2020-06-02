@@ -10,9 +10,9 @@
 Player::Player(const Vector2& position, const char* tag) :
 	Actor(tag),
 	mCollider(new ColliderComponent(this)),
-	mMaxHp(4),										  //最大体力
+	mMaxHp(5),										  //最大体力
 	mHp(5),											  //現在の体力
-	mInvincibleTime(4),								  //無敵時間
+	mInvincibleTime(5),								  //無敵時間
 	mPos(new Vector2(0, 0)),							  //現在の位置
 	mVelocity(new Vector2(0, 0)),					  //移動量
 	maxSpeed(7),									  //最大スピード
@@ -32,7 +32,7 @@ Player::Player(const Vector2& position, const char* tag) :
 	mMovingFast(false),								  //高速移動しているかどうか
 	mMovingFastCount(3),							  //高速移動できる回数
 	mMovingFastMaxCount(3),							  //最大高速移動の回数ー
-	mMovingFastAmount(15),							  //高速移動の移動量
+	mMovingFastAmount(13),							  //高速移動の移動量
 	mNowMovingFastTimer(new CountDownTimer()),        //高速移動状態のタイマー
 	mNowMovingFastTime(0.2f),						  //高速移動状態の時間
 	mNowMovingFast(false),							  //高速移動した瞬間
