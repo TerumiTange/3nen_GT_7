@@ -26,7 +26,10 @@ GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	mInputTimers(new CountDownTimer()),
 	mRenderer(new Renderer("Number")),
 	mPhysics(new Physics()),
-	mBackGround(new Renderer("Background"))
+	mBackGround(new Renderer("Background")),
+	mExplain1(new Renderer("explanation1")),
+	mExplain2(new Renderer("explanation2")),
+	mExplain3(new Renderer("explanation3"))
 {
 	Actor::SetActorManager(mActorManager);
 	Collider::setPhysics(mPhysics);
@@ -42,6 +45,9 @@ GamePlay::~GamePlay()
 	delete(mInputTimers);
 	delete(mRenderer);
 	delete(mBackGround);
+	delete(mExplain1);
+	delete(mExplain2);
+	delete(mExplain3);
 
 	//sound->StopBGM("./Assets/Sound/GamePlay.mp3");
 	SceneManager::sound->StopBGM("./Assets/Sound/GamePlay.mp3");
@@ -221,6 +227,13 @@ void GamePlay::Update()
 void GamePlay::Draw()
 {
 	mBackGround->Draw(0, 0);
+	if (mStageName == "stage1")
+	{
+		mExplain1->Draw(250, 400);
+		mExplain2->Draw(750, 250);
+		mExplain3->Draw(775, 400);
+	}
+
 	mActorManager->Draw();
 	mRenderer->DrawNumber(Vector2(500, 0), SceneManager::mElapsedTime->Now());
 	mRenderer->DrawIntegerNumber(Vector2(800, 0), SceneManager::score);

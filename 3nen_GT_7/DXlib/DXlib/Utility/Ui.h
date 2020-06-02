@@ -12,7 +12,6 @@ public:
 
 	void Init();
 	void Active(bool set);
-	void Draw();
 	void Gauge(int volum,int maxVolum);
 	void Cell(int volum, int maxVolum);
 
