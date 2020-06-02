@@ -308,6 +308,12 @@ void Player::Draw()//描画
 		}
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//アルファ値最大
+
+	if (!mCountTimer->IsTime())
+	{
+		DrawString(mPos->x - 10, mPos->y - 32, "ダメージ", GetColor(255, 0, 0));
+	}
+
 	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{

@@ -87,7 +87,7 @@ void ActorManager::Draw()
 	{
 		auto c = Camera2d::CameraPos;
 		auto a = mParalActors.front()->Position();
-		DrawLine(a->x - c.x, a->y - c.y, pa->Position()->x - c.x, pa->Position()->y - c.y, GetColor(255, 255, 0));
+		DrawLine(a->x - c.x, a->y - c.y, pa->Position()->x + 16 - c.x, pa->Position()->y + 16 - c.y, GetColor(255, 255, 0));
 	}
 	mParalActors.clear();
 	if (!GetPlayer())return;
