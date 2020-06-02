@@ -32,5 +32,8 @@ private:
 	CountDownTimer* mInputTimers;//Œo‰ß‚µ‚½ŠÔ
 	Renderer* mRenderer;//•`‰æ—p
 	Renderer* mBackGround;//”wŒi‰æ
+	Renderer* mExplain1;//‘€ìà–¾1
+	Renderer* mExplain2;//‘€ìà–¾2
+	Renderer* mExplain3;//‘€ìà–¾3
 	Physics* mPhysics;
 };
