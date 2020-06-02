@@ -18,8 +18,8 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	staSize(200),//追跡範囲
 	sRenderer(new Renderer("EnemyTargetOn")),//追跡状態の画像
 	paralRenderer(new Renderer("ThunderEffect")),//マヒ状態の画像
-	speed(5.0f),//速度
-	paraTime(4.0f),//麻痺時間
+	speed(4.0f),//速度
+	paraTime(1.5f),//麻痺時間
 	paralimitTime(new CountDownTimer()),//麻痺時間のタイマー
 	paral(false),//麻痺状態かどうか
 	playerHitTimer(new CountDownTimer()),//プレイヤーとの連続ヒットを防ぐため（これがないとあたった瞬間に死ぬ）
