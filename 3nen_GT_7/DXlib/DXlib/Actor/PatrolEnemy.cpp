@@ -25,12 +25,8 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	sound(new Sound()),
 	patrolPos(0),
 	mPatrol(false),//„‰ñó‘Ô‚©H
-<<<<<<< HEAD
 	pspeed(5.0f),//„‰ñ‘¬“x
 	bomRenderer(new Renderer("BOMEFFECT")),
-=======
-	pspeed(8.0f),//„‰ñ‘¬“x
->>>>>>> 527e6b36558b685cf01b5fdc97ef0cc4b5839993
 	mUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
