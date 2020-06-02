@@ -480,13 +480,13 @@ void Player::Hit()
 			{
 				if (hit->getOwner()->GetElectricShock())
 				{
-					float count = 0.5f;
+					float count = 0.1f;
 					Destroy(hit->getOwner(), count);
 					for (auto && ac : GetActorManager()->getActorList())
 					{
 						if (ac->GetElectricShock())
 						{
-							count += 0.1f;
+							count += 0.15f;
 							SceneManager::score += (count * 100);
 							Destroy(ac, count);
 						}
