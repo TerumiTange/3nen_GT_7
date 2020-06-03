@@ -26,6 +26,7 @@ public:
 	//bool CheckHit(int x, int y, int width, int height);
 	//bool CheckHit2(int x, int y, int width, int height,int p);
 
+	void DeathUpdate();
 	void Move();
 	void Fall();
 	//void Stalker();
@@ -60,5 +61,5 @@ private:
 	Renderer* bomRenderer;
 
 	CountUpTimer* mUpTimer;
-
+	CountUpTimer* deathUpTimer;
 };

@@ -23,6 +23,7 @@ public:
 	virtual void Draw()override;
 	virtual void Hit()override;
 
+	void DeathUpdate();
 	void ToPlayer();
 	void Move();
 	void Rush();
@@ -70,4 +71,5 @@ private:
 
 	float moveTime;
 	CountDownTimer* moveTimer;
+	CountUpTimer* deathUpTimer;
 };

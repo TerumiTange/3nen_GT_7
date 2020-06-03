@@ -33,7 +33,8 @@ RushEnemy::RushEnemy(const Vector2 & pos, const char * tag) :
 	mUpTimer(new CountUpTimer()),
 	isRush(false),
 	moveTime(1.0f),
-	moveTimer(new CountDownTimer(moveTime))
+	moveTimer(new CountDownTimer(moveTime)),
+	deathUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -64,6 +65,7 @@ void RushEnemy::End()
 	delete(mUpTimer);
 	delete(moveTimer);
 	delete(bomRenderer);
+	delete(deathUpTimer);
 }
 
 void RushEnemy::Update()
@@ -72,6 +74,7 @@ void RushEnemy::Update()
 
 	playerHitTimer->Update();
 	paralimitTimer->Update();
+	mUpTimer->Update();
 	Paralise();
 
 	if (direction.x < 0) mRight = false;
@@ -83,12 +86,17 @@ void RushEnemy::Update()
 	}
 }
 
+void RushEnemy::DeathUpdate()
+{
+	deathUpTimer->Update();
+}
+
 void RushEnemy::Draw()
 {
-	mUpTimer->Update();
 	if (GetDeath())
 	{
-		int d = fmod(mUpTimer->Now() * 10, 9);
+		DeathUpdate();
+		int d = fmod(deathUpTimer->Now() * 10, 9);
 		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
 		return;
 	}

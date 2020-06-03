@@ -24,6 +24,7 @@ public:
 	virtual void Draw()override;
 	virtual void Hit()override;
 
+	void DeathUpdate();
 	void ToPlayer();
 	void Move();
 	void Paralise();
@@ -67,4 +68,5 @@ private:
 	float pspeed;
 	Renderer* bomRenderer;
 	CountUpTimer* mUpTimer;
+	CountUpTimer* deathUpTimer;
 };

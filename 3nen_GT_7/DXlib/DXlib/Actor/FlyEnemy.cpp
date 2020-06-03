@@ -26,7 +26,8 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	paralimitTimer(new CountDownTimer()), //連続で麻痺状態にならないためのタイマー
 	sound(new Sound()),
 	bomRenderer(new Renderer("BOMEFFECT")),
-	mUpTimer(new CountUpTimer())
+	mUpTimer(new CountUpTimer()),
+	deathUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -54,6 +55,7 @@ void FlyEnemy::End()
 	delete(sound);
 	delete(mUpTimer);
 	delete(bomRenderer);
+	delete(deathUpTimer);
 }
 
 void FlyEnemy::Update()
@@ -62,6 +64,7 @@ void FlyEnemy::Update()
 
 	playerHitTimer->Update();//
 	paralimitTimer->Update();//
+	mUpTimer->Update();
 	Paralise();//
 
 	if (direction.x < 0) mRight = false;
@@ -73,13 +76,18 @@ void FlyEnemy::Update()
 	}
 }
 
+void FlyEnemy::DeathUpdate()
+{
+	deathUpTimer->Update();
+}
+
 void FlyEnemy::Draw()
 {
 
-	mUpTimer->Update();
 	if (GetDeath())
 	{
-		int d = fmod(mUpTimer->Now() * 10, 9);
+		DeathUpdate();
+		int d = fmod(deathUpTimer->Now() * 10, 9);
 		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
 		return;
 	}

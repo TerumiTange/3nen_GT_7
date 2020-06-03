@@ -28,7 +28,8 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	/*pspeed(5.0f),//„‰ñ‘¬“x*/
 	bomRenderer(new Renderer("BOMEFFECT")),
 	pspeed(8.0f),//„‰ñ‘¬“x
-	mUpTimer(new CountUpTimer())
+	mUpTimer(new CountUpTimer()),
+	deathUpTimer(new CountUpTimer())
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -63,6 +64,7 @@ void PatrolEnemy::End()
 	delete(sound);
 	delete(mUpTimer);
 	delete(bomRenderer);
+	delete(deathUpTimer);
 
 	patrolPos.clear();
 }
@@ -74,6 +76,7 @@ void PatrolEnemy::Update()
 	if (GetDeath())return;
 	playerHitTimer->Update();
 	paralimitTimer->Update();
+	mUpTimer->Update();
 	Paralise();
 
 	if (direction.x < 0) mRight = false;
@@ -86,12 +89,17 @@ void PatrolEnemy::Update()
 	}
 }
 
-void PatrolEnemy::Draw()
+void PatrolEnemy::DeathUpdate()
 {
-	mUpTimer->Update();
+	deathUpTimer->Update();
+}
+
+void PatrolEnemy::Draw()
+{	
 	if (GetDeath())
 	{
-		int d = fmod(mUpTimer->Now() * 10, 9);
+		DeathUpdate();
+		int d = fmod(deathUpTimer->Now() * 10, 9);
 		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
 		return;
 	}
