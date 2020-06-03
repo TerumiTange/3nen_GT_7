@@ -19,9 +19,7 @@ private:
 	Input* input;
 	Renderer* mNumber;
 	//Sound* sound;
-	int s;//セレクト
-	int r;//リスタート
-	int n;//次のステージへ
+
 	int choice;//現在選択中
 	CountDownTimer* timer;//遅延用
 	bool NewScore;
@@ -29,13 +27,18 @@ private:
 	int numScore;//合計スコア
 	bool clear;
 	std::string stage;
+
+	Renderer* mGOverGra;
+	Renderer* mChoiceGra;
+	Renderer* mClear1;
+	Renderer* mClear2;
+	bool mC;//画面が2かどうか
 };
 
 enum EndMenu
 {
 	e_select,
 	e_restart,
-	e_nextstage,
 
 	endNum
 };

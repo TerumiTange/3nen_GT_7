@@ -9,13 +9,16 @@ Ending::Ending(ISceneChanger * changer) :
 	mNumber(new Renderer("Number")),
 	//sound(new Sound()),
 	timer(new CountDownTimer()),
-	NewScore(false)
+	NewScore(false),
+	mGOverGra(new Renderer("GameOver")),
+	mChoiceGra(new Renderer("Choice")),
+	mClear1(new Renderer("Result1")),
+	mClear2(new Renderer("Result2")),
+	mC(false)
 {
-	s = 350;
-	r = 400;
-	n = 450;
-	choice = e_select;
+	choice = e_restart;
 	clear = SceneManager::gameClear;
+	clear = true;
 }
 
 Ending::~Ending()
@@ -27,6 +30,10 @@ Ending::~Ending()
 	delete(input);
 	delete(mNumber);
 	delete(timer);
+	delete(mGOverGra);
+	delete(mChoiceGra);
+	delete(mClear1);
+	delete(mClear2);
 	//delete(sound);
 }
 
@@ -92,14 +99,20 @@ void Ending::Update()
 
 	input->JoyUpdate();
 	timer->Update();
+	if (!timer->IsTime())return;
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
 	{
 		//sound->PlaySE("./Assets/Sound/kettei.wav");
+		if (!mC&&clear)
+		{
+			mC = true;
+			timer->SetTime(0.3f);
+			return;
+		}
 		SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
 	}
-	if (!timer->IsTime())return;
-
+	if (!mC && clear)return;
 	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down))//下
 	{
 		//sound->PlaySE("./Assets/Sound/migration.wav");
@@ -138,73 +151,71 @@ void Ending::Update()
 
 void Ending::Draw()
 {
-	int Cr = GetColor(255, 0, 0);
-	SetFontSize(32);
 	if (clear)
 	{
-		int figure;//タイムの秒数(整数)
-		figure = SceneManager::mElapsedTime->Now();
-		for (auto count = 1;; ++count)
+		//int figure;//タイムの秒数(整数)
+		//figure = SceneManager::mElapsedTime->Now();
+		//for (auto count = 1;; ++count)
+		//{
+		//	if (figure < 10)
+		//	{
+		//		figure = count;//桁数になる
+		//		//continue;
+		//		break;
+		//	}
+		//	figure /= 10;
+		//}
+
+		if (mC)
 		{
-			if (figure < 10)
+			mClear2->Drawb(0, 0);
+
+			int y;
+			switch (choice)
 			{
-				figure = count;//桁数になる
-				//continue;
+			case e_select:
+				y = 320;
+				break;
+			case e_restart:
+				y = 80;
 				break;
 			}
-			figure /= 10;
-		}
-		DrawString(380, 50, "ゲームクリア", Cr);
-		DrawFormatString(380, 100, Cr, "スコア：%d", SceneManager::score);//ゲームによるスコア表示
-		DrawString(380, 150, "タイムスコア", Cr);
-		mNumber->DrawNumber(Vector2(396 - (32 * figure), 200) , SceneManager::mElapsedTime->Now());//かかった時間表示
-		DrawFormatString(500, 200, Cr, " : %d", timeScore);//タイムによるスコア表示
-		DrawFormatString(380, 250, Cr, "トータルスコア：%d", numScore);//合計スコア表示
-		if (NewScore)
-		{
-			DrawString(380, 300, "ハイスコア更新！！", Cr);
-		}
-	}
-	else
-	{
-		DrawString(380, 50, "ゲームオーバー", Cr);
-	}
-	
-	
-	DrawString(380, s, "ゲームセレクトへ", Cr);
-	DrawString(380, r, "もう一度同じステージで遊ぶ", Cr);
-	if (stage == "stage5" || clear == FALSE)
-	{
 
-	}
-	else
-	{
-		DrawString(380, n, "次のステージへ", Cr);
-	}
-	int y;
-	switch (choice)
-	{
-	case e_select:
-		y = s;
-		break;
-	case e_restart:
-		y = r;
-		break;
-	case e_nextstage:
-		if (stage == "stage5"||clear==FALSE)
-		{
-			choice = e_select;
-			y = s;
-			break;
+			mChoiceGra->Drawb(320, y);
 		}
 		else
 		{
-			y = n;
+			mClear1->Drawb(0, 0);
+			mNumber->DrawIntegerNumber(Vector2(500, 110), SceneManager::score);//ゲームによるスコア表示
+			//mNumber->DrawNumber(Vector2(396 - (32 * figure), 200), SceneManager::mElapsedTime->Now());//かかった時間表示
+			mNumber->DrawIntegerNumber(Vector2(500, 180), timeScore);//タイムによるスコア表示
+			mNumber->DrawIntegerNumber(Vector2(300, 400), numScore);//合計スコア表示
+			if (NewScore)
+			{
+				DrawString(380, 300, "ハイスコア更新！！", GetColor(255, 255, 255));
+			}
 		}
-		break;
 	}
+	else
+	{
+		//DrawString(380, 50, "ゲームオーバー", Cr);
+		mGOverGra->Drawb(0, 0);
 
-	DrawString(300, y, "■", GetColor(0, 255, 0));
+		int y;
+		switch (choice)
+		{
+		case e_select:
+			y = 320;
+			break;
+		case e_restart:
+			y = 80;
+			break;
+		}
+
+		mChoiceGra->Drawb(320, y);
+	}
+	
+	
 }
 
 void Ending::NextScene()
@@ -215,25 +226,6 @@ void Ending::NextScene()
 		mSceneChanger->ChangeScene(SceneSelect);
 		break;
 	case e_restart:
-		mSceneChanger->ChangeScene(SceneGamePlay);
-		break;
-	case e_nextstage:
-		if (stage == "stage1")//書き込む
-		{
-			SceneManager::stageName = "stage2";
-		}
-		else if (stage == "stage2")
-		{
-			SceneManager::stageName = "stage3";
-		}
-		else if (stage == "stage3")
-		{
-			SceneManager::stageName = "stage4";
-		}
-		else if (stage == "stage4")
-		{
-			SceneManager::stageName = "stage5";
-		}
 		mSceneChanger->ChangeScene(SceneGamePlay);
 		break;
 	default:
