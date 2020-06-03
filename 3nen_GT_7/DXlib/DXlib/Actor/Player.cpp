@@ -12,7 +12,7 @@ Player::Player(const Vector2& position, const char* tag) :
 	mCollider(new ColliderComponent(this)),
 	mMaxHp(5),										  //最大体力
 	mHp(5),											  //現在の体力
-	mInvincibleTime(5),								  //無敵時間
+	mInvincibleTime(3),								  //無敵時間
 	mPos(new Vector2(0, 0)),							  //現在の位置
 	mVelocity(new Vector2(0, 0)),					  //移動量
 	maxSpeed(7),									  //最大スピード
@@ -128,10 +128,10 @@ void Player::Update()
 		MovingFast();//瞬間移動
 	}
 
-	if (mInput->GetKeyDown(H))//デバッグ用
-	{
-		Recovery();//体力回復
-	}
+	//if (mInput->GetKeyDown(H))//デバッグ用
+	//{
+	//	Recovery();//体力回復
+	//}
 
 	Move();//移動処理
 	Fall();//重力計算
@@ -283,10 +283,10 @@ void Player::Recovery()//体力回復
 void Player::Draw()//描画
 {
 	//mRenderer->Draw(*mPos);
-	//if (!mCountTimer->IsTime())
-	//{
-	//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 / 2);
-	//}
+	if (!mCountTimer->IsTime())
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 / 2);
+	}
 	if (mMovingFast)
 	{
 		mAttackImages->Draw(*mPos);
@@ -425,6 +425,23 @@ void Player::Hit()
 				}
 			}
 		}
+
+		if (hit->getOwner()->Tag() == "FlyEnemy" || hit->getOwner()->Tag() == "RushEnemy" || hit->getOwner()->Tag() == "PatrolEnemy")
+		{
+			if (mMovingFast)//高速移動状態ならば
+			{
+				hit->getOwner()->SetElectricShock(true);
+			}
+			if (mNowMovingFast)//高速移動状態初期処理状態ならば
+			{
+				hit->getOwner()->SetElectricShock(true);
+			}
+
+			if (!hit->getOwner()->GetElectricShock())
+			{
+				Damage();
+			}
+		}
 	}
 
 	for (auto && hit : mCollider->onCollisionEnter())//あたった瞬間
@@ -479,8 +496,6 @@ void Player::Hit()
 					}
 				}
 			}
-
-		
 		}
 		
 		if (hit->getOwner()->Tag() == "FlyEnemy" || hit->getOwner()->Tag() == "RushEnemy" || hit->getOwner()->Tag() == "PatrolEnemy")

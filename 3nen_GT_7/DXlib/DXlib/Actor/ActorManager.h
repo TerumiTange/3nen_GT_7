@@ -68,4 +68,5 @@ private:
 	bool mUpdatingActors;
 	bool mWallStart;
 	size_t mEnemyCount;
+	size_t count;
 };

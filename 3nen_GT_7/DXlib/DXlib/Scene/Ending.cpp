@@ -16,7 +16,8 @@ Ending::Ending(ISceneChanger * changer) :
 	mClear1(new Renderer("Result1")),
 	mClear2(new Renderer("Result2")),
 	mC(false),
-	HiGra(new Renderer("HIScore"))
+	HiGra(new Renderer("HIScore")),
+	mGra(new Renderer("Background"))
 {
 	choice = e_restart;
 	clear = SceneManager::gameClear;
@@ -38,6 +39,7 @@ Ending::~Ending()
 	delete(mClear2);
 	delete(mBigNumber);
 	delete(HiGra);
+	delete(mGra);
 	//delete(sound);
 }
 
@@ -156,6 +158,7 @@ void Ending::Update()
 
 void Ending::Draw()
 {
+	mGra->Drawb(0, 0);
 	if (clear)
 	{
 		//int figure;//ƒ^ƒCƒ€‚Ì•b”(®”)

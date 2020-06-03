@@ -20,7 +20,7 @@ private:
 	Renderer* mNumber;
 	Renderer* mBigNumber;
 	//Sound* sound;
-
+	Renderer* mGra;
 	int choice;//Œ»İ‘I‘ğ’†
 	CountDownTimer* timer;//’x‰„—p
 	bool NewScore;
