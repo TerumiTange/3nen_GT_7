@@ -320,8 +320,8 @@ void Player::Draw()//•`‰æ
 		//DrawString(mPos->x - 10, mPos->y - 32, "ƒ_ƒ[ƒW", GetColor(255, 0, 0));
 		SetDrawBright(200, 100, 100);
 		mDamage->Draw(mPos->x, mPos->y - 32);
-		mDamageEf2->Draw(mPos->x-512, 0);
-		mDamageEf1->Draw(mPos->x-512, 0);
+		mDamageEf2->Drawb(0, 0);
+		mDamageEf1->Drawb(0, 0);
 		SetDrawBright(255, 255, 255);
 	}
 
