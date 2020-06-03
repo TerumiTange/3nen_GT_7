@@ -29,7 +29,8 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	bomRenderer(new Renderer("BOMEFFECT")),
 	pspeed(8.0f),//„‰ñ‘¬“x
 	mUpTimer(new CountUpTimer()),
-	deathUpTimer(new CountUpTimer())
+	deathUpTimer(new CountUpTimer()),
+	removeS(6.0f)//’ÇÕŒã‚Ì‘¬“x
 {
 	*mPos = pos;
 	Actor::SetPos(*mPos);
@@ -354,7 +355,15 @@ void PatrolEnemy::Patrol()
 	{
 		patrolcount = 4;
 
-		PatrolMove();
+		old_x = mPos->x;
+		old_y = mPos->y;
+		a = patrolPos[patrolcount];
+		direction.x = a.x - old_x;
+		direction.y = a.y - old_y;
+		direction.normalize();
+
+		mPos->x += direction.x*removeS;
+		mPos->y += direction.y*removeS;
 
 		if (old_x <= a.x && old_y <= a.y)
 		{

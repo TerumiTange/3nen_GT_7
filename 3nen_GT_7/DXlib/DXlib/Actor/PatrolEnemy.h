@@ -69,4 +69,5 @@ private:
 	Renderer* bomRenderer;
 	CountUpTimer* mUpTimer;
 	CountUpTimer* deathUpTimer;
+	float removeS;
 };
