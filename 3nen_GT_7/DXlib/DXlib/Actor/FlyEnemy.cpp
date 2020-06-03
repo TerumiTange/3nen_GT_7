@@ -87,7 +87,7 @@ void FlyEnemy::Draw()
 	if (GetDeath())
 	{
 		DeathUpdate();
-		int d = fmod(deathUpTimer->Now() * 10, 9);
+		int d = fmod(deathUpTimer->Now() * 5, 9);
 		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
 		return;
 	}
