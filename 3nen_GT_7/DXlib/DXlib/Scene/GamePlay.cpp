@@ -29,7 +29,8 @@ GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	mBackGround(new Renderer("Background")),
 	mExplain1(new Renderer("explanation1")),
 	mExplain2(new Renderer("explanation2")),
-	mExplain3(new Renderer("explanation3"))
+	mExplain3(new Renderer("explanation3")),
+	mPause(new Renderer("PAUSEwindow"))
 {
 	Actor::SetActorManager(mActorManager);
 	Collider::setPhysics(mPhysics);
@@ -48,6 +49,7 @@ GamePlay::~GamePlay()
 	delete(mExplain1);
 	delete(mExplain2);
 	delete(mExplain3);
+	delete(mPause);
 
 	//sound->StopBGM("./Assets/Sound/GamePlay.mp3");
 	SceneManager::sound->StopBGM("./Assets/Sound/GamePlay.mp3");
@@ -240,12 +242,13 @@ void GamePlay::Draw()
 
 	if (pose)
 	{
-		int Cr = GetColor(255, 123, 123);
+		/*int Cr = GetColor(255, 123, 123);
 		SetFontSize(32);
 		DrawString(300, 100, "ポーズ中 ", Cr);
 		DrawString(300, 180, "ゲームに戻る　START ", Cr);
 		DrawString(300, 260, "リセット　　　 X    ", Cr);
-		DrawString(300, 340, "終了　　　　　BACK  ", Cr);
+		DrawString(300, 340, "終了　　　　　BACK  ", Cr);*/
+		mPause->Drawb(350, 150);
 	}
 }
 

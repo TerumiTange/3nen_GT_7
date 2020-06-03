@@ -36,4 +36,6 @@ private:
 	Renderer* mExplain2;//‘€ìà–¾2
 	Renderer* mExplain3;//‘€ìà–¾3
 	Physics* mPhysics;
+
+	Renderer* mPause;
 };
