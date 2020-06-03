@@ -42,7 +42,9 @@ Player::Player(const Vector2& position, const char* tag) :
 	mFrame(new Renderer("frame")),
 	mRight(false),
 	mUpTimer(new CountUpTimer()),
-	mDamage(new Renderer("Damage"))
+	mDamage(new Renderer("Damage")),
+	mDamageEf1(new Renderer("DamageEffect01")),
+	mDamageEf2(new Renderer("DamageEffect02"))
 {
 	mPos->x = position.x;
 	mPos->y = position.y;
@@ -79,6 +81,8 @@ void Player::End()//メモリの開放
 	delete(mFrame);
 	delete(mUpTimer);
 	delete(mDamage);
+	delete(mDamageEf1);
+	delete(mDamageEf2);
 }
 
 void Player::Update()
@@ -316,6 +320,8 @@ void Player::Draw()//描画
 		//DrawString(mPos->x - 10, mPos->y - 32, "ダメージ", GetColor(255, 0, 0));
 		SetDrawBright(200, 100, 100);
 		mDamage->Draw(mPos->x, mPos->y - 32);
+		mDamageEf2->Draw(mPos->x-512, 0);
+		mDamageEf1->Draw(mPos->x-512, 0);
 		SetDrawBright(255, 255, 255);
 	}
 

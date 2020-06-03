@@ -1,15 +1,19 @@
-﻿  RushEnemy.cpp
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\actor.h(15): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
-  c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(91): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(100): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(103): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(111): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(120): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(126): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(262): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(263): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(279): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\rushenemy.cpp(287): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-  DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
+﻿  Player.cpp
+d:\gtsample\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\actor.h(15): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
+  d:\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(121): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(122): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(198): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(206): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(248): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(298): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(306): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(312): warning C4244: '初期化中': 'double' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(322): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(323): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(324): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(332): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(334): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(496): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  DXlib.vcxproj -> D:\Gtsample\3nen_GT_7\DXlib\Debug\DXlib.exe
