@@ -6,8 +6,7 @@
 
 Renderer::Renderer(const char* name):
 	mName("./Assets/Texture/"),
-	mGra(0),
-	width(32)
+	mGra(0)
 {
 	mName = mName + name + ".png";
 	mGra = LoadGraph(mName.c_str());
@@ -47,6 +46,7 @@ void Renderer::DrawE(const Vector2 & pos, int e)//画像を描画(サイズ指定)
 
 void Renderer::DrawIntegerNumber(const Vector2 & pos, int num)//Numverのみ使用できる
 {
+	int width = 32;
 	if (num < 0)
 	{
 		num = 0;
@@ -55,7 +55,7 @@ void Renderer::DrawIntegerNumber(const Vector2 & pos, int num)//Numverのみ使用で
 	std::string n = std::to_string(num);
 	for (auto a : n)
 	{
-		DrawRectGraph(x, pos.y, (a - '0')*width, 0, 32, 32, mGra, TRUE, FALSE);
+		DrawRectGraph(x, pos.y, (a - '0') * 32, 0, 32, 32, mGra, TRUE, FALSE);
 		x += width;
 	}
 }
@@ -63,6 +63,7 @@ void Renderer::DrawIntegerNumber(const Vector2 & pos, int num)//Numverのみ使用で
 void Renderer::DrawNumber(const Vector2& pos, float num)//Numberのみ使用できる
 {
 	SetDrawBright(255, 0, 0);
+	int width = 32;
 	if (num < 0.f)//マイナスなら0に
 	{
 		num = 0.f;
@@ -87,6 +88,21 @@ void Renderer::DrawNumber(const Vector2& pos, float num)//Numberのみ使用できる
 		if (count >= 2)break;
 	}
 	SetDrawBright(255, 255, 255);
+}
+
+void Renderer::DrawBigNumber(const Vector2& pos, int num, int width)
+{
+	if (num < 0)
+	{
+		num = 0;
+	}
+	int x = pos.x;
+	std::string n = std::to_string(num);
+	for (auto a : n)
+	{
+		DrawRectGraph(x, pos.y, (a - '0')*width, 0, width, width, mGra, TRUE, FALSE);
+		x += width;
+	}
 }
 
 //描画位置、画像の開始位置、何枚目の描画か、描画範囲、反転するかどうか（TRUEなら反転）

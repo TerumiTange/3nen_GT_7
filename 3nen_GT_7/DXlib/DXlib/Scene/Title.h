@@ -16,21 +16,22 @@ public:
 	void NextScene();
 private:
 	Input* input;
-	int startY;//ゲームスタート
-	int creditY;//クレジット
-	int choice;//現在選択中
+	//int startY;//ゲームスタート
+	//int creditY;//クレジット
+	//int choice;//現在選択中
 	CountDownTimer* timer;//入力遅延をわざと起こすよう
 	//Sound* sound;
 	bool option;
 	Renderer* mGra;//周りの画像
 	Renderer* mBackGra;//背景
 	Renderer* mTitleGra;//タイトルの画像
+	Renderer* BSta;
 	int mBY;
 };
 
-enum eMenu
-{
-	start,  //ゲームスタート
-	credit, //クレジット
-	eMenuNum//本項目の数
-};
+//enum eMenu
+//{
+//	start,  //ゲームスタート
+//	credit, //クレジット
+//	eMenuNum//本項目の数
+//};

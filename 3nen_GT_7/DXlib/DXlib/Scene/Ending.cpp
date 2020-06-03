@@ -7,6 +7,7 @@ Ending::Ending(ISceneChanger * changer) :
 	BaseScene(changer),
 	input(new Input()),
 	mNumber(new Renderer("Number")),
+	mBigNumber(new Renderer("BigNumber")),
 	//sound(new Sound()),
 	timer(new CountDownTimer()),
 	NewScore(false),
@@ -14,7 +15,8 @@ Ending::Ending(ISceneChanger * changer) :
 	mChoiceGra(new Renderer("Choice")),
 	mClear1(new Renderer("Result1")),
 	mClear2(new Renderer("Result2")),
-	mC(false)
+	mC(false),
+	HiGra(new Renderer("HIScore"))
 {
 	choice = e_restart;
 	clear = SceneManager::gameClear;
@@ -34,6 +36,8 @@ Ending::~Ending()
 	delete(mChoiceGra);
 	delete(mClear1);
 	delete(mClear2);
+	delete(mBigNumber);
+	delete(HiGra);
 	//delete(sound);
 }
 
@@ -82,6 +86,7 @@ void Ending::Init()
 			NewScore = SceneManager::mScore->Write("./Assets/Data/Score5.txt", numScore);
 		}
 	}
+	//NewScore = true;
 }
 
 void Ending::Update()
@@ -189,11 +194,16 @@ void Ending::Draw()
 			mNumber->DrawIntegerNumber(Vector2(500, 110), SceneManager::score);//ゲームによるスコア表示
 			//mNumber->DrawNumber(Vector2(396 - (32 * figure), 200), SceneManager::mElapsedTime->Now());//かかった時間表示
 			mNumber->DrawIntegerNumber(Vector2(500, 180), timeScore);//タイムによるスコア表示
-			mNumber->DrawIntegerNumber(Vector2(300, 400), numScore);//合計スコア表示
+			//mNumber->DrawIntegerNumber(Vector2(300, 400), numScore);//合計スコア表示
+			SetDrawBright(255, 0, 0);
+			mBigNumber->DrawBigNumber(Vector2(300, 400), numScore, 64);//合計スコア表示
 			if (NewScore)
 			{
-				DrawString(380, 300, "ハイスコア更新！！", GetColor(255, 255, 255));
+				//DrawString(380, 300, "ハイスコア更新！！", GetColor(255, 255, 255));
+				SetDrawBright(255, 255, 0);
+				HiGra->Drawb(600, 450);
 			}
+			SetDrawBright(255, 255, 255);
 		}
 	}
 	else

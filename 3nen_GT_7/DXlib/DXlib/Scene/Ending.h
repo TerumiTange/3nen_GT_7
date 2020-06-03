@@ -18,6 +18,7 @@ public:
 private:
 	Input* input;
 	Renderer* mNumber;
+	Renderer* mBigNumber;
 	//Sound* sound;
 
 	int choice;//Œ»İ‘I‘ğ’†
@@ -33,6 +34,7 @@ private:
 	Renderer* mClear1;
 	Renderer* mClear2;
 	bool mC;//‰æ–Ê‚ª2‚©‚Ç‚¤‚©
+	Renderer* HiGra;
 };
 
 enum EndMenu

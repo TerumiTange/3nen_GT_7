@@ -5,16 +5,17 @@
 Title::Title(ISceneChanger* changer)
 	:BaseScene(changer),
 	input(new Input()),
-	startY(380),
-	creditY(460),
+	//startY(380),
+	//creditY(460),
 	timer(new CountDownTimer()),
 	mGra(new Renderer("Wall2")),
 	mBackGra(new Renderer("Background")),
 	mTitleGra(new Renderer("TitleLogo")),
-	mBY(-87)
+	mBY(-87),
+	BSta(new Renderer("BStart"))
 	//sound(new Sound())
 {
-	choice = start;//最初はゲームスタートを選択
+	//choice = start;//最初はゲームスタートを選択
 }
 
 Title::~Title()
@@ -26,6 +27,7 @@ Title::~Title()
 	delete(mGra);
 	delete(mBackGra);
 	delete(mTitleGra);
+	delete(BSta);
 	//delete(sound);
 }
 
@@ -59,7 +61,8 @@ void Title::Update()
 		return;
 	}
 
-	if (option)return;
+	//if (option)return;
+	/*
 	if (input->GetKeyDown(S) || input->GetKeyDown(DOWNARROW) || input->PadDown(JoyCode::Joy_Down))//下
 	{
 		//sound->PlaySE("./Assets/Sound/migration.wav");
@@ -93,6 +96,7 @@ void Title::Update()
 		timer->SetTime(0.3f);
 		return;
 	}
+	*/
 }
 
 void Title::Draw()
@@ -110,7 +114,8 @@ void Title::Draw()
 		mGra->Drawb(0, i);
 		mGra->Drawb(992, i);
 	}
-
+	BSta->Drawb(340, 400);
+	/*
 	int Cr = GetColor(255, 0, 0);
 	SetFontSize(32);
 	if (option)
@@ -137,11 +142,14 @@ void Title::Draw()
 			break;
 		}
 		DrawString(100, y, "■", GetColor(0, 255, 0));
-	}
+		*/
+	//}
 }
 
 void Title::NextScene()
 {
+	mSceneChanger->ChangeScene(SceneSelect);
+	/*
 	switch (choice)
 	{
 	case start:
@@ -157,5 +165,6 @@ void Title::NextScene()
 	  mSceneChanger->ChangeScene(SceneSelect);//例外が発生したら
 		break;
 	}
+	*/
 	//mSceneChanger->ChangeScene(SceneGamePlay);
 }

@@ -314,23 +314,26 @@ void Player::Draw()//描画
 		}
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);//アルファ値最大
-	
-	if (!mCountTimer->IsTime())//ダメージを受けたら
-	{
-		//DrawString(mPos->x - 10, mPos->y - 32, "ダメージ", GetColor(255, 0, 0));
-		SetDrawBright(200, 100, 100);
-		mDamage->Draw(mPos->x, mPos->y - 32);
-		mDamageEf2->Draw(mPos->x-512, 0);
-		mDamageEf1->Draw(mPos->x-512, 0);
-		SetDrawBright(255, 255, 255);
-	}
 
 	//mRenderer->DrawE(*mPos, 64);
 	if (mNowMovingFast)
 	{
 		//mStaticElectricity->Draw(mPos->x - 32, mPos->y);
-		mStaticElectricity->DrawAlternating(mPos->x+8, mPos->y + 5, 3);
+		mStaticElectricity->DrawAlternating(mPos->x + 8, mPos->y + 5, 3);
 	}
+	
+	//mCountTimer->Now(); mInvincibleTime
+	if (mInvincibleTime - mCountTimer->Now() < 0.3f)//ダメージを受けたら
+	{
+		//DrawString(mPos->x - 10, mPos->y - 32, "ダメージ", GetColor(255, 0, 0));
+		SetDrawBright(200, 100, 100);
+		mDamage->Draw(mPos->x, mPos->y - 32);
+		mDamageEf1->Drawb(0, 0);//外枠
+		mDamageEf2->Drawb(0, 0);//画面全体の赤
+		SetDrawBright(255, 255, 255);
+	}
+
+	
 	for (size_t i = 0; i < mHp; ++i)//HP表示
 	{
 		mHeart->Drawb(10 + i * 32, 32);
