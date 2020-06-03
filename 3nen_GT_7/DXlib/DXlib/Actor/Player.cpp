@@ -328,13 +328,8 @@ void Player::Draw()//描画
 		//DrawString(mPos->x - 10, mPos->y - 32, "ダメージ", GetColor(255, 0, 0));
 		SetDrawBright(200, 100, 100);
 		mDamage->Draw(mPos->x, mPos->y - 32);
-<<<<<<< HEAD
-		mDamageEf2->Drawb(0, 0);
-		mDamageEf1->Drawb(0, 0);
-=======
 		mDamageEf1->Drawb(0, 0);//外枠
 		mDamageEf2->Drawb(0, 0);//画面全体の赤
->>>>>>> Aya
 		SetDrawBright(255, 255, 255);
 	}
 
