@@ -18,7 +18,7 @@ Ending::Ending(ISceneChanger * changer) :
 {
 	choice = e_restart;
 	clear = SceneManager::gameClear;
-	clear = true;
+	//clear = true;
 }
 
 Ending::~Ending()

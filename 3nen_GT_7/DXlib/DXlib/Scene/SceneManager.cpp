@@ -6,8 +6,8 @@ SceneManager::SceneManager():
 	mNextScene(SceneNone),
 	mfader(new Fader())
 {
-	//mScene = (BaseScene*) new Title(this);
-	mScene = (BaseScene*) new Ending(this);
+	mScene = (BaseScene*) new Title(this);
+	//mScene = (BaseScene*) new Ending(this);
 	sound->Load("./Assets/Sound/kettei.wav");//Œˆ’è
 	sound->Load("./Assets/Sound/migration.wav");//ƒJ[ƒ\ƒ‹
 	sound->Load("./Assets/Sound/Title.mp3");//BGM
