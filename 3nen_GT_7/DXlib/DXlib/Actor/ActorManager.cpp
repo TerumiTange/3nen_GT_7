@@ -8,7 +8,8 @@
 ActorManager::ActorManager():
 	mUpdatingActors(false),
 	mEnemyCount(0),
-	mWallStart(false)
+	mWallStart(false),
+	count(0)
 {
 }
 
@@ -39,6 +40,13 @@ void ActorManager::Update()
 	MovePendingToMain();
 
 	Remove();
+
+	if (!GetPlayer())return;
+	if (count >= 5)
+	{
+		GetPlayer()->Recovery(); 
+		count -= 5;
+	}
 }
 
 void ActorManager::Hit()
@@ -152,6 +160,7 @@ void ActorManager::Remove()
 			if ((*itr)->Tag() != "Player" && (*itr)->Tag() != "Wall")
 			{
 				mEnemyCount--;//プレイヤーでなければ減らす
+				count++;
 				SceneManager::score += 50;
 			}
 			(*itr)->End();//死んだらメモリ開放
