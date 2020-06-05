@@ -51,7 +51,8 @@ PatrolEnemy::~PatrolEnemy() = default;
 
 void PatrolEnemy::End()
 {
-	sound->PlaySE("./Assets/Sound/deth.wav");
+	sound->DeleteM("./Assets/Sound/deth.wav");
+	sound->DeleteM("./Assets/Sound/paral.wav");
 	delete(mPos);
 	delete(mSize);
 	delete(mRenderer);
@@ -61,7 +62,6 @@ void PatrolEnemy::End()
 	delete(paralimitTime);
 	delete(paralimitTimer);
 	delete(playerHitTimer);
-	sound->Init();
 	delete(sound);
 	delete(mUpTimer);
 	delete(bomRenderer);
@@ -99,6 +99,7 @@ void PatrolEnemy::Draw()
 {	
 	if (GetDeath())
 	{
+		sound->PlaySEF("./Assets/Sound/deth.wav");
 		DeathUpdate();
 		int d = fmod(deathUpTimer->Now() * 5, 9);
 		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);
