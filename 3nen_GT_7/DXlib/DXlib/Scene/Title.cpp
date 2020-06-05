@@ -46,7 +46,6 @@ void Title::Update()
 	//sound->PlayBGM("./Assets/Sound/Title.mp3");//BGM
 	mBY += (mBY < 100) ? 1 : 0;
 	SceneManager::sound->PlayBGM("./Assets/Sound/Title.mp3");
-	printfDx("ゲームパッド数%d", GetJoypadNum());
 	GetJoypadInputState(DX_INPUT_PAD1);
 	input->JoyUpdate();
 	timer->Update();

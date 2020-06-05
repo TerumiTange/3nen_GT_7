@@ -14,7 +14,7 @@ public:
 	void PlaySE(const char* filename);
 	void PlaySEF(const char* filename);
 	void StopBGM(const char* filename);
-	
+	void DeleteM(const char* filename);
 private:
 	std::map<const char*, int> mSound;
 };

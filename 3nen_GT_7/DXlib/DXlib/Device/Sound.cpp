@@ -1,6 +1,5 @@
 #include "Sound.h"
 
-
 Sound::Sound():
 	mSound()
 {
@@ -14,6 +13,7 @@ Sound::~Sound()
 
 void Sound::Init()
 {
+	
 	mSound.clear();
 }
 
@@ -54,4 +54,9 @@ void Sound::PlaySEF(const char * filename)
 void Sound::StopBGM(const char * filename)
 {
 	StopSoundMem(mSound[filename]);
+}
+
+void Sound::DeleteM(const char * filename)
+{
+	DeleteSoundMem(mSound.at(filename));
 }

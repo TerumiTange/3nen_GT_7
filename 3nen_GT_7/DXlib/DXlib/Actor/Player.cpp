@@ -63,6 +63,11 @@ Player::~Player() = default;
 
 void Player::End()//メモリの開放
 {
+	sound->DeleteM("./Assets/Sound/damage.wav");
+	sound->DeleteM("./Assets/Sound/pdeth.wav");
+	sound->DeleteM("./Assets/Sound/movingfast.wav");
+	sound->DeleteM("./Assets/Sound/crash.wav");
+	sound->DeleteM("./Assets/Sound/Landing.wav");
 	delete(mPos);
 	delete(mVelocity);
 	delete(mSize);
@@ -102,11 +107,6 @@ void Player::Update()
 	//printfDx("瞬間移動できるようになるまでの時間%.01f", mMovingFastTimer->Now());
 
 	if (mHp <= 0)return;//体力がなくなったら操作しないようにする
-
-	if (mInput->GetKeyDown(K))
-	{
-		Damage();
-	}
 
 	mInput->JoyUpdate();//ジョイパッド更新
 	mCountTimer->Update();//無敵時間更新

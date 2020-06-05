@@ -48,7 +48,8 @@ RushEnemy::~RushEnemy() = default;
 
 void RushEnemy::End()
 {
-	sound->PlaySE("./Assets/Sound/deth.wav");
+	sound->DeleteM("./Assets/Sound/deth.wav");
+	sound->DeleteM("./Assets/Sound/paral.wav");
 	delete(mPos);
 	delete(mSize);
 	delete(mRenderer);
@@ -58,7 +59,6 @@ void RushEnemy::End()
 	delete(paralimitTime);
 	delete(paralimitTimer);
 	delete(playerHitTimer);
-	sound->Init();
 	delete(sound);
 	delete(attackTimer);
 	delete(mVelocity);
@@ -95,6 +95,7 @@ void RushEnemy::Draw()
 {
 	if (GetDeath())
 	{
+		sound->PlaySEF("./Assets/Sound/deth.wav");
 		DeathUpdate();
 		int d = fmod(deathUpTimer->Now() * 5, 9);
 		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);

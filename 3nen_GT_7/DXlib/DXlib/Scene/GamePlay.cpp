@@ -16,6 +16,8 @@
 
 #define SAFE_DELETE(x) if(x){delete x; x=0;}
 
+
+
 GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 	BaseScene(changer),
 	mActorManager(new ActorManager()),
@@ -34,7 +36,6 @@ GamePlay::GamePlay(ISceneChanger* changer, const char* sname) :
 {
 	Actor::SetActorManager(mActorManager);
 	Collider::setPhysics(mPhysics);
-
 }
 
 GamePlay::~GamePlay()
@@ -75,9 +76,12 @@ void do_wark2()
 	delete(map);
 }*/
 
+#include <iostream>
+#include <fstream>
+
 void GamePlay::Init()
 {
-	mActorManager->Clear();
+	//mActorManager->Clear();
 	mPhysics->clear();
 	SceneManager::gameClear = false;
 	SceneManager::score = 0;
@@ -148,6 +152,11 @@ void GamePlay::Init()
 
 void GamePlay::Update()
 {
+	if (input->GetKeyDown(R))
+	{
+		Reset();
+	}
+
 	input->JoyUpdate();//ポーズ中でもコントローラーをいじれるように
 	mInputTimers->Update();//操作遅延用	
 	

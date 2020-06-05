@@ -41,7 +41,7 @@ FlyEnemy::~FlyEnemy() = default;
 
 void FlyEnemy::End()
 {
-	sound->PlaySE("./Assets/Sound/deth.wav");
+	
 	delete(mPos);
 	delete(mSize);
 	delete(mRenderer);
@@ -51,7 +51,8 @@ void FlyEnemy::End()
 	delete(paralimitTime);
 	delete(paralimitTimer);
 	delete(playerHitTimer);
-	sound->Init();
+	sound->DeleteM("./Assets/Sound/deth.wav");
+	sound->DeleteM("./Assets/Sound/paral.wav");
 	delete(sound);
 	delete(mUpTimer);
 	delete(bomRenderer);
@@ -86,6 +87,7 @@ void FlyEnemy::Draw()
 
 	if (GetDeath())
 	{
+		sound->PlaySEF("./Assets/Sound/deth.wav");
 		DeathUpdate();
 		int d = fmod(deathUpTimer->Now() * 5, 9);
 		bomRenderer->DrawSerialNumber(*mPos, Vector2(0, 0), d, *mSize, FALSE);

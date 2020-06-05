@@ -1,5 +1,4 @@
 #include "Enemy.h"
-#include "SmallEnemy.h"
 #include "FlyEnemy.h"
 #include "PatrolEnemy.h"
 #include "RushEnemy.h"
@@ -80,10 +79,6 @@ void Enemy::InitM(const char * filename)
 
 void Enemy::Create(const EnemyData& data)
 {
-	if (data.type == EnemyType::SMALLENEMY)
-	{
-		auto e = new SmallEnemy(data.position);
-	}
 
 	if (data.type == EnemyType::FLYENEMY)
 	{
