@@ -58,6 +58,7 @@ Player::Player(const Vector2& position, const char* tag) :
 	sound->Load("./Assets/Sound/crash.wav");//•Ç‚Æ‚ÌÕ“Ë
 	sound->Load("./Assets/Sound/Landing.wav");//’…’n‰¹
 	mCountTimer->SetTime(0.0f);
+	mNowMovingFastTimer->SetTime(0.0f);
 }
 
 Player::~Player() = default;

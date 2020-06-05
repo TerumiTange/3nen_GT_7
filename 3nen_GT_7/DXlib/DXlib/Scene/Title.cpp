@@ -12,40 +12,43 @@ Title::Title(ISceneChanger* changer)
 	mBackGra(new Renderer("Background")),
 	mTitleGra(new Renderer("TitleLogo")),
 	mBY(-87),
-	BSta(new Renderer("BStart"))
-	//sound(new Sound())
+	BSta(new Renderer("BStart")),
+	sound(new Sound())
 {
 	//choice = start;//最初はゲームスタートを選択
 }
 
 Title::~Title()
 {
-	SceneManager::sound->StopBGM("./Assets/Sound/Title.mp3");
-	//sound->StopBGM("./Assets/Sound/Title.mp3");
+	sound->StopBGM("./Assets/Sound/Title.mp3");
+
+	sound->DeleteM("./Assets/Sound/kettei.wav");
+	sound->DeleteM("./Assets/Sound/migration.wav");
+	sound->DeleteM("./Assets/Sound/Title.mp3");
+
 	delete(input);
 	delete(timer);
 	delete(mGra);
 	delete(mBackGra);
 	delete(mTitleGra);
 	delete(BSta);
-	//delete(sound);
+	delete(sound);
 }
 
 void Title::Init()
 {
 	input->Init();
-	//sound->Init();
-	//sound->Load("./Assets/Sound/kettei.wav");//決定
-	//sound->Load("./Assets/Sound/migration.wav");//カーソル
-	//sound->Load("./Assets/Sound/Title.mp3");//BGM
+	sound->Init();
+	sound->Load("./Assets/Sound/kettei.wav");//決定
+	sound->Load("./Assets/Sound/migration.wav");//カーソル
+	sound->Load("./Assets/Sound/Title.mp3");//BGM
 	option = false;
 }
 
 void Title::Update()
 {
-	//sound->PlayBGM("./Assets/Sound/Title.mp3");//BGM
+	sound->PlayBGM("./Assets/Sound/Title.mp3");//BGM
 	mBY += (mBY < 100) ? 1 : 0;
-	SceneManager::sound->PlayBGM("./Assets/Sound/Title.mp3");
 	GetJoypadInputState(DX_INPUT_PAD1);
 	input->JoyUpdate();
 	timer->Update();
@@ -53,8 +56,7 @@ void Title::Update()
 	if (!timer->IsTime())return;
 	if (input->GetKeyDown(B) || input->PadDown(Joy_B))
 	{
-		//sound->PlaySE("./Assets/Sound/kettei.wav");
-		SceneManager::sound->PlaySE("./Assets/Sound/kettei.wav");
+		sound->PlaySE("./Assets/Sound/kettei.wav");
 		NextScene();
 		timer->SetTime(0.3f);
 		return;

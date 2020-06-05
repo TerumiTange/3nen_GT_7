@@ -11,7 +11,6 @@
 
 #include "../System/CountUpTimer.h"
 #include "../Device/Camera2d.h"
-#include "../Device/Sound.h"
 
 #include "Score.h"
 
@@ -32,10 +31,10 @@ public:
 	static bool gameClear;//ゲームをクリアしたかどうか
 	static Score* mScore;
 	static int score;//スコア
-	static Sound* sound;
 	
 private:
 	BaseScene* mScene;
 	SceneType mNextScene;
 	Fader* mfader;//フェード
+	Sound* sound;
 };

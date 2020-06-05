@@ -19,7 +19,7 @@ private:
 	Input* input;
 	Renderer* mNumber;
 	Renderer* mBigNumber;
-	//Sound* sound;
+	Sound* sound;
 	Renderer* mGra;
 	int choice;//Œ»İ‘I‘ğ’†
 	CountDownTimer* timer;//’x‰„—p
