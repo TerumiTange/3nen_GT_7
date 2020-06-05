@@ -154,7 +154,7 @@ void StageSelect::Draw()
 	case stage1:
 		mSelect->Drawb(stage1Pos->x, stage1Pos->y);
 		mRenderer->DrawIntegerNumber(Vector2(512, 250), Score1);
-		mStage1->Drawb(352, 100);
+		mStage1->Drawb(302, 100);
 		break;
 	case stage2:
 		mSelect->Drawb(stage2Pos->x, stage2Pos->y);

@@ -242,8 +242,10 @@ void GamePlay::Draw()
 	}
 
 	mActorManager->Draw();
-	mRenderer->DrawNumber(Vector2(500, 0), SceneManager::mElapsedTime->Now());
+	mRenderer->DrawNumber(Vector2(512, 0), SceneManager::mElapsedTime->Now());
+	SetDrawBright(255, 255, 0);
 	mRenderer->DrawIntegerNumber(Vector2(800, 0), SceneManager::score);
+	SetDrawBright(255, 255, 255);
 
 	if (pose)
 	{

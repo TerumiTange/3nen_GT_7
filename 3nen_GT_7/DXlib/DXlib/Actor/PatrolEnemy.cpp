@@ -149,6 +149,23 @@ void PatrolEnemy::Draw()
 
 void PatrolEnemy::Hit()
 {
+	for (auto && hit : mCollider->onCollisionEnter())
+	{
+		if (hit->getOwner()->GetElectricShock())
+		{
+			SetElectricShock(true);
+		}
+		//if (hit->getOwner()->Tag() == "Wall" ||
+		//	hit->getOwner()->Tag() == "FlyEnemy" ||
+		//	hit->getOwner()->Tag() == "RushEnemy" ||
+		//	hit->getOwner()->Tag() == "PatrolEnemy")
+		//{
+		//	if (hit->getEnable())
+		//	{
+		//		SetElectricShock(true);
+		//	}
+		//}
+	}
 	//for (auto && hit : mCollider->onCollisionStay())
 	//{
 
