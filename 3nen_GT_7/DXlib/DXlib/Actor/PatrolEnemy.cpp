@@ -38,6 +38,7 @@ PatrolEnemy::PatrolEnemy(const Vector2 & pos, const Vector2 & patpos1, const Vec
 	sound->Init();
 	sound->Load("./Assets/Sound/deth.wav");
 	sound->Load("./Assets/Sound/paral.wav");
+	sound->Load("./Assets/Sound/paral2.wav");
 
 	//巡回のポジション
 	patrolPos.push_back(Vector2(patpos1.x, patpos1.y));//1位置
@@ -53,6 +54,7 @@ void PatrolEnemy::End()
 {
 	sound->DeleteM("./Assets/Sound/deth.wav");
 	sound->DeleteM("./Assets/Sound/paral.wav");
+	sound->DeleteM("./Assets/Sound/paral2.wav");
 	delete(mPos);
 	delete(mSize);
 	delete(mRenderer);
@@ -85,9 +87,12 @@ void PatrolEnemy::Update()
 
 	if (!paral)//マヒ状態でないなら
 	{
+		sound->StopBGM("./Assets/Sound/paral2.wav");
 		Move();
 		Patrol();
+		return;
 	}
+	sound->PlaySEF("./Assets/Sound/paral2.wav");
 }
 
 void PatrolEnemy::DeathUpdate()
