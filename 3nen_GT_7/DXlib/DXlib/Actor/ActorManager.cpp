@@ -41,6 +41,7 @@ void ActorManager::Update()
 
 	Remove();
 
+
 	if (!GetPlayer())return;
 	if (count >= 5)
 	{

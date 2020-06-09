@@ -211,6 +211,10 @@ void RushEnemy::Hit()
 			hit->getOwner()->Tag() == "RushEnemy" ||
 			hit->getOwner()->Tag() == "PatrolEnemy")
 		{
+			if (hit->getOwner()->GetElectricShock())
+			{
+				SetElectricShock(true);
+			}
 			if (abs(dir.x) > abs(dir.y))
 			{
 				if (dir.x > 0)//‘ŠŽè‚Ì‰E‚É“–‚½‚Á‚½‚ç

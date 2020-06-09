@@ -338,7 +338,7 @@ void Player::Draw()//•`‰æ
 	
 	for (size_t i = 0; i < mHp; ++i)//HP•\¦
 	{
-		mHeart->Drawb(10 + i * 32, 32);
+		mHeart->Drawb(10 + i * 32, 0);
 	}
     //DrawString(0, 0, "", mMovingFastCount);
 	//DrawFormatString(10, 0, GetColor(255, 0, 0), "uŠÔˆÚ“®‚Å‚«‚é‰ñ”%d", mMovingFastCount);
@@ -348,11 +348,11 @@ void Player::Draw()//•`‰æ
 
 	for (int i = 0; i < mMovingFastMaxCount; ++i)//‚‘¬ˆÚ“®‰ñ”•\¦
 	{
-		mFrame->Drawb(10 + i * 32, 0);
+		mFrame->Drawb(10 + i * 32, 32);
 	}
 	for (int i = 0; i < mMovingFastCount; ++i)
 	{
-		mContent->Drawb(10 + i * 32, 0);
+		mContent->Drawb(10 + i * 32, 32);
 	}
 }
 

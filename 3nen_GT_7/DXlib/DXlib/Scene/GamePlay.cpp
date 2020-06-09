@@ -236,14 +236,15 @@ void GamePlay::Draw()
 	mBackGround->Draw(0, 0);
 	if (mStageName == "stage1")
 	{
-		mExplain1->Draw(250, 400);
-		mExplain2->Draw(500, 365);
-		mExplain3->Draw(775, 400);
+		mExplain1->Draw(64, 192);
+		mExplain2->Draw(288, 160);
+		mExplain3->Draw(768, 192);
 	}
-
 	mActorManager->Draw();
-	mRenderer->DrawNumber(Vector2(500, 0), SceneManager::mElapsedTime->Now());
+	mRenderer->DrawNumber(Vector2(512, 0), SceneManager::mElapsedTime->Now());
+	SetDrawBright(255, 255, 0);
 	mRenderer->DrawIntegerNumber(Vector2(800, 0), SceneManager::score);
+	SetDrawBright(255, 255, 255);
 
 	if (pose)
 	{
