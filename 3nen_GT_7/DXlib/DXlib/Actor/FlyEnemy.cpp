@@ -36,6 +36,7 @@ FlyEnemy::FlyEnemy(const Vector2 & pos, const char * tag) :
 	sound->Load("./Assets/Sound/deth.wav");
 	sound->Load("./Assets/Sound/paral.wav");
 	sound->Load("./Assets/Sound/paral2.wav");
+	sound->Load("./Assets/Sound/electric.wav");
 }
 
 FlyEnemy::~FlyEnemy() = default;
@@ -55,6 +56,7 @@ void FlyEnemy::End()
 	sound->DeleteM("./Assets/Sound/deth.wav");
 	sound->DeleteM("./Assets/Sound/paral.wav");
 	sound->DeleteM("./Assets/Sound/paral2.wav");
+	sound->DeleteM("./Assets/Sound/electric.wav");
 	delete(sound);
 	delete(mUpTimer);
 	delete(bomRenderer);
@@ -75,11 +77,11 @@ void FlyEnemy::Update()
 
 	if (!paral)//–ƒáƒó‘Ô‚Å‚È‚¢‚È‚ç
 	{
-		sound->StopBGM("./Assets/Sound/paral2.wav");
+		sound->StopBGM("./Assets/Sound/electric.wav");
 		Move();
 		return;
 	}
-	sound->PlaySEF("./Assets/Sound/paral2.wav");
+	sound->PlaySEF("./Assets/Sound/electric.wav");
 }
 
 void FlyEnemy::DeathUpdate()

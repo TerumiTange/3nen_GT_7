@@ -43,6 +43,7 @@ RushEnemy::RushEnemy(const Vector2 & pos, const char * tag) :
 	sound->Load("./Assets/Sound/deth.wav");
 	sound->Load("./Assets/Sound/paral.wav");
 	sound->Load("./Assets/Sound/paral2.wav");
+	sound->Load("./Assets/Sound/electric.wav");
 }
 
 RushEnemy::~RushEnemy() = default;
@@ -52,6 +53,7 @@ void RushEnemy::End()
 	sound->DeleteM("./Assets/Sound/deth.wav");
 	sound->DeleteM("./Assets/Sound/paral.wav");
 	sound->DeleteM("./Assets/Sound/paral2.wav");
+	sound->DeleteM("./Assets/Sound/electric.wav");
 	delete(mPos);
 	delete(mSize);
 	delete(mRenderer);
@@ -84,11 +86,11 @@ void RushEnemy::Update()
 
 	if (!paral)
 	{
-		sound->StopBGM("./Assets/Sound/paral2.wav");
+		sound->StopBGM("./Assets/Sound/electric.wav");
 		Rush();
 		return;
 	}
-	sound->PlaySEF("./Assets/Sound/paral2.wav");
+	sound->PlaySEF("./Assets/Sound/electric.wav");
 }
 
 void RushEnemy::DeathUpdate()
