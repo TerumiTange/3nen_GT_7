@@ -33,9 +33,9 @@ public:
 	}
 	void Draw()
 	{
-		DrawFormatString(0, 0, GetColor(255, 0, 0), "%.1f", mFps);
+		//DrawFormatString(0, 0, GetColor(255, 0, 0), "%.1f", mFps);
 		clsDx();
-		printfDx("%.1f", mFps);
+		//printfDx("%.1f", mFps);
 	}
 	void Wait()
 	{
