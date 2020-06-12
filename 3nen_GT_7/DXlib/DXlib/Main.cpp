@@ -6,8 +6,6 @@
 //static int ScreenHeight = 576;
 #include <crtdbg.h>
 
-#include "resource.h"
-
 class Fps
 {
 public:
@@ -78,7 +76,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//メモリーリーク検出
 	//_CrtSetBreakAlloc(15679);//メモリーリークが出たら()に数字を入れる
-	SetWindowIconID(IDI_ICON2);
 	bool g = true;
 	int a = GetJoypadNum();
 	if (GetJoypadNum() != 0)
