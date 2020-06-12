@@ -42,12 +42,12 @@ void ActorManager::Update()
 	Remove();
 
 
-	if (!GetPlayer())return;
-	if (count >= 5)
-	{
-		GetPlayer()->Recovery(); 
-		count -= 5;
-	}
+	//if (!GetPlayer())return;
+	//if (count >= 5)
+	//{
+	//	GetPlayer()->Recovery(); 
+	//	count -= 5;
+	//}
 }
 
 void ActorManager::Hit()

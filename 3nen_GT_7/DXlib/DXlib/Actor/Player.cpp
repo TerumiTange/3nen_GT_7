@@ -180,7 +180,7 @@ void Player::Movement()//移動処理
 	if (!mNowMovingFast)
 	{
 		mVelocity->y *= 0.7f;//ここで慣性性が出る
-		mVelocity->x *= 0.9f;//ここで慣性性が出る
+		mVelocity->x *= 0.5f;//ここで慣性性が出る
 	}
 	
 	if (mNowMovingFast&&mNowMovingFastTimer->IsTime())//高速移動なら慣性0
@@ -245,10 +245,10 @@ void Player::MovingFast()//瞬間移動
 	}
 	*/
 
-	if (mVelocity->x == 0 && mVelocity->y == 0)//もし入力がなければ右に移動
-	{
-		mVelocity->x = mMovingFastAmount;
-	}
+	//if (mVelocity->x == 0 && mVelocity->y == 0)//もし入力がなければ右に移動
+	//{
+	//	mVelocity->x = mMovingFastAmount;
+	//}
 
 
 	mNowMovingFastTimer->SetTime(mNowMovingFastTime);//処理に必要な時間
