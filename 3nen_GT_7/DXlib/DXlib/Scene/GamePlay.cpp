@@ -234,6 +234,7 @@ void GamePlay::Update()
 void GamePlay::Draw()
 {
 	mBackGround->Draw(0, 0);
+	mBackGround->Draw(0, 1024);
 	if (mStageName == "stage1")
 	{
 		mExplain1->Draw(64, 192);
