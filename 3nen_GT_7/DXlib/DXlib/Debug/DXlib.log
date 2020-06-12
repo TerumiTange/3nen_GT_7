@@ -1,5 +1,8 @@
 ﻿  ActorManager.cpp
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c57b778c4996f924a9b3ce88a5fe05e70d896ab4
 d:\gtsample\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
 d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\actor.h(15): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
   d:\gtsample\3nen_gt_7\dxlib\dxlib\utility\vector2.h(3): note: 'Vector2' の宣言を確認してください
@@ -22,6 +25,7 @@ d:\gtsample\3nen_gt_7\dxlib\dxlib\actor\player.cpp(516): warning C4244: '+=': 'f
   コードを生成中...
   LINK : 前回のインクリメンタル リンクで D:\Gtsample\3nen_GT_7\DXlib\Debug\DXlib.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   DXlib.vcxproj -> D:\Gtsample\3nen_GT_7\DXlib\Debug\DXlib.exe
+<<<<<<< HEAD
 =======
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\device\fader.h(2): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
 c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\actor.h(15): warning C4099: 'Vector2': タイプ名は最初 'struct' として使われていましたが 'class' として使われています。
@@ -45,3 +49,5 @@ c:\users\kpc-018a1434\desktop\team_7seven\3nen_gt_7\dxlib\dxlib\actor\player.cpp
   コードを生成中...
   DXlib.vcxproj -> C:\Users\KPC-018A1434\Desktop\Team_7Seven\3nen_GT_7\DXlib\Debug\DXlib.exe
 >>>>>>> origin/kubota
+=======
+>>>>>>> c57b778c4996f924a9b3ce88a5fe05e70d896ab4
