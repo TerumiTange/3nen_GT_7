@@ -52,6 +52,7 @@ void Ending::Init()
 	numScore = 0;
 	timeScore = 0;
 	input->Init();
+	input->JoyInit();
 	sound->Init();
 	sound->Load("./Assets/Sound/kettei.wav");
 	sound->Load("./Assets/Sound/migration.wav");
